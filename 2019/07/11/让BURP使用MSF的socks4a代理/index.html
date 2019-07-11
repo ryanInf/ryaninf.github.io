@@ -94,16 +94,33 @@
 
 
 
-  <meta name="description" content="r0yanx 的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="r0yanx&#39;s Blog">
-<meta property="og:url" content="https://ryaninf.github.io/tags/网络/index.html">
+  <meta name="description" content="前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A">
+<meta name="keywords" content="工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让BURP使用MSF的socks4a代理">
+<meta property="og:url" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="r0yanx 的博客">
+<meta property="og:description" content="前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-10-27.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-10-46-29.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-23-12.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-24-44.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-25-39.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-30-54.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-43-03.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-41-15.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-42-31.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-46-52.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-48-59.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-49-59.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-15-01-12.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-15-03-29.png">
+<meta property="og:updated_time" content="2019-07-11T07:58:29.873Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="r0yanx&#39;s Blog">
-<meta name="twitter:description" content="r0yanx 的博客">
+<meta name="twitter:title" content="让BURP使用MSF的socks4a代理">
+<meta name="twitter:description" content="前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A">
+<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-10-27.png">
 
 
 
@@ -111,7 +128,7 @@
 
   
   
-  <link rel="canonical" href="https://ryaninf.github.io/tags/网络/">
+  <link rel="canonical" href="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/">
 
 
 
@@ -121,7 +138,7 @@
   };
 </script>
 
-  <title>标签: 网络 | r0yanx's Blog</title>
+  <title>让BURP使用MSF的socks4a代理 | r0yanx's Blog</title>
   
 
 
@@ -169,7 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,7 +260,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -304,28 +321,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -378,57 +373,261 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>网络<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="r0yanx 的博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/08/浅谈代理隧道的几种应用场景/" itemprop="url">
-            
-              <span itemprop="name">浅谈代理隧道的几种应用场景</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">让BURP使用MSF的socks4a代理
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-08T09:14:42+08:00" content="2019-07-08">
-          07-08
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-11 15:07:25 / 修改时间：15:58:29" itemprop="dateCreated datePublished" datetime="2019-07-11T15:07:25+08:00">2019-07-11</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
+<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。</p>
+<p><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-10-27.png" alt></p>
+<h4 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h4><ol>
+<li>在MSF机器启动socks4a代理（前面获取反弹shell、设置路由的步骤略过）<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf5 auxiliary(server/socks4a) &gt; use auxiliary/server/socks4a </span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; set SRVPORT 11080</span><br><span class="line">msf5 auxiliary(server/socks4a) &gt; exploit</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-10-46-29.png" alt></p>
+<ol start="2">
+<li><p>在配置代理前，我的ip地址是A地公网ip<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-23-12.png" alt></p>
+</li>
+<li><p>使用Firefox配置代理测试转发是否正常，这时ip由联通变成电信了，证明代理转发隧道工作正常<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-24-44.png" alt><br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-25-39.png" alt></p>
+</li>
+<li><p>这个时候，如果直接在burpsuite配置前置socks代理的话是不能使用的，因为burpsuite不支持socks4协议，所以会打不开网页<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-30-54.png" alt></p>
+</li>
+</ol>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用sockscap64工具，把socks4a转发为http代理。当然，使用其它工具将socks4a转为http代理或socks5代理也行，比如Linux下的privoxy，socks4a转socks5的工具找了很久都没找到，遂放弃。  </p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li><p>打开sockscap64工具，创建代理配置，代理服务器为127.0.0.1:1083（MSF socks4a端口地址）<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-43-03.png" alt><br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-41-15.png" alt><br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-42-31.png" alt></p>
+</li>
+<li><p>burpsuite配置前置http代理，代理服务地址为127.0.0.1:25378，这个端口是sockscap64监听的端口<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-46-52.png" alt><br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-48-59.png" alt></p>
+</li>
+<li><p>打开Firefox测试，可以看到现在已经是MSF机器的电信ip了，问题成功解决。<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-11-49-59.png" alt></p>
+</li>
+<li><p>回顾下出口流量走向，如下：  </p>
+<!-- Firefox <=burp proxy=>127.0.0.1:1080<=burp Upstream Proxy=> 127.0.0.1:25378 <=SocksCap64=> 127.0.0.1:1083 <=ssh tunnel=> 172.16.1.2:11083 
+outbound流量流向 -->
+<div id="flowchart-0" class="flow-chart"></div>
+
+</li>
+</ol>
+<h4 id="为什么是25378端口"><a href="#为什么是25378端口" class="headerlink" title="为什么是25378端口"></a>为什么是25378端口</h4><ol>
+<li>SockScap64支持系统代理<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-15-01-12.png" alt></li>
+<li>启用系统代理可发现其使用25378端口做代理服务<br><img src="/2019/07/11/让BURP使用MSF的socks4a代理/2019-07-11-15-03-29.png" alt><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
+e=>end: 目标网络
+op1=>operation: burp代理（127.0.0.1:1080)
+op2=>operation: SocksCap64本地代理（127.0.0.1:25378)
+op3=>operation: ssh本地转发端口（127.0.0.1:1083)
+op4=>operation: msf socks4a端口（172.16.1.2:11083）
+
+st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
+</ol>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>r0yanx</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/" title="让BURP使用MSF的socks4a代理">https://ryaninf.github.io/2019/07/11/让BURP使用MSF的socks4a代理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag"># 工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/11/VMware虚拟机导出压缩/" rel="next" title="VMware虚拟机导出压缩">
+                <i class="fa fa-chevron-left"></i> VMware虚拟机导出压缩
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -448,8 +647,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -589,6 +797,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体问题"><span class="nav-number">2.</span> <span class="nav-text">具体问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#演示环境"><span class="nav-number">2.1.</span> <span class="nav-text">演示环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试步骤"><span class="nav-number">2.2.</span> <span class="nav-text">测试步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤"><span class="nav-number">3.1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么是25378端口"><span class="nav-number">3.2.</span> <span class="nav-text">为什么是25378端口</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -712,6 +937,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   
 
@@ -727,6 +956,8 @@
 
   
 
+
+  
 
 
   
