@@ -94,19 +94,20 @@
 
 
 
-  <meta name="description" content="先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018   然后清理swap文件：先执行sync命令，sync命令用于强制被改变的内容立刻写入磁">
+  <meta name="description" content="先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：   12rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655   rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018  然后清理swap文件：先执行sync命令，sync命令用于强制被改变的">
+<meta name="keywords" content="折腾">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VMware虚拟机导出压缩">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/11/VMware虚拟机导出压缩/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018   然后清理swap文件：先执行sync命令，sync命令用于强制被改变的内容立刻写入磁">
+<meta property="og:description" content="先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：   12rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655   rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018  然后清理swap文件：先执行sync命令，sync命令用于强制被改变的">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/11/VMware虚拟机导出压缩/2019-07-11-09-50-01.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/11/VMware虚拟机导出压缩/2019-07-11-09-50-23.png">
-<meta property="og:updated_time" content="2019-07-11T01:53:14.118Z">
+<meta property="og:updated_time" content="2019-07-11T01:56:10.092Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VMware虚拟机导出压缩">
-<meta name="twitter:description" content="先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018   然后清理swap文件：先执行sync命令，sync命令用于强制被改变的内容立刻写入磁">
+<meta name="twitter:description" content="先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：   12rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655   rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018  然后清理swap文件：先执行sync命令，sync命令用于强制被改变的">
 <meta name="twitter:image" content="https://ryaninf.github.io/2019/07/11/VMware虚拟机导出压缩/2019-07-11-09-50-01.png">
 
 
@@ -190,7 +191,7 @@
     </div>
     
       
-        <p class="site-subtitle">一条游走在信安路上的杂鱼</p>
+        <p class="site-subtitle">爱生活、爱信安、爱折腾</p>
       
     
     
@@ -419,7 +420,7 @@
                 
               
 
-              <time title="创建时间：2019-07-11 09:47:45 / 修改时间：09:53:14" itemprop="dateCreated datePublished" datetime="2019-07-11T09:47:45+08:00">2019-07-11</time>
+              <time title="创建时间：2019-07-11 09:47:45 / 修改时间：09:56:10" itemprop="dateCreated datePublished" datetime="2019-07-11T09:47:45+08:00">2019-07-11</time>
             </span>
           
 
@@ -476,11 +477,14 @@
       
 
       
-        <h3 id="先清理系统垃圾文件"><a href="#先清理系统垃圾文件" class="headerlink" title="先清理系统垃圾文件"></a>先清理系统垃圾文件</h3><p>比如有安装nessus，先删除其插件备份文件：<br>rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655<br>rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018  </p>
+        <h3 id="先清理系统垃圾文件"><a href="#先清理系统垃圾文件" class="headerlink" title="先清理系统垃圾文件"></a>先清理系统垃圾文件</h3><p>比如有安装nessus，先删除其插件备份文件：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655   </span><br><span class="line">rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018</span><br></pre></td></tr></table></figure>
+
 <h3 id="然后清理swap文件："><a href="#然后清理swap文件：" class="headerlink" title="然后清理swap文件："></a>然后清理swap文件：</h3><p>先执行sync命令，sync命令用于强制被改变的内容立刻写入磁盘，更新超块信息，以防止释放，sync命令则可用来强制将内存缓冲区中的数据立即写入磁盘中。<br><code>sync</code><br>关闭swap：<br><code>swapoff -a</code></p>
 <h3 id="压缩虚拟机磁盘空间"><a href="#压缩虚拟机磁盘空间" class="headerlink" title="压缩虚拟机磁盘空间"></a>压缩虚拟机磁盘空间</h3><p>先填充虚拟机磁盘：<br><code>cat /dev/zero &gt; zero.fill;sync;sleep 1;sync;rm -f zero.fill</code>  </p>
 <h3 id="使用vm磁盘工具压缩空间"><a href="#使用vm磁盘工具压缩空间" class="headerlink" title="使用vm磁盘工具压缩空间"></a>使用vm磁盘工具压缩空间</h3><p> <code>vmware-vdiskmanager.exe -k &quot;G:\vmfiles\Pentest_Linux\Nessus 8_VM12-disk1-cl1.vmdk&quot;</code><br><img src="/2019/07/11/VMware虚拟机导出压缩/2019-07-11-09-50-01.png" alt></p>
 <h3 id="导出为ovf文件"><a href="#导出为ovf文件" class="headerlink" title="导出为ovf文件"></a>导出为ovf文件</h3><p><img src="/2019/07/11/VMware虚拟机导出压缩/2019-07-11-09-50-23.png" alt></p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>原本直接导出大概生成8G大小的文件，压缩后只需不到4G</p>
 
       
     </div>
@@ -525,6 +529,15 @@
     
 
     <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/折腾/" rel="tag"># 折腾</a>
+          
+        </div>
       
 
       
@@ -656,7 +669,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -741,7 +756,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#先清理系统垃圾文件"><span class="nav-number">1.</span> <span class="nav-text">先清理系统垃圾文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#然后清理swap文件："><span class="nav-number">2.</span> <span class="nav-text">然后清理swap文件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩虚拟机磁盘空间"><span class="nav-number">3.</span> <span class="nav-text">压缩虚拟机磁盘空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vm磁盘工具压缩空间"><span class="nav-number">4.</span> <span class="nav-text">使用vm磁盘工具压缩空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出为ovf文件"><span class="nav-number">5.</span> <span class="nav-text">导出为ovf文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#先清理系统垃圾文件"><span class="nav-number">1.</span> <span class="nav-text">先清理系统垃圾文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#然后清理swap文件："><span class="nav-number">2.</span> <span class="nav-text">然后清理swap文件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩虚拟机磁盘空间"><span class="nav-number">3.</span> <span class="nav-text">压缩虚拟机磁盘空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vm磁盘工具压缩空间"><span class="nav-number">4.</span> <span class="nav-text">使用vm磁盘工具压缩空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出为ovf文件"><span class="nav-number">5.</span> <span class="nav-text">导出为ovf文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">6.</span> <span class="nav-text">效果</span></a></li></ol></div>
             
 
           </div>

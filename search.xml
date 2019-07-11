@@ -3,10 +3,13 @@
   <entry>
     <title><![CDATA[VMware虚拟机导出压缩]]></title>
     <url>%2F2019%2F07%2F11%2FVMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%BC%E5%87%BA%E5%8E%8B%E7%BC%A9%2F</url>
-    <content type="text"><![CDATA[先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件：rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018 然后清理swap文件：先执行sync命令，sync命令用于强制被改变的内容立刻写入磁盘，更新超块信息，以防止释放，sync命令则可用来强制将内存缓冲区中的数据立即写入磁盘中。sync关闭swap：swapoff -a 压缩虚拟机磁盘空间先填充虚拟机磁盘：cat /dev/zero &gt; zero.fill;sync;sleep 1;sync;rm -f zero.fill 使用vm磁盘工具压缩空间 vmware-vdiskmanager.exe -k &quot;G:\vmfiles\Pentest_Linux\Nessus 8_VM12-disk1-cl1.vmdk&quot; 导出为ovf文件]]></content>
+    <content type="text"><![CDATA[先清理系统垃圾文件比如有安装nessus，先删除其插件备份文件： 12rm /opt/nessus/var/nessus/plugins-code.db.1555813621612956655 rm /opt/nessus/var/nessus/plugins-desc.db.15558136311650186018 然后清理swap文件：先执行sync命令，sync命令用于强制被改变的内容立刻写入磁盘，更新超块信息，以防止释放，sync命令则可用来强制将内存缓冲区中的数据立即写入磁盘中。sync关闭swap：swapoff -a 压缩虚拟机磁盘空间先填充虚拟机磁盘：cat /dev/zero &gt; zero.fill;sync;sleep 1;sync;rm -f zero.fill 使用vm磁盘工具压缩空间 vmware-vdiskmanager.exe -k &quot;G:\vmfiles\Pentest_Linux\Nessus 8_VM12-disk1-cl1.vmdk&quot; 导出为ovf文件 效果原本直接导出大概生成8G大小的文件，压缩后只需不到4G]]></content>
       <categories>
         <category>折腾</category>
       </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[记一次Windows提权过程]]></title>
@@ -35,8 +38,8 @@
         <category>渗透测试</category>
       </categories>
       <tags>
-        <tag>网络</tag>
         <tag>渗透测试</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
