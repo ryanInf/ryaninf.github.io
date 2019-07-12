@@ -36,7 +36,7 @@
   <entry>
     <title><![CDATA[HEXO建站遇到的几个坑与解决方案]]></title>
     <url>%2F2019%2F07%2F08%2FHEXO%E5%BB%BA%E7%AB%99%E9%81%87%E5%88%B0%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9D%91%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%2F</url>
-    <content type="text"><![CDATA[本地图片引用npm install hexo-asset-image --save 自动部署到githubnpm install hexo-deployer-git --save 添加流程图支持npm install --save hexo-filter-flowchart 有空再把坑填完 ~]]></content>
+    <content type="text"><![CDATA[本地图片引用npm install hexo-asset-image --save 自动部署到githubnpm install hexo-deployer-git --save 添加流程图支持npm install --save hexo-filter-flowchart安装成功后，需要在根路径的_config.yml文件添加下列代码 1234flowchart: # raphael: # optional, the source url of raphael.js # flowchart: # optional, the source url of flowchart.js options: # options used for `drawSVG` 有空再把坑填完 ~]]></content>
       <categories>
         <category>其它</category>
       </categories>
@@ -49,8 +49,8 @@
         <category>渗透测试</category>
       </categories>
       <tags>
-        <tag>网络</tag>
         <tag>渗透测试</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>

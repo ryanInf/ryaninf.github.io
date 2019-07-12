@@ -95,7 +95,7 @@
 
 
   <meta name="description" content="前言SOCKS代理隧道HTTP代理隧道代理隧道建立的几种方式代理隧道的几种应用场景 有空再把坑填完 ~">
-<meta name="keywords" content="网络,渗透测试">
+<meta name="keywords" content="渗透测试,网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈代理隧道的几种应用场景">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/08/浅谈代理隧道的几种应用场景/index.html">
@@ -522,7 +522,7 @@
     <a href="https://ryaninf.github.io/2019/07/08/浅谈代理隧道的几种应用场景/" title="浅谈代理隧道的几种应用场景">https://ryaninf.github.io/2019/07/08/浅谈代理隧道的几种应用场景/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 
       </div>
@@ -535,9 +535,9 @@
         
         <div class="post-tags">
           
-            <a href="/tags/网络/" rel="tag"># 网络</a>
-          
             <a href="/tags/渗透测试/" rel="tag"># 渗透测试</a>
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
           
         </div>
       
@@ -740,7 +740,7 @@
               
               
               
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
              </div>
           
 
@@ -824,6 +824,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -1289,6 +1291,9 @@
       ta.setSelectionRange(0, code.length);
       ta.readOnly = false;
       var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
       
       ta.blur(); // For iOS
       $(this).blur();
