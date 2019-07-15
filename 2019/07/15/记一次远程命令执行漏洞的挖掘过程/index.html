@@ -94,16 +94,31 @@
 
 
 
-  <meta name="description" content="r0yanx 的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="r0yanx&#39;s Blog">
-<meta property="og:url" content="https://ryaninf.github.io/tags/网络/index.html">
+  <meta name="description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。 发现 通过nessus扫描器的Sitemap模块，发现了可疑目录： 根据sitem">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次远程命令执行漏洞的挖掘过程">
+<meta property="og:url" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="r0yanx 的博客">
+<meta property="og:description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。 发现 通过nessus扫描器的Sitemap模块，发现了可疑目录： 根据sitem">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-31-42.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-32-12.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-32-38.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-37-55.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-37-43.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-40-10.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-42-38.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-41-55.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-46-20.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-46-45.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-50-58.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-57-00.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-57-25.png">
+<meta property="og:updated_time" content="2019-07-15T13:08:36.536Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="r0yanx&#39;s Blog">
-<meta name="twitter:description" content="r0yanx 的博客">
+<meta name="twitter:title" content="记一次远程命令执行漏洞的挖掘过程">
+<meta name="twitter:description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。 发现 通过nessus扫描器的Sitemap模块，发现了可疑目录： 根据sitem">
+<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-31-42.png">
 
 
 
@@ -111,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="https://ryaninf.github.io/tags/网络/">
+  <link rel="canonical" href="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/">
 
 
 
@@ -121,7 +136,7 @@
   };
 </script>
 
-  <title>标签: 网络 | r0yanx's Blog</title>
+  <title>记一次远程命令执行漏洞的挖掘过程 | r0yanx's Blog</title>
   
 
 
@@ -169,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,7 +258,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -304,28 +319,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -378,57 +371,231 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>网络<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="r0yanx 的博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/08/浅谈代理隧道的几种应用场景/" itemprop="url">
-            
-              <span itemprop="name">浅谈代理隧道的几种应用场景</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">记一次远程命令执行漏洞的挖掘过程
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-08T09:14:42+08:00" content="2019-07-08">
-          07-08
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-15 17:28:04 / 修改时间：21:08:36" itemprop="dateCreated datePublished" datetime="2019-07-15T17:28:04+08:00">2019-07-15</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/漏洞挖掘/" itemprop="url" rel="index"><span itemprop="name">漏洞挖掘</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。</em><br><em>原文链接： <a href="https://www.freebuf.com/vuls/185380.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/185380.html</a></em></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。</p>
+<h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
+<li>通过<code>nessus</code>扫描器的<code>Sitemap</code>模块，发现了可疑目录：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-31-42.png" alt></li>
+<li>根据<code>sitemap</code>的目录信息，打开URL:<code>http://x.x.x.x:28076/file/</code>，发现存在未授权访问漏洞：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-32-12.png" alt></li>
+<li>逐个查看里面的文件，找到了一些比较有意思的JSP：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-32-38.png" alt></li>
+<li>蒙了一下dirFiles.jsp的 参数，发现使用<code>path</code>作为参数名可列出目录、文件信息，URL：<br><code>http://x.x.x.x:28076/file/dirFiles.jsp?path=.</code><br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-37-55.png" alt></li>
+<li>同样的方法，发现show.jsp存在任意文件读取漏洞，URL：<br><code>http://x.x.x.x:28076/file/show.jsp?path=/etc/passwd.</code><br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-37-43.png" alt></li>
+<li>结合上面的目录信息和任意文件读取漏洞，对JSP文件简单审计一下，发现<code>logContentNewest.jsp</code>会调用一个bash脚本，便猜想能否使用它构造命令执行：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-40-10.png" alt></li>
+</ol>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
+<li><code>logContentNewest.jsp</code>正常执行是这样的，可自定义<code>path</code>参数的值，如<code>/etc/passwd</code>，来查找这个文件里面的内容：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-42-38.png" alt></li>
+<li>分析<code>logContentNewest.jsp</code>和被调用的sh脚本，得知path参数最终会传入sh脚本的<code>FILE_PATH</code>变量，然后调用下面的判断逻辑。从下面代码我们可以看到，函数的功能是判断<code>FILE_PATH</code>变量的值是否存在，而这个变量的值目前是可控的<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-41-55.png" alt></li>
+<li>最初想通过添加双引号闭合if条件判断参数注入命令，没有成功<br><code>payload： /etc/passwd&quot; ];ls;then echo 1;fi;if [ -e &quot;123.txt;</code><br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-46-20.png" alt></li>
+<li>从上图可以看到，payload的双引号不见了，在自己的Linux测试一下，发现bash在这种情况下会过滤双引号，因此排除了存在过滤双引号的可能<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-46-45.png" alt></li>
+<li>经过多次测试，最终可用反引号<code>`</code>或者<code>$()</code>进行命令执行，如<code>`ifconfig`</code><br><code>payload：&quot;`ifconfig`&quot;</code><br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-50-58.png" alt></li>
+<li>命令结果的回显是因为判断不存在FILA_PATH文件名的文件后，会把变量值返回，其源码如下:<br><code>echo &quot;the file($FILE_PATH) dose not exist!&quot;</code><br><strong>拓展知识</strong>：Linuxbash中可以使用反引号<code>`</code>、<code>$()</code>等方式将bash命令的执行结果保存到变量中，如<code>a=$(ifconfig)</code>  </li>
+<li>命令执行结果显示不完整，只能看到返回的第一行的结果，没关系，可以简单优化一下:<br><code>payload：&quot;`ifconfig |xargs`&quot;</code><br><strong>拓展知识</strong>：<code>xargs</code>可以将stdin中以空格或换行符进行分隔的数据，形成以空格分隔的参数（arguments），传递给其他命令。因为以空格作为分隔符，所以有一些文件名或者其他意义的名词内含有空格的时候，<code>xargs</code>可能会误判。简单来说，<code>xargs</code>是给其他命令传递参数的一个过滤器，是构建单行命令的重要组件之一。 但是这里仅仅只是通过<code>xargs</code>的特性让它把多行内容转换成一行来更好地显示结果，当然也可以使用其他方法来实现<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-57-00.png" alt>  </li>
+<li>再看看nmap内网扫描的结果，同样的漏洞组件在内网中还发现了很多…<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-57-25.png" alt></li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>漏洞是由于程序调用bash脚本传参时没有做过滤，通过$(cmd)这样的方式来执行命令并将结果存入变量中，在脚本判断文件不存在时会返回文件名，造成了回显。</p>
+<h4 id="漏洞修复方法"><a href="#漏洞修复方法" class="headerlink" title="漏洞修复方法"></a>漏洞修复方法</h4><p>严格控制文件名参数值，先判断文件名或文件路径是否合法可修复漏洞。</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>r0yanx</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/" title="记一次远程命令执行漏洞的挖掘过程">https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/15/使用BurpSuite宏获取CSRF-TOKEN/" rel="next" title="使用BurpSuite宏获取CSRF TOKEN">
+                <i class="fa fa-chevron-left"></i> 使用BurpSuite宏获取CSRF TOKEN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -448,8 +615,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -591,6 +767,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发现"><span class="nav-number">2.</span> <span class="nav-text">发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#漏洞修复方法"><span class="nav-number">4.1.</span> <span class="nav-text">漏洞修复方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -716,6 +909,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   
 
@@ -731,6 +928,8 @@
 
   
 
+
+  
 
 
   
