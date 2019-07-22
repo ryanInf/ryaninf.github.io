@@ -94,17 +94,17 @@
 
 
 
-  <meta name="description" content="本地图片引用npm install hexo-asset-image --save 自动部署到githubnpm install hexo-deployer-git --save 添加流程图支持npm install --save hexo-filter-flowchart安装成功后，需要在根路径的_config.yml文件添加下列代码   1234flowchart:  # raphael:">
+  <meta name="description" content="安装next主题12$ cd hexo$ git clone https://github.com/theme-next/hexo-theme-next themes/next  本地图片引用npm install hexo-asset-image --save安装成功后，需要在根路径的_config.yml如下配置post_asset_folder: true这样新建的文章会同时自动生成同文章名">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HEXO建站遇到的几个坑与解决方案">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/08/HEXO建站遇到的几个坑与解决方案/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="本地图片引用npm install hexo-asset-image --save 自动部署到githubnpm install hexo-deployer-git --save 添加流程图支持npm install --save hexo-filter-flowchart安装成功后，需要在根路径的_config.yml文件添加下列代码   1234flowchart:  # raphael:">
+<meta property="og:description" content="安装next主题12$ cd hexo$ git clone https://github.com/theme-next/hexo-theme-next themes/next  本地图片引用npm install hexo-asset-image --save安装成功后，需要在根路径的_config.yml如下配置post_asset_folder: true这样新建的文章会同时自动生成同文章名">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-11T08:58:15.033Z">
+<meta property="og:updated_time" content="2019-07-22T03:44:13.685Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HEXO建站遇到的几个坑与解决方案">
-<meta name="twitter:description" content="本地图片引用npm install hexo-asset-image --save 自动部署到githubnpm install hexo-deployer-git --save 添加流程图支持npm install --save hexo-filter-flowchart安装成功后，需要在根路径的_config.yml文件添加下列代码   1234flowchart:  # raphael:">
+<meta name="twitter:description" content="安装next主题12$ cd hexo$ git clone https://github.com/theme-next/hexo-theme-next themes/next  本地图片引用npm install hexo-asset-image --save安装成功后，需要在根路径的_config.yml如下配置post_asset_folder: true这样新建的文章会同时自动生成同文章名">
 
 
 
@@ -431,7 +431,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-11 16:58:15" itemprop="dateModified" datetime="2019-07-11T16:58:15+08:00">2019-07-11</time>
+                <time title="修改时间：2019-07-22 11:44:13" itemprop="dateModified" datetime="2019-07-22T11:44:13+08:00">2019-07-22</time>
               </span>
             
           
@@ -483,11 +483,22 @@
       
 
       
-        <h3 id="本地图片引用"><a href="#本地图片引用" class="headerlink" title="本地图片引用"></a>本地图片引用</h3><p><code>npm install hexo-asset-image --save</code></p>
-<h3 id="自动部署到github"><a href="#自动部署到github" class="headerlink" title="自动部署到github"></a>自动部署到github</h3><p><code>npm install hexo-deployer-git --save</code></p>
-<h3 id="添加流程图支持"><a href="#添加流程图支持" class="headerlink" title="添加流程图支持"></a>添加流程图支持</h3><p><code>npm install --save hexo-filter-flowchart</code><br>安装成功后，需要在根路径的_config.yml文件添加下列代码  </p>
+        <h3 id="安装next主题"><a href="#安装next主题" class="headerlink" title="安装next主题"></a>安装next主题</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd hexo</span><br><span class="line"><span class="meta">$</span> git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地图片引用"><a href="#本地图片引用" class="headerlink" title="本地图片引用"></a>本地图片引用</h3><p><code>npm install hexo-asset-image --save</code><br>安装成功后，需要在根路径的_config.yml如下配置<br><code>post_asset_folder: true</code><br>这样新建的文章会同时自动生成同文章名的文件夹</p>
+<a id="more"></a>
+<p>平时我使用<code>vs code</code>写markdown文档，配合<code>Paste Image</code>插件，只需<code>Ctrl + Alt + V</code>可自动把剪切板的图片复制到同路径的<code>images</code>文件夹下，并在文章中生成图片链接。因<code>hexo</code>只能读取文章同路径下同文章名的文件夹下的文件，需要把<code>images</code>文件夹的所有图片复制到同文章名的文件夹下，然后在文章中把所有<code>images</code>替换成同文章名即可</p>
+<h3 id="自动部署到github"><a href="#自动部署到github" class="headerlink" title="自动部署到github"></a>自动部署到github</h3><p><code>npm install hexo-deployer-git --save</code><br>然后需要在根路径的<code>_config.yml</code>配置你的git URL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/xxx/xxx.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>然后使用<code>hexo d</code>命令可部署到github</p>
+<h3 id="添加流程图支持"><a href="#添加流程图支持" class="headerlink" title="添加流程图支持"></a>添加流程图支持</h3><p><code>npm install --save hexo-filter-flowchart</code><br>安装成功后，需要在根路径的<code>_config.yml</code>文件添加下列代码  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flowchart:</span><br><span class="line">  # raphael:   # optional, the source url of raphael.js</span><br><span class="line">  # flowchart: # optional, the source url of flowchart.js</span><br><span class="line">  options: # options used for `drawSVG`</span><br></pre></td></tr></table></figure>
 
+<h3 id="设置阅读全文按钮"><a href="#设置阅读全文按钮" class="headerlink" title="设置阅读全文按钮"></a>设置阅读全文按钮</h3><p>只需在文章中添加<code>&lt;!-- more --&gt;</code>标签就行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">这是摘要</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br><span class="line"></span><br><span class="line">这是全文</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置评论功能"><a href="#配置评论功能" class="headerlink" title="配置评论功能"></a>配置评论功能</h3><p>最开始是想使用gitalk，但发现gitalk权限过高，并且会泄露<code>client_id</code>和<code>client_secret</code>，所以放弃了，改为使用<code>LiveRe</code>，只需注册后拿到uid再复制到<code>next</code>主题目录下的<code>_config.yml</code>，<code>livere_uid:</code>后填入即可</p>
 <h3 id="有空再把坑填完"><a href="#有空再把坑填完" class="headerlink" title="有空再把坑填完 ~"></a>有空再把坑填完 ~</h3>
       
     </div>
@@ -628,7 +639,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -765,7 +776,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本地图片引用"><span class="nav-number">1.</span> <span class="nav-text">本地图片引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动部署到github"><span class="nav-number">2.</span> <span class="nav-text">自动部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加流程图支持"><span class="nav-number">3.</span> <span class="nav-text">添加流程图支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有空再把坑填完"><span class="nav-number">4.</span> <span class="nav-text">有空再把坑填完 ~</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装next主题"><span class="nav-number">1.</span> <span class="nav-text">安装next主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地图片引用"><span class="nav-number">2.</span> <span class="nav-text">本地图片引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动部署到github"><span class="nav-number">3.</span> <span class="nav-text">自动部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加流程图支持"><span class="nav-number">4.</span> <span class="nav-text">添加流程图支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置阅读全文按钮"><span class="nav-number">5.</span> <span class="nav-text">设置阅读全文按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置评论功能"><span class="nav-number">6.</span> <span class="nav-text">配置评论功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有空再把坑填完"><span class="nav-number">7.</span> <span class="nav-text">有空再把坑填完 ~</span></a></li></ol></div>
             
 
           </div>

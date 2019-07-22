@@ -94,12 +94,12 @@
 
 
 
-  <meta name="description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。 发现 通过nessus扫描器的Sitemap模块，发现了可疑目录： 根据sitem">
+  <meta name="description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次远程命令执行漏洞的挖掘过程">
 <meta property="og:url" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。 发现 通过nessus扫描器的Sitemap模块，发现了可疑目录： 根据sitem">
+<meta property="og:description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-31-42.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-32-12.png">
@@ -114,10 +114,10 @@
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-50-58.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-57-00.png">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-57-25.png">
-<meta property="og:updated_time" content="2019-07-16T00:41:31.177Z">
+<meta property="og:updated_time" content="2019-07-22T03:04:05.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次远程命令执行漏洞的挖掘过程">
-<meta name="twitter:description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。 发现 通过nessus扫描器的Sitemap模块，发现了可疑目录： 根据sitem">
+<meta name="twitter:description" content="本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。原文链接： https://www.freebuf.com/vuls/185380.html 前言最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。">
 <meta name="twitter:image" content="https://ryaninf.github.io/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-31-42.png">
 
 
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 08:41:31" itemprop="dateModified" datetime="2019-07-16T08:41:31+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-22 11:04:05" itemprop="dateModified" datetime="2019-07-22T11:04:05+08:00">2019-07-22</time>
               </span>
             
           
@@ -499,6 +499,7 @@
       
         <p><em>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。</em><br><em>原文链接： <a href="https://www.freebuf.com/vuls/185380.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/185380.html</a></em></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。</p>
+<a id="more"></a>
 <h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
 <li>通过<code>nessus</code>扫描器的<code>Sitemap</code>模块，发现了可疑目录：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-31-42.png" alt></li>
 <li>根据<code>sitemap</code>的目录信息，打开URL:<code>http://x.x.x.x:28076/file/</code>，发现存在未授权访问漏洞：<br><img src="/2019/07/15/记一次远程命令执行漏洞的挖掘过程/2019-07-15-20-32-12.png" alt></li>
@@ -583,6 +584,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/22/一些过WAF的PAYLOAD/" rel="prev" title="一些过WAF的PAYLOAD">
+                一些过WAF的PAYLOAD <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -655,7 +660,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
