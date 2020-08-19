@@ -191,87 +191,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/08/19/hexo-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/19/hexo-blog/" class="post-title-link" itemprop="url">hexo建站笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-19 09:55:59 / 修改时间：14:22:13" itemprop="dateCreated datePublished" datetime="2020-08-19T09:55:59+08:00">2020-08-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E5%AE%83/" itemprop="url" rel="index"><span itemprop="name">其它</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>因一次意外，hexo博客源码被删除干净，抽空重新配置hexo并重新写了之前的文章。</p>
-<h3 id="安装next主题"><a href="#安装next主题" class="headerlink" title="安装next主题"></a>安装next主题</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> hexo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="创建-“关于我”-页面"><a href="#创建-“关于我”-页面" class="headerlink" title="创建 “关于我” 页面"></a>创建 “关于我” 页面</h3><p>新建一个 about 页面：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure>
-<p>菜单显示 about 链接，在主题的 _configy.yml 设置中将 menu 中 about 前面的注释去掉即可。</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/19/hexo-blog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -328,7 +247,7 @@
       
           <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>熟练的代理转发，既可助你穿梭内网，亦可在工作生活中提供便利。理论上，任何接入互联网的计算机都是可访问的，但是如果目标主机处于内网，而我们又想和该目标主机进行通信的话，就需要借助一些端口转发工具来达到我们的目的。</p>
 <h3 id="二、端口转发"><a href="#二、端口转发" class="headerlink" title="二、端口转发"></a>二、端口转发</h3><p>把端口接收到的流量转发到另外一个端口，可以是本机的端口，也可以是其它网络的端口。<br>实现原理：基于传输层协议，把socket字节流原封不动进行转发。<br>弊端：如果上层协议有校验，会出错。比如<code>HTTP协议</code>中部分WEB服务会校验host头，导致HTTP连接中断。</p>
-<h4 id="2-1-简单端口转发"><a href="#2-1-简单端口转发" class="headerlink" title="2.1 简单端口转发"></a>2.1 简单端口转发</h4><p>域C可访问域B，不可访问域A。<code>172.16.1.1</code>把<code>172.16.2.1</code>的SSH服务<code>22</code>端口转发到自己的<code>8022</code>端口，<code>192.168.1.2</code>可通过访问<code>172.16.1.1:8022</code>端口连接<code>172.16.2.1</code>的SSH服务。<br><img src="/.io//2020-08-19-15-56-37.png"><br>实现方法：</p>
+<h4 id="2-1-简单端口转发"><a href="#2-1-简单端口转发" class="headerlink" title="2.1 简单端口转发"></a>2.1 简单端口转发</h4><p>域C可访问域B，不可访问域A。<code>172.16.1.1</code>把<code>172.16.2.1</code>的SSH服务<code>22</code>端口转发到自己的<code>8022</code>端口，<code>192.168.1.2</code>可通过访问<code>172.16.1.1:8022</code>端口连接<code>172.16.2.1</code>的SSH服务。<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-15-56-37.png"><br>实现方法：</p>
 <ul>
 <li>Windows：<code>netsh int portproxy</code>，如:<code>netsh interface portproxy add v4tov4 listenport=8022 connectport=22 connectaddress=172.16.2.1</code></li>
 <li>Linux：<code>socat、iptables DNAT+SNAT</code>，如：<code>socat tcp-l:8022,reuseaddr,fork tcp:172.16.2.1:22,reuseaddr</code></li>
@@ -336,7 +255,7 @@
 <li>ew</li>
 <li>其它</li>
 </ul>
-<h4 id="2-2-反弹端口转发"><a href="#2-2-反弹端口转发" class="headerlink" title="2.2 反弹端口转发"></a>2.2 反弹端口转发</h4><p>局域网B内PC1无法直接访问局域网A内机器，把局域网A服务器172.16.2.1:22端口转发到公网服务器1.1.1.1:8022端口，这样可以让PC1通过公网访问该机器。<br><img src="/.io//2020-08-19-16-00-25.png"><br>实现方法：</p>
+<h4 id="2-2-反弹端口转发"><a href="#2-2-反弹端口转发" class="headerlink" title="2.2 反弹端口转发"></a>2.2 反弹端口转发</h4><p>局域网B内PC1无法直接访问局域网A内机器，把局域网A服务器172.16.2.1:22端口转发到公网服务器1.1.1.1:8022端口，这样可以让PC1通过公网访问该机器。<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-00-25.png"><br>实现方法：</p>
 <ul>
 <li>SSH远程转发</li>
 <li>ngrok</li>
@@ -344,24 +263,24 @@
 <li>shootback</li>
 </ul>
 <h3 id="三、socks转发"><a href="#三、socks转发" class="headerlink" title="三、socks转发"></a>三、socks转发</h3><p>socks转发与端口转发类似，但是效果不同，端口转发效果只能访问单个端口的服务，socks转发可以访问整个目标网络。与VP*N效果类似，但是不能转发传输层以下的包。</p>
-<h4 id="3-1-简单socks转发"><a href="#3-1-简单socks转发" class="headerlink" title="3.1 简单socks转发"></a>3.1 简单socks转发</h4><p><img src="/.io//2020-08-19-16-01-24.png"><br>实现方法：</p>
+<h4 id="3-1-简单socks转发"><a href="#3-1-简单socks转发" class="headerlink" title="3.1 简单socks转发"></a>3.1 简单socks转发</h4><p><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-01-24.png"><br>实现方法：</p>
 <ul>
 <li>小飞机</li>
 <li>ew</li>
 <li>nps</li>
 <li>reGeorg(webshell)</li>
-<li>冰歇(webshell)<h4 id="3-2-反弹socks转发"><a href="#3-2-反弹socks转发" class="headerlink" title="3.2 反弹socks转发"></a>3.2 反弹socks转发</h4>socks服务器位于内网，外部机器通过公网访问反弹的socks端口来访问内网。<br><img src="/.io//2020-08-19-16-02-20.png"><br>实现方法：</li>
+<li>冰歇(webshell)<h4 id="3-2-反弹socks转发"><a href="#3-2-反弹socks转发" class="headerlink" title="3.2 反弹socks转发"></a>3.2 反弹socks转发</h4>socks服务器位于内网，外部机器通过公网访问反弹的socks端口来访问内网。<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-02-20.png"><br>实现方法：</li>
 <li>小飞机+反弹端口</li>
 <li>ew</li>
 <li>nps</li>
 <li>其它socks服务+反弹端口</li>
 </ul>
 <h3 id="四、SSH代理隧道"><a href="#四、SSH代理隧道" class="headerlink" title="四、SSH代理隧道"></a>四、SSH代理隧道</h3><h4 id="4-1-使用SSH动态端口转发"><a href="#4-1-使用SSH动态端口转发" class="headerlink" title="4.1 使用SSH动态端口转发"></a>4.1 使用SSH动态端口转发</h4><h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>使用工作PC访问公司内网服务器，登陆内网网站、登陆内网服务器。</p>
-<h5 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接123.123.123.123:2222登陆到内网服务器A，其它内网端口未做映射<br><img src="/.io//2020-08-19-16-03-35.png"></p>
+<h5 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接123.123.123.123:2222登陆到内网服务器A，其它内网端口未做映射<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-03-35.png"></p>
 <h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
-<li>工作机使用Xshell新建连接，并填好连接信息，然后打开隧道选项<br><img src="/.io//2020-08-19-16-04-10.png"></li>
-<li>添加动态转发隧道<br><img src="/.io//2020-08-19-16-04-30.png"></li>
-<li>这时候工作机使用浏览器设置<code>127.0.0.1:9999</code>为socks5代理，即可访问<code>172.16.1.101:80</code><br><img src="/.io//2020-08-19-16-05-13.png"></li>
+<li>工作机使用Xshell新建连接，并填好连接信息，然后打开隧道选项<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-10.png"></li>
+<li>添加动态转发隧道<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-30.png"></li>
+<li>这时候工作机使用浏览器设置<code>127.0.0.1:9999</code>为socks5代理，即可访问<code>172.16.1.101:80</code><br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-05-13.png"></li>
 <li>如果要连接服务器B的3389端口，则需要借助<code>sockscap64</code>之类的工具打开，因为Windows远程连接客户端原生不支持代理，需要借助工具强制让它使用代理，这里不多赘述，可参考我的另一篇文章让<a href>BurpSuite使用MSF的socks4a代理</a>中<code>解决方法</code>-&gt;<code>步骤</code>-&gt;<code>1</code>中的sockscap64使用示例<h5 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h5>使用SSH动态端口转发，相当在远程SSH服务器启动了socks5代理服务，本地监听的<code>9999</code>端口流量将通过SSH隧道转发到SSH服务器，SSH服务器再对外发起网络请求。以上转发亦可使用<code>ssh</code>命令或者其它SSH客户端实现，具体方法可自行实验。<h5 id="出口数据流向"><a href="#出口数据流向" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-0" class="flow-chart"></div>
 
 
@@ -370,10 +289,10 @@
 </li>
 </ol>
 <h4 id="4-2-使用SSH隧道本地转发"><a href="#4-2-使用SSH隧道本地转发" class="headerlink" title="4.2 使用SSH隧道本地转发"></a>4.2 使用SSH隧道本地转发</h4><h5 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h5><p>工作PC连接Windows服务器B的远程桌面。</p>
-<h5 id="网络拓扑-1"><a href="#网络拓扑-1" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接<code>123.123.123.123:2222</code>登陆到内网服务器A，其它内网端口未做映射<br><img src="/.io//2020-08-19-16-08-50.png"></p>
+<h5 id="网络拓扑-1"><a href="#网络拓扑-1" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接<code>123.123.123.123:2222</code>登陆到内网服务器A，其它内网端口未做映射<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-08-50.png"></p>
 <h5 id="操作步骤-1"><a href="#操作步骤-1" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
-<li>工作机<code>xshell</code>创建连接后，在<code>属性</code>-&gt;<code>连接</code>-&gt;<code>隧道</code>中添加<code>Local</code>类型转发<br><img src="/.io//2020-08-19-16-15-41.png"></li>
-<li>这时工作机打开远程桌面客户端，通过连接<code>127.0.0.1:9999</code>端口，可连接到内网服务器B的<code>3389</code>端口<br><img src="/.io//2020-08-19-16-16-14.png"><h5 id="原理解释-1"><a href="#原理解释-1" class="headerlink" title="原理解释"></a>原理解释</h5>SSH隧道的本地转发，相当于把本地监听的<code>9999</code>端口接收到的TCP流量，通过SSH隧道转发到远程的SSH服务器A，服务器A再发起TCP连接到服务器B的3389端口。可以看到，本地转发跟动态转发有点相似，不同的是本地转发是转发了<code>一个远程端口</code>到本地，而动态转发可通过配置代理访问整个<code>远程网络</code>。<br>注意：这种方法转发<code>HTTP</code>端口一般无法成功，因为HTTP协议带有<code>Host</code>头，服务器端校验Host头后可能会重置该HTTP请求导致无法连接，如果想了解这一细节，不妨抓个包看看。</li>
+<li>工作机<code>xshell</code>创建连接后，在<code>属性</code>-&gt;<code>连接</code>-&gt;<code>隧道</code>中添加<code>Local</code>类型转发<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-15-41.png"></li>
+<li>这时工作机打开远程桌面客户端，通过连接<code>127.0.0.1:9999</code>端口，可连接到内网服务器B的<code>3389</code>端口<br><img src="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-16-14.png"><h5 id="原理解释-1"><a href="#原理解释-1" class="headerlink" title="原理解释"></a>原理解释</h5>SSH隧道的本地转发，相当于把本地监听的<code>9999</code>端口接收到的TCP流量，通过SSH隧道转发到远程的SSH服务器A，服务器A再发起TCP连接到服务器B的3389端口。可以看到，本地转发跟动态转发有点相似，不同的是本地转发是转发了<code>一个远程端口</code>到本地，而动态转发可通过配置代理访问整个<code>远程网络</code>。<br>注意：这种方法转发<code>HTTP</code>端口一般无法成功，因为HTTP协议带有<code>Host</code>头，服务器端校验Host头后可能会重置该HTTP请求导致无法连接，如果想了解这一细节，不妨抓个包看看。</li>
 </ol>
 <h5 id="出口数据流向-1"><a href="#出口数据流向-1" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-1" class="flow-chart"></div>
 #### 4.3 使用SSH隧道远程转发
@@ -408,6 +327,93 @@ op1=>operation: 云服务器监听端口（123.123.123.123:9999)
 op2=>operation: 工作PC-A SSH客户端进程
 st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-2-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-2-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-2", options);</script></p>
 
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/08/hexo-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/hexo-blog/" class="post-title-link" itemprop="url">hexo建站笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 09:55:59" itemprop="dateCreated datePublished" datetime="2019-07-08T09:55:59+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-19 17:50:32" itemprop="dateModified" datetime="2020-08-19T17:50:32+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E5%AE%83/" itemprop="url" rel="index"><span itemprop="name">其它</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>因一次意外，hexo博客源码被删除干净，抽空重新配置hexo并重新写了之前的文章。</p>
+<h3 id="安装next主题"><a href="#安装next主题" class="headerlink" title="安装next主题"></a>安装next主题</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> hexo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建-“关于我”-页面"><a href="#创建-“关于我”-页面" class="headerlink" title="创建 “关于我” 页面"></a>创建 “关于我” 页面</h3><p>新建一个 about 页面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure>
+<p>菜单显示 about 链接，在主题的 _configy.yml 设置中将 menu 中 about 前面的注释去掉即可。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/hexo-blog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
