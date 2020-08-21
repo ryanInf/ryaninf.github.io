@@ -94,6 +94,8 @@ st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: non
     <title>hexo建站笔记</title>
     <url>/2019/07/08/hexo-blog/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>因一次意外，hexo博客源码被删除干净，抽空重新配置hexo并重新写了之前的文章。</p>
+<h3 id="hexo版本"><a href="#hexo版本" class="headerlink" title="hexo版本"></a>hexo版本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">λ hexo version</span><br><span class="line">hexo-cli: 4.2.0</span><br><span class="line">os: Windows_NT 10.0.18363 win32 x64</span><br><span class="line">node: 12.18.3</span><br><span class="line">v8: 7.8.279.23-node.39</span><br><span class="line">uv: 1.38.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.7</span><br><span class="line">ares: 1.16.0</span><br><span class="line">modules: 72</span><br><span class="line">nghttp2: 1.41.0</span><br><span class="line">napi: 6</span><br><span class="line">llhttp: 2.0.4</span><br><span class="line">http_parser: 2.9.3</span><br><span class="line">openssl: 1.1.1g</span><br><span class="line">cldr: 37.0</span><br><span class="line">icu: 67.1</span><br><span class="line">tz: 2019c</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
 <h3 id="安装next主题"><a href="#安装next主题" class="headerlink" title="安装next主题"></a>安装next主题</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> hexo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="创建-“关于我”-页面"><a href="#创建-“关于我”-页面" class="headerlink" title="创建 “关于我” 页面"></a>创建 “关于我” 页面</h3><p>新建一个 about 页面：</p>
@@ -154,6 +156,11 @@ st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: non
 <p>将草稿发布为正式文章</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo P &lt;filename&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="配置评论功能"><a href="#配置评论功能" class="headerlink" title="配置评论功能"></a>配置评论功能</h3><p>最开始是想使用gitalk，但发现<code>gitalk</code>权限过高，并且会泄露<code>client_id</code>和<code>client_secret</code>，所以放弃了，改为使用<code>LiveRe</code>，只需注册后拿到<code>uid</code>再复制到<code>next</code>主题目录下的<code>_config.yml</code>，<code>livere_uid:</code>后填入即可</p>
+<h3 id="图片点击预览放大功能"><a href="#图片点击预览放大功能" class="headerlink" title="图片点击预览放大功能"></a>图片点击预览放大功能</h3><p>进入主题目录，下载<code>fancybox</code>包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog\themes\next</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/theme-next-fancybox3 <span class="built_in">source</span>/lib/fancybox</span><br></pre></td></tr></table></figure>
+<p>在主题配置文件中启用<code>fancybox</code>：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">fancybox:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://github.com/theme-next/theme-next-fancybox3">https://github.com/theme-next/theme-next-fancybox3</a></p>
 ]]></content>
       <categories>
         <category>其它</category>
