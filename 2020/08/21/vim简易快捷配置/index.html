@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"ryaninf.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="r0yanx&#39;s Blog">
-<meta property="og:url" content="https://ryaninf.github.io/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/index.html">
+  <meta name="description" content="前言经常需要在不同的Linux上切换，有些Linux默认配置的vim用起来很不舒服，所以记录一个简单的vim配置，用起来会顺手一点。 配置文件将下面代码保存到~&#x2F;.vimrc 12345678910111213syntax onfiletype indent onset nocpset nocompatibleset autoreadset mouse&#x3D;set showcmdset sh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim简易快捷配置">
+<meta property="og:url" content="https://ryaninf.github.io/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
+<meta property="og:description" content="前言经常需要在不同的Linux上切换，有些Linux默认配置的vim用起来很不舒服，所以记录一个简单的vim配置，用起来会顺手一点。 配置文件将下面代码保存到~&#x2F;.vimrc 12345678910111213syntax onfiletype indent onset nocpset nocompatibleset autoreadset mouse&#x3D;set showcmdset sh">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-21T02:36:10.000Z">
+<meta property="article:modified_time" content="2020-08-21T02:39:16.558Z">
 <meta property="article:author" content="r0yanx">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://ryaninf.github.io/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/">
+<link rel="canonical" href="https://ryaninf.github.io/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类: 漏洞挖掘 | r0yanx's Blog</title>
+  <title>vim简易快捷配置 | r0yanx's Blog</title>
   
 
 
@@ -185,57 +190,125 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">漏洞挖掘
-          <small>分类</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vim简易快捷配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-21 10:36:10 / 修改时间：10:39:16" itemprop="dateCreated datePublished" datetime="2020-08-21T10:36:10+08:00">2020-08-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>经常需要在不同的Linux上切换，有些Linux默认配置的vim用起来很不舒服，所以记录一个简单的vim配置，用起来会顺手一点。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>将下面代码保存到<code>~/.vimrc</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">syntax on</span><br><span class="line">filetype indent on</span><br><span class="line">set nocp</span><br><span class="line">set nocompatible</span><br><span class="line">set autoread</span><br><span class="line">set mouse&#x3D;</span><br><span class="line">set showcmd</span><br><span class="line">set showmatch</span><br><span class="line">set autoindent</span><br><span class="line">set softtabstop&#x3D;4</span><br><span class="line">set shiftwidth&#x3D;4</span><br><span class="line">set tabstop&#x3D;4</span><br><span class="line">set nu</span><br></pre></td></tr></table></figure>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-07-15T16:24:48+08:00"
-              content="2019-07-15">
-          07-15
-        </time>
-      </div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>r0yanx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ryaninf.github.io/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/" title="vim简易快捷配置">https://ryaninf.github.io/2020/08/21/vim简易快捷配置/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/" itemprop="url">
-            <span itemprop="name">记一次远程命令执行漏洞的挖掘过程</span>
-          </a>
-      </div>
 
-    </header>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/21/kali-iptables-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD/" rel="prev" title="kali iptables 配置自启动加载">
+      <i class="fa fa-chevron-left"></i> kali iptables 配置自启动加载
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NTQyMS8yMTkzMw=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -282,6 +355,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">配置文件</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -437,6 +511,21 @@
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
 </body>
 </html>
