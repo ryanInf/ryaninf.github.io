@@ -15,6 +15,8 @@
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -30,7 +32,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ryaninf.github.io/2019/07/08/hexo-blog/2020-08-21-18-23-16.png">
 <meta property="article:published_time" content="2019-07-08T01:55:59.000Z">
-<meta property="article:modified_time" content="2020-08-21T12:11:12.359Z">
+<meta property="article:modified_time" content="2020-08-21T13:11:03.133Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="其它">
 <meta name="twitter:card" content="summary">
@@ -184,6 +186,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
   <a href="https://github.com/ryaninf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
@@ -230,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-21 20:11:12" itemprop="dateModified" datetime="2020-08-21T20:11:12+08:00">2020-08-21</time>
+                <time title="修改时间：2020-08-21 21:11:03" itemprop="dateModified" datetime="2020-08-21T21:11:03+08:00">2020-08-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -337,6 +340,27 @@
 <p>如<code>hijiki</code>对应的是<code>live2d-widget-model-hijiki</code>，然后通过<code>npm install 模型的包名</code>来安装，安装后在<code>_config.yml</code>修改对应的包名来启用：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">model:</span></span><br><span class="line"> <span class="attr">use:</span> <span class="string">live2d-widget-model-hijiki</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="添加背景动画"><a href="#添加背景动画" class="headerlink" title="添加背景动画"></a>添加背景动画</h3><p>安装动画js依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog\themes\next</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/theme-next-three <span class="built_in">source</span>/lib/three</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/theme-next-canvas-ribbon <span class="built_in">source</span>/lib/canvas-ribbon</span><br></pre></td></tr></table></figure>
+<p>在<strong>NexT</strong>主题的<code>_config.yml</code>文件启用以下配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">three_waves:</span> <span class="literal">true</span></span><br><span class="line"><span class="string">OR</span></span><br><span class="line"><span class="attr">canvas_lines:</span> <span class="literal">true</span></span><br><span class="line"><span class="string">OR</span></span><br><span class="line"><span class="attr">canvas_sphere:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>以上三种动画只能选一个：</p>
+<ul>
+<li>three 的动画是线和点的组合，随鼠标位置的移动而变化。</li>
+<li>canvas_nest 是自由移动的线条，当你的鼠标移动时，线条汇聚在你的鼠标位置上，形成多边形。</li>
+<li>canvas_ribbon 是随鼠标点击而变化颜色的彩带。</li>
+</ul>
+<p>启用彩虹背景：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">canvas_ribbon:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-three">https://github.com/theme-next/theme-next-three</a><br><a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-canvas-ribbon">https://github.com/theme-next/theme-next-canvas-ribbon</a></p>
+<h3 id="启用顶部的阅读进度条"><a href="#启用顶部的阅读进度条" class="headerlink" title="启用顶部的阅读进度条"></a>启用顶部的阅读进度条</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">reading_progress:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启用页面加载动画"><a href="#启用页面加载动画" class="headerlink" title="启用页面加载动画"></a>启用页面加载动画</h3><p>页面加载动画指的是刚访问页面，各元素还没有加载完成时，显示的加载进度动画。NexT 提供了多种样式，读者可以自己尝试。<br>安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog\themes\next</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/theme-next-pace <span class="built_in">source</span>/lib/pace</span><br></pre></td></tr></table></figure>
+<p>启用配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pace:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-pace">https://github.com/theme-next/theme-next-pace</a><br><a target="_blank" rel="noopener" href="https://tding.top/archives/dfac1e9c.html">https://tding.top/archives/dfac1e9c.html</a></p>
+
     </div>
 
     
@@ -438,7 +462,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">hexo版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85next%E4%B8%BB%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">安装next主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-%E2%80%9C%E5%85%B3%E4%BA%8E%E6%88%91%E2%80%9D-%E9%A1%B5%E9%9D%A2"><span class="nav-number">4.</span> <span class="nav-text">创建 “关于我” 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%88%86%E7%B1%BB%E9%A1%B5%E9%9D%A2"><span class="nav-number">5.</span> <span class="nav-text">创建分类页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE%E4%BA%91%E9%A1%B5%E9%9D%A2"><span class="nav-number">6.</span> <span class="nav-text">创建标签云页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD"><span class="nav-number">7.</span> <span class="nav-text">站内搜索功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%B4%E5%83%8F"><span class="nav-number">8.</span> <span class="nav-text">添加头像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">本地图片引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%88%B0github"><span class="nav-number">10.</span> <span class="nav-text">自动部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%B5%81%E7%A8%8B%E5%9B%BE%E6%94%AF%E6%8C%81"><span class="nav-number">11.</span> <span class="nav-text">添加流程图支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87%E6%8C%89%E9%92%AE"><span class="nav-number">12.</span> <span class="nav-text">设置阅读全文按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8D%89%E7%A8%BF%E5%8A%9F%E8%83%BD"><span class="nav-number">13.</span> <span class="nav-text">草稿功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">14.</span> <span class="nav-text">配置评论功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E9%A2%84%E8%A7%88%E6%94%BE%E5%A4%A7%E5%8A%9F%E8%83%BD"><span class="nav-number">15.</span> <span class="nav-text">图片点击预览放大功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%BA%E7%89%A9"><span class="nav-number">16.</span> <span class="nav-text">添加一个二次元人物</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">hexo版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85next%E4%B8%BB%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">安装next主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-%E2%80%9C%E5%85%B3%E4%BA%8E%E6%88%91%E2%80%9D-%E9%A1%B5%E9%9D%A2"><span class="nav-number">4.</span> <span class="nav-text">创建 “关于我” 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%88%86%E7%B1%BB%E9%A1%B5%E9%9D%A2"><span class="nav-number">5.</span> <span class="nav-text">创建分类页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE%E4%BA%91%E9%A1%B5%E9%9D%A2"><span class="nav-number">6.</span> <span class="nav-text">创建标签云页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD"><span class="nav-number">7.</span> <span class="nav-text">站内搜索功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%B4%E5%83%8F"><span class="nav-number">8.</span> <span class="nav-text">添加头像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E5%BC%95%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">本地图片引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%88%B0github"><span class="nav-number">10.</span> <span class="nav-text">自动部署到github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%B5%81%E7%A8%8B%E5%9B%BE%E6%94%AF%E6%8C%81"><span class="nav-number">11.</span> <span class="nav-text">添加流程图支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87%E6%8C%89%E9%92%AE"><span class="nav-number">12.</span> <span class="nav-text">设置阅读全文按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8D%89%E7%A8%BF%E5%8A%9F%E8%83%BD"><span class="nav-number">13.</span> <span class="nav-text">草稿功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">14.</span> <span class="nav-text">配置评论功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E9%A2%84%E8%A7%88%E6%94%BE%E5%A4%A7%E5%8A%9F%E8%83%BD"><span class="nav-number">15.</span> <span class="nav-text">图片点击预览放大功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%BA%E7%89%A9"><span class="nav-number">16.</span> <span class="nav-text">添加一个二次元人物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%83%8C%E6%99%AF%E5%8A%A8%E7%94%BB"><span class="nav-number">17.</span> <span class="nav-text">添加背景动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E9%A1%B6%E9%83%A8%E7%9A%84%E9%98%85%E8%AF%BB%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">18.</span> <span class="nav-text">启用顶部的阅读进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB"><span class="nav-number">19.</span> <span class="nav-text">启用页面加载动画</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -496,6 +520,7 @@
   <div id="sidebar-dimmer"></div>
 
 
+
       </div>
     </main>
 
@@ -549,6 +574,7 @@
   </div>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
@@ -568,8 +594,6 @@
 
   <script defer src="/lib/three/three.min.js"></script>
     <script defer src="/lib/three/three-waves.min.js"></script>
-    <script defer src="/lib/three/canvas_lines.min.js"></script>
-    <script defer src="/lib/three/canvas_sphere.min.js"></script>
 
 
   
