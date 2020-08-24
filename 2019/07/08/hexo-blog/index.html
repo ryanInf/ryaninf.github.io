@@ -30,13 +30,13 @@
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
 <meta property="og:description" content="前言因一次意外，hexo博客源码被删除干净，抽空重新配置hexo并重新写了之前的文章，这里把配置hexo各项功能作个记录。 hexo版本12345678910111213141516171819λ hexo versionhexo-cli: 4.2.0os: Windows_NT 10.0.18363 win32 x64node: 12.18.3v8: 7.8.279.23-node.39uv:">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/08/hexo-blog/2020-08-21-18-23-16.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/08/hexo-blog/hexo-blog/2020-08-21-18-23-16.png">
 <meta property="article:published_time" content="2019-07-08T01:55:59.000Z">
 <meta property="article:modified_time" content="2020-08-21T13:11:03.133Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="其它">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/08/hexo-blog/2020-08-21-18-23-16.png">
+<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/08/hexo-blog/hexo-blog/2020-08-21-18-23-16.png">
 
 <link rel="canonical" href="https://ryaninf.github.io/2019/07/08/hexo-blog/">
 
@@ -330,7 +330,7 @@
 <p>在主题配置文件中启用<code>fancybox</code>：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fancybox:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>参考：<a target="_blank" rel="noopener" href="https://github.com/theme-next/theme-next-fancybox3">https://github.com/theme-next/theme-next-fancybox3</a></p>
-<h3 id="添加一个二次元人物"><a href="#添加一个二次元人物" class="headerlink" title="添加一个二次元人物"></a>添加一个二次元人物</h3><p>效果如下：<br><img src="/2019/07/08/hexo-blog/2020-08-21-18-23-16.png"><br>首先安装live2d插件：</p>
+<h3 id="添加一个二次元人物"><a href="#添加一个二次元人物" class="headerlink" title="添加一个二次元人物"></a>添加一个二次元人物</h3><p>效果如下：<br><img data-src="hexo-blog/2020-08-21-18-23-16.png"><br>首先安装live2d插件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
 <p>在Hexo的<code>_config.yml</code>文件中添加下面代码：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">live2d:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">scriptFrom:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">pluginRootPath:</span> <span class="string">live2dw/</span></span><br><span class="line">  <span class="attr">pluginJsPath:</span> <span class="string">lib/</span></span><br><span class="line">  <span class="attr">pluginModelPath:</span> <span class="string">assets/</span></span><br><span class="line">  <span class="attr">tagMode:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">model:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">live2d-widget-model-wanko</span></span><br><span class="line">  <span class="attr">display:</span></span><br><span class="line">    <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">    <span class="attr">width:</span> <span class="number">150</span></span><br><span class="line">    <span class="attr">height:</span> <span class="number">300</span></span><br><span class="line">  <span class="attr">mobile:</span></span><br><span class="line">    <span class="attr">show:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">react:</span></span><br><span class="line">    <span class="attr">opacity:</span> <span class="number">0.7</span></span><br></pre></td></tr></table></figure>
