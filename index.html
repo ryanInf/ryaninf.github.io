@@ -640,7 +640,7 @@
 <li>xargs占位符<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
 <li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
 <li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
-<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure></li></ol>
+<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/#more" rel="contents">
@@ -727,7 +727,7 @@
 <li><p>去除HTTP协议头，<code>http://baidu.com</code>-&gt;<code>baidu.com</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain = re.sub(<span class="string">&#x27;https?://&#x27;</span>, <span class="string">&#x27;&#x27;</span>, domain, flags=re.IGNORECASE)</span><br></pre></td></tr></table></figure></li>
 <li><p>把字符串内多个空格合并成一个空格，<code>&#39;　　　&#39;</code>-&gt;<code>&#39; &#39;</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">line = re.sub(<span class="string">&#x27; +&#x27;</span>, <span class="string">&#x27; &#x27;</span>, line)</span><br></pre></td></tr></table></figure></li></ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">line = re.sub(<span class="string">&#x27; +&#x27;</span>, <span class="string">&#x27; &#x27;</span>, line)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/09/16/Python%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E5%A4%87%E5%BF%98/#more" rel="contents">
