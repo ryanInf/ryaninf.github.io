@@ -30,32 +30,32 @@
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
 <meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言在WEB渗透中经常可以看到页面存在一次性token校验的情况，即请求包中包含token，而token值需通过其它页面获取，导致burpsuite抓包后无法重放。 开始下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以burpsuite宏进行实验。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-17.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-24.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-48.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-29.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-54.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-16.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-23.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-07.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-30.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-00-45.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-02.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-19.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-52.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-29.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-36.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-54.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-17.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-32.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-17.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-24.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-48.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-29.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-54.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-16.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-23.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-07.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-30.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-00-45.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-02.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-19.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-52.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-29.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-36.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-54.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-17.png">
+<meta property="og:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-32.png">
 <meta property="article:published_time" content="2019-07-15T06:54:04.000Z">
-<meta property="article:modified_time" content="2020-08-20T11:25:23.420Z">
+<meta property="article:modified_time" content="2020-08-26T07:53:20.276Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="渗透测试">
 <meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png">
+<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png">
 
 <link rel="canonical" href="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/">
 
@@ -252,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-20 19:25:23" itemprop="dateModified" datetime="2020-08-20T19:25:23+08:00">2020-08-20</time>
+                <time title="修改时间：2020-08-26 15:53:20" itemprop="dateModified" datetime="2020-08-26T15:53:20+08:00">2020-08-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,27 +284,27 @@
       
         <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="2020-08-19-18-55-39.png"></p>
 <a id="more"></a>
 <h3 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h3><ol>
-<li>目标URL为：<code>http://1.1.1.1/c/hdyzma/welcome.php</code>，抓个包测试一下，发现其会对<code>token</code>参数校验，拒绝重放的数据包。<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-17.png"><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-24.png"></li>
-<li>在登陆页面<code>http://1.1.1.1/c/hdyzma/</code>可发现<code>token</code>值：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-56-48.png"></li>
+<li>目标URL为：<code>http://1.1.1.1/c/hdyzma/welcome.php</code>，抓个包测试一下，发现其会对<code>token</code>参数校验，拒绝重放的数据包。<br><img data-src="2020-08-19-18-56-17.png"><br><img data-src="2020-08-19-18-56-24.png"></li>
+<li>在登陆页面<code>http://1.1.1.1/c/hdyzma/</code>可发现<code>token</code>值：<br><img data-src="2020-08-19-18-56-48.png"></li>
 <li>通过上面的发现，可以使用<code>burpsuite</code>的宏功能自动把登陆页的<code>token</code>值抓取出来填入登陆请求</li>
 </ol>
 <h3 id="创建Macros"><a href="#创建Macros" class="headerlink" title="创建Macros"></a>创建Macros</h3><ol>
-<li>创建<code>Macros</code>，获取<code>token</code>值<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-29.png"></li>
-<li>在<code>Macro Recorder</code>中选择包含要获取的<code>token</code>的页面<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-57-54.png"></li>
-<li>配置<code>Macros</code><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-16.png"><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-58-23.png"><br>用鼠标选中<code>token</code>值，<code>burpsuite</code>会自动填写开始标记以及结束标记，并且写上<code>Parameter name</code>为<code>token</code>，注意这里的参数名<code>token</code>是与要爆破页面里的<code>token</code>名称一致：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-07.png"><br>定义<code>Macro</code>描述，方便区分：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-59-30.png"></li>
+<li>创建<code>Macros</code>，获取<code>token</code>值<br><img data-src="2020-08-19-18-57-29.png"></li>
+<li>在<code>Macro Recorder</code>中选择包含要获取的<code>token</code>的页面<br><img data-src="2020-08-19-18-57-54.png"></li>
+<li>配置<code>Macros</code><br><img data-src="2020-08-19-18-58-16.png"><br><img data-src="2020-08-19-18-58-23.png"><br>用鼠标选中<code>token</code>值，<code>burpsuite</code>会自动填写开始标记以及结束标记，并且写上<code>Parameter name</code>为<code>token</code>，注意这里的参数名<code>token</code>是与要爆破页面里的<code>token</code>名称一致：<br><img data-src="2020-08-19-18-59-07.png"><br>定义<code>Macro</code>描述，方便区分：<br><img data-src="2020-08-19-18-59-30.png"></li>
 </ol>
 <h3 id="创建Session-Handling-Rules"><a href="#创建Session-Handling-Rules" class="headerlink" title="创建Session Handling Rules"></a>创建Session Handling Rules</h3><ol>
-<li><p>然后在Session Handling Rules里面新建一条规则：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-00-45.png"><br>设置一个名字，这里叫<code>update_token</code>：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-02.png"><br>选中刚刚录制好的宏，并且设置要更新的参数名，这里是<code>token</code>：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-19.png"></p>
+<li><p>然后在Session Handling Rules里面新建一条规则：<br><img data-src="2020-08-19-19-00-45.png"><br>设置一个名字，这里叫<code>update_token</code>：<br><img data-src="2020-08-19-19-01-02.png"><br>选中刚刚录制好的宏，并且设置要更新的参数名，这里是<code>token</code>：<br><img data-src="2020-08-19-19-01-19.png"></p>
 </li>
-<li><p>然后是设置宏的影响范围，因为我们只需要暴力破解账号密码，所以<code>Tools Scope</code>这里只选中<code>Repeater</code>、<code>Intruder</code>就行了，其它模块可根据实际需要勾选:<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-01-52.png"></p>
+<li><p>然后是设置宏的影响范围，因为我们只需要暴力破解账号密码，所以<code>Tools Scope</code>这里只选中<code>Repeater</code>、<code>Intruder</code>就行了，其它模块可根据实际需要勾选:<br><img data-src="2020-08-19-19-01-52.png"></p>
 </li>
 </ol>
 <h3 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h3><ol>
-<li>回到<code>Repeater</code>，点击<code>Go</code>重新发包，可以看到现在<code>token</code>参数会自动刷新：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-29.png"><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-36.png"></li>
-<li>使用<code>Intruder</code>暴力破解账号密码：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-02-54.png"><br>因为多线程会同时刷新<code>token</code>，导致部分请求包拿到的<code>token</code>已经被刷新了，所以只能设置单线程跑：<br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-17.png"><br>成功暴破得到账号<code>admin/123456a</code><br><img data-src="%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-19-03-32.png"></li>
+<li>回到<code>Repeater</code>，点击<code>Go</code>重新发包，可以看到现在<code>token</code>参数会自动刷新：<br><img data-src="2020-08-19-19-02-29.png"><br><img data-src="2020-08-19-19-02-36.png"></li>
+<li>使用<code>Intruder</code>暴力破解账号密码：<br><img data-src="2020-08-19-19-02-54.png"><br>因为多线程会同时刷新<code>token</code>，导致部分请求包拿到的<code>token</code>已经被刷新了，所以只能设置单线程跑：<br><img data-src="2020-08-19-19-03-17.png"><br>成功暴破得到账号<code>admin/123456a</code><br><img data-src="2020-08-19-19-03-32.png"></li>
 </ol>
 <h3 id="题目源码"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码</h3><p>源码来自<a target="_blank" rel="noopener" href="https://github.com/3sNwgeek">3sNwgeek</a>，附上题目：<a target="_blank" rel="noopener" href="https://github.com/3sNwgeek/BruteForc_test">https://github.com/3sNwgeek/BruteForc_test</a></p>
 
