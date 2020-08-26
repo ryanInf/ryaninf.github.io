@@ -331,7 +331,9 @@
     <url>/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在渗透工作中我们经常能碰到一些逻辑复杂的SQL注入漏洞，并不能直接通过sqlmap工具注入拿到结果。今年网鼎杯的一道SQL注入题“张三的网站”让我久久不能忘怀，我不断思考遇到这类型的SQL注入除了手工注入然后编写脚本一点一点脱数据以外，有没有一个比较优雅的解决方案呢？</p>
-<h3 id="一道CTF题的思考"><a href="#一道CTF题的思考" class="headerlink" title="一道CTF题的思考"></a>一道CTF题的思考</h3><p>先来说说“张三的网站”这道题目，因为我手上没有题目源码，所以就根据记忆中的各个功能自己写了一个（很少写php，代码很烂），相关代码已经上传到GitHub，见文章底部。<br>该题目主要涉及3个页面：</p>
+<h3 id="一道CTF题的思考"><a href="#一道CTF题的思考" class="headerlink" title="一道CTF题的思考"></a>一道CTF题的思考</h3><p>先来说说“张三的网站”这道题目，因为我手上没有题目源码，所以就根据记忆中的各个功能自己写了一个（很少写php，代码很烂），相关代码已经上传到GitHub，见文章底部。</p>
+<a id="more"></a>
+<p>该题目主要涉及3个页面：</p>
 <ol>
 <li>登陆页面<br><img data-src="/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/2020-07-17-10-23-16.png"></li>
 <li>注册页面<br><img data-src="/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/2020-07-17-10-23-38.png"></li>
@@ -361,6 +363,13 @@
 <p><img data-src="/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/2020-07-21-10-44-35.png"></p>
 <h3 id="测试环境代码"><a href="#测试环境代码" class="headerlink" title="测试环境代码"></a>测试环境代码</h3><p>GitHub：<a href="https://github.com/ryanInf/fakeZhangSan">https://github.com/ryanInf/fakeZhangSan</a></p>
 ]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+        <tag>WEB</tag>
+      </tags>
   </entry>
   <entry>
     <title>VMware虚拟机磁盘空间压缩</title>
