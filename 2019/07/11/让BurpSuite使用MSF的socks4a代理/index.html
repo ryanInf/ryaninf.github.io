@@ -279,27 +279,27 @@
       
         <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
-<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="2020-08-19-18-43-50.png"></p>
+<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
 <a id="more"></a>
 <h4 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h4><ol>
 <li>在MSF机器启动socks4a代理（前面获取反弹shell、设置路由的步骤略过）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; use auxiliary&#x2F;server&#x2F;socks4a </span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; set SRVPORT 11080</span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; exploit</span><br></pre></td></tr></table></figure>
-<img data-src="2020-08-19-18-44-36.png"></li>
-<li>在配置代理前，我的ip地址是A地公网ip<br><img data-src="2020-08-19-18-44-49.png"></li>
-<li>使用Firefox配置代理测试转发是否正常，这时ip由联通变成电信了，证明代理转发隧道工作正常<br><img data-src="2020-08-19-18-45-05.png"><br><img data-src="2020-08-19-18-45-14.png"></li>
-<li>这个时候，如果直接在burpsuite配置前置socks代理的话是不能使用的，因为burpsuite不支持socks4协议，所以会打不开网页<br><img data-src="2020-08-19-18-45-33.png"></li>
+<img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-36.png"></li>
+<li>在配置代理前，我的ip地址是A地公网ip<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-49.png"></li>
+<li>使用Firefox配置代理测试转发是否正常，这时ip由联通变成电信了，证明代理转发隧道工作正常<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-05.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-14.png"></li>
+<li>这个时候，如果直接在burpsuite配置前置socks代理的话是不能使用的，因为burpsuite不支持socks4协议，所以会打不开网页<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-33.png"></li>
 </ol>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用sockscap64工具，把socks4a转发为http代理。当然，使用其它工具将socks4a转为http代理或socks5代理也行，比如Linux下的privoxy，socks4a转socks5的工具找了很久都没找到，遂放弃。</p>
 <h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ol>
-<li>打开sockscap64工具，创建代理配置，代理服务器为127.0.0.1:1083（MSF socks4a端口地址）<br><img data-src="2020-08-19-18-46-34.png"><br><img data-src="2020-08-19-18-46-39.png"><br><img data-src="2020-08-19-18-46-47.png"></li>
-<li>burpsuite配置前置http代理，代理服务地址为127.0.0.1:25378，这个端口是sockscap64监听的端口<br><img data-src="2020-08-19-18-47-08.png"><br><img data-src="2020-08-19-18-47-15.png"></li>
-<li>打开Firefox测试，可以看到现在已经是MSF机器的电信ip了，问题成功解决。<br><img data-src="2020-08-19-18-47-29.png"></li>
+<li>打开sockscap64工具，创建代理配置，代理服务器为127.0.0.1:1083（MSF socks4a端口地址）<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-34.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-39.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-47.png"></li>
+<li>burpsuite配置前置http代理，代理服务地址为127.0.0.1:25378，这个端口是sockscap64监听的端口<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-08.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-15.png"></li>
+<li>打开Firefox测试，可以看到现在已经是MSF机器的电信ip了，问题成功解决。<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-29.png"></li>
 <li>回顾下出口流量走向，如下：<div id="flowchart-0" class="flow-chart"></div>
 
 </li>
 </ol>
 <h4 id="为什么是25378端口"><a href="#为什么是25378端口" class="headerlink" title="为什么是25378端口"></a>为什么是25378端口</h4><ol>
-<li>SockScap64支持系统代理<br><img data-src="2020-08-19-18-50-11.png"></li>
-<li>启用系统代理可发现其使用25378端口做代理服务<br><img data-src="2020-08-19-18-50-27.png"><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
+<li>SockScap64支持系统代理<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-11.png"></li>
+<li>启用系统代理可发现其使用25378端口做代理服务<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-27.png"><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
 e=>end: 目标网络
 op1=>operation: burp代理（127.0.0.1:1080)
 op2=>operation: SocksCap64本地代理（127.0.0.1:25378)
@@ -429,7 +429,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

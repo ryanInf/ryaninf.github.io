@@ -264,7 +264,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img data-src="2020-08-20-19-12-27.png"></p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img data-src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-12-27.png"></p>
 <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
 <li>Python 3</li>
 <li>xlrd==1.2.0</li>
@@ -273,7 +273,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>坐标从0开始算起，代表第1行到第4行（不包含4），第0列到第一列（不包含1）为合并单元格。</p>
-<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img data-src="2020-08-20-19-14-52.png"></p>
+<p>这里有一个点要注意，xlrd官方说明中，需要在<code>open_workbook</code>时传入<code>formatting_info=True</code>，如果未设置此选项，获取到的合并单元格坐标为空，这点是很多文章没有提到的，可能是版本的变更问题：<br><img data-src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-14-52.png"></p>
 <p>示例代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xlrd</span><br><span class="line">wb = xlrd.open_workbook(<span class="string">&#x27;test.xls&#x27;</span>, formatting_info=<span class="literal">True</span>)</span><br><span class="line">sheet = wb.sheet_by_name(<span class="string">&#x27;Sheet1&#x27;</span>)</span><br><span class="line">mc = sheet.merged_cells</span><br><span class="line">print(mc)</span><br></pre></td></tr></table></figure>
 <p>结果输出：</p>
@@ -405,7 +405,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
