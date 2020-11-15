@@ -195,6 +195,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/" class="post-title-link" itemprop="url">Linux命令备忘</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-03 18:51:23" itemprop="dateCreated datePublished" datetime="2020-01-03T18:51:23+08:00">2020-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-21 10:32:02" itemprop="dateModified" datetime="2020-08-21T10:32:02+08:00">2020-08-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Linux命令备忘"><a href="#Linux命令备忘" class="headerlink" title="Linux命令备忘"></a>Linux命令备忘</h3><ol start="0">
+<li>xargs占位符<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> aaa |xargs -I &#123;&#125; python3 test.py &#123;&#125; &#123;&#125;.xlsx</span><br></pre></td></tr></table></figure></li>
+<li>查看进程启动时间<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -eo pid,lstart,etime,cmd | grep nginx</span><br></pre></td></tr></table></figure></li>
+<li>找出大于500m的文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -size +500M -print0 |xargs -0 ls -l</span><br></pre></td></tr></table></figure></li>
+<li>Debian显示已安装的软件包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt list --installed</span><br></pre></td></tr></table></figure></li></ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/09/16/Python%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E5%A4%87%E5%BF%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -927,89 +1012,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">让BurpSuite使用MSF的socks4a代理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-11 18:40:11" itemprop="dateCreated datePublished" datetime="2019-07-11T18:40:11+08:00">2019-07-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:52:40" itemprop="dateModified" datetime="2020-08-26T15:52:40+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
-<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1081,7 +1083,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
