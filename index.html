@@ -195,6 +195,163 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/11/17/fakebook-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/17/fakebook-writeup/" class="post-title-link" itemprop="url">fakebook-writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-17 17:13:42 / 修改时间：17:20:18" itemprop="dateCreated datePublished" datetime="2020-11-17T17:13:42+08:00">2020-11-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本题来源于2018年网鼎杯，攻防世界WEB进阶019上是原题。题目考察的是SQL注入中的UNION注入、SSRF和反序列化的组合利用，是一道比较综合性的题目，值得学习。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/17/fakebook-writeup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/11/17/give-you-flag-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/17/give-you-flag-writeup/" class="post-title-link" itemprop="url">give_you_flag-writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-17 16:06:09 / 修改时间：17:14:48" itemprop="dateCreated datePublished" datetime="2020-11-17T16:06:09+08:00">2020-11-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本题来源于攻防世界，MISC题，题目考察的是二维码修复能力。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>题目是一张GIF图片，使用图像软件逐帧查看可发现里面有个二维码，我这里使用的是<code>ImageGlass</code>，免费软件。</p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117154637142.png"></p>
+<p>使用<code>ImageGlass</code>提取所有帧：</p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155032363.png"></p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155126107.png"></p>
+<p>打开图片，是个残缺的二维码：</p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155305222.png"></p>
+<p>看了其它wp说用ps来修复，无奈ps太菜了，这里另辟蹊径，讲讲我的方法。</p>
+<p>首先随意取一张二维码图片，放大，使用<code>Snipaste</code>（一个截图软件，免费）按<code>F1</code>键把定位符截图，然后按<code>F3</code>键贴图，重复复制3个定位符</p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155436560.png"></p>
+<p>得到3个定位符，然后把定位符调整到合适大小，并移动到残缺的二维码中， 然后再截屏到识别软件提取或者手机扫码提取：</p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155713817.png"></p>
+<p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155951545.png"></p>
+<p>扫码后得到flag： <code>flag&#123;e7d478cf6b915f50ab1277f78502a2c5&#125;</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/11/16/mfw-writeup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,10 +375,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-16 01:16:08 / 修改时间：02:06:52" itemprop="dateCreated datePublished" datetime="2020-11-16T01:16:08+08:00">2020-11-16</time>
+              <time title="创建时间：2020-11-16 01:16:08" itemprop="dateCreated datePublished" datetime="2020-11-16T01:16:08+08:00">2020-11-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-17 17:14:35" itemprop="dateModified" datetime="2020-11-17T17:14:35+08:00">2020-11-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -243,8 +406,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本题来源于攻防世界<code>WEB</code>题，题目名称为<code>mfw</code>，考察的是<code>PHP</code>代码注入，需要有点脑洞，故记录一下。</p>
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本题来源于攻防世界<code>WEB</code>题，题目名称为<code>mfw</code>，考察的是<code>PHP</code>代码注入，需要有点脑洞，故记录一下。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/16/mfw-writeup/#more" rel="contents">
@@ -302,7 +464,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-09 11:12:49" itemprop="dateModified" datetime="2020-11-09T11:12:49+08:00">2020-11-09</time>
+                <time title="修改时间：2020-11-17 17:14:32" itemprop="dateModified" datetime="2020-11-17T17:14:32+08:00">2020-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,8 +487,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在某次比赛中碰到一题很魔幻的题目，让我印象深刻，特别是赛后主办方提供的wp（见下图）看得我久久不能忘怀，机缘巧合之下，又碰到了这一题目，故来分析一下。</p>
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在某次比赛中碰到一题很魔幻的题目，让我印象深刻，特别是赛后主办方提供的wp（见下图）看得我久久不能忘怀，机缘巧合之下，又碰到了这一题目，故来分析一下。</p>
 <p><img data-src="/2020/10/28/fslh-writeup/image-20201108120312799.png" alt="主办方的wp"></p>
           <!--noindex-->
             <div class="post-button">
@@ -385,7 +546,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-23 11:53:44" itemprop="dateModified" datetime="2020-10-23T11:53:44+08:00">2020-10-23</time>
+                <time title="修改时间：2020-11-17 17:14:42" itemprop="dateModified" datetime="2020-11-17T17:14:42+08:00">2020-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -408,8 +569,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文为某次培训练习题解题过程，该题考察SQL注入绕过方法，难度中等。</p>
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文为某次培训练习题解题过程，该题考察SQL注入绕过方法，难度中等。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/10/21/blacklist-writeup/#more" rel="contents">
@@ -814,175 +974,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/" class="post-title-link" itemprop="url">Spring Boot Actuators未授权GetShell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-05 19:29:40" itemprop="dateCreated datePublished" datetime="2020-06-05T19:29:40+08:00">2020-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:50:54" itemprop="dateModified" datetime="2020-08-26T15:50:54+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>actuator 是 springboot 提供的用来对应用系统进行自省和监控的功能模块。其提供的执行器端点分为两类：原生端点和用户自定义扩展端点，原生端点主要有：  </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/" class="post-title-link" itemprop="url">Python读取Excel合并单元格</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-01 19:11:24" itemprop="dateCreated datePublished" datetime="2020-04-01T19:11:24+08:00">2020-04-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:57:57" itemprop="dateModified" datetime="2020-08-26T15:57:57+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img data-src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-12-27.png"></p>
-<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
-<li>Python 3</li>
-<li>xlrd==1.2.0</li>
-</ul>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1054,7 +1045,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1067,7 +1058,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

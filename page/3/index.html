@@ -195,6 +195,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">记一次远程命令执行漏洞的挖掘过程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-15 16:24:48" itemprop="dateCreated datePublished" datetime="2019-07-15T16:24:48+08:00">2019-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 15:53:55" itemprop="dateModified" datetime="2020-08-26T15:53:55+08:00">2020-08-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" itemprop="url" rel="index"><span itemprop="name">漏洞挖掘</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong><br>本文已在Freebuf发布，但文章经Freebuf编辑改动导致有小部分错误，故在这里改正并重新发布。<br><em>原文链接： <a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/185380.html">https://www.freebuf.com/vuls/185380.html</a></em></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近为甲方做渗透测试发现了一个远程命令执行漏洞，可以通过构造恶意参数传递执行bash命令，本文回顾一下漏洞的挖掘过程。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/15/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E7%9A%84%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/" class="post-title-link" itemprop="url">使用BurpSuite宏获取CSRF TOKEN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-15 14:54:04" itemprop="dateCreated datePublished" datetime="2019-07-15T14:54:04+08:00">2019-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 15:53:20" itemprop="dateModified" datetime="2020-08-26T15:53:20+08:00">2020-08-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -684,7 +849,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -697,7 +862,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
