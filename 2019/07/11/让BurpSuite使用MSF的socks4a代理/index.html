@@ -20,39 +20,39 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"ryaninf.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary&#x2F;server&#x2F;socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary&#x2F;server&#x2F;socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="让BurpSuite使用MSF的socks4a代理">
-<meta property="og:url" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/index.html">
+<meta property="og:url" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
 <meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary&#x2F;server&#x2F;socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary&#x2F;server&#x2F;socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-36.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-49.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-05.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-14.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-33.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-34.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-39.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-47.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-08.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-15.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-29.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-11.png">
-<meta property="og:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-27.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-36.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-49.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-05.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-14.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-33.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-34.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-39.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-47.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-08.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-15.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-29.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-11.png">
+<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-27.png">
 <meta property="article:published_time" content="2019-07-11T10:40:11.000Z">
 <meta property="article:modified_time" content="2020-08-26T07:52:40.721Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="渗透测试">
 <meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png">
+<meta name="twitter:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png">
 
-<link rel="canonical" href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
+<link rel="canonical" href="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -217,7 +217,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -322,7 +322,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://ryaninf.github.io/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/" title="让BurpSuite使用MSF的socks4a代理">https://ryaninf.github.io/2019/07/11/让BurpSuite使用MSF的socks4a代理/</a>
+    <a href="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/" title="让BurpSuite使用MSF的socks4a代理">https://r0yanx.com/2019/07/11/让BurpSuite使用MSF的socks4a代理/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -484,7 +484,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <div class="copyright">
   
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

