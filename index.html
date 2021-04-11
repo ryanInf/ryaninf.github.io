@@ -195,6 +195,161 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2021/04/06/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B9%8BWeb-Scraper%E7%88%AC%E5%8F%96%E7%AB%99%E9%95%BF%E4%B9%8B%E5%AE%B6%E5%A4%87%E6%A1%88%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/06/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B9%8BWeb-Scraper%E7%88%AC%E5%8F%96%E7%AB%99%E9%95%BF%E4%B9%8B%E5%AE%B6%E5%A4%87%E6%A1%88%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">信息收集之Web Scraper爬取站长之家备案数据</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-06 10:56:32 / 修改时间：10:56:33" itemprop="dateCreated datePublished" datetime="2021-04-06T10:56:32+08:00">2021-04-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/" class="post-title-link" itemprop="url">记一次XSS绕过</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-24 10:47:32" itemprop="dateCreated datePublished" datetime="2021-03-24T10:47:32+08:00">2021-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-06 10:18:47" itemprop="dateModified" datetime="2021-04-06T10:18:47+08:00">2021-04-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在某次演练中，发现了一处XSS注入点，位于<code>input</code>标签内，但是它拦截了大部分事件且拦截尖括号，并且标签内用<code>disable</code>，导致无法利用，本文记录一下绕过过程。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先简单看一下参数输出点，可以看到是在input标签内<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-17-50.png"></p>
+<p>简单测试，双引号不拦截，尖括号拦截<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-55-37.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-56-25.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-57-13.png"></p>
+<p>不能用尖括号的话，看来只能通过js事件触发了，fuzz了一下js事件，看到还是有几个事件还能用<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-58-43.png"></p>
+<p>事件用法可以参考<a target="_blank" rel="noopener" href="https://www.runoob.com/tags/ref-eventattributes.html">HTML 事件属性</a></p>
+<p><code>onshow</code>、<code>ontoggle</code>事件因为要<code>&lt;menu&gt; </code>元素或者<code>&lt;details&gt;</code>元素等才能触发，而本例是有拦截尖括号的，所以无法使用，而<code>oninvalid</code>事件需要在<code>&lt;form&gt;</code>内，而本例中的注入点恰好是在在<code>&lt;form&gt;</code>内，那么就选用<code>oninvalid</code>作为触发事件测试</p>
+<p>先看一下<code>oninvalid</code>事件的触发样例</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;wapFrom&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">            查询号码：</span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">pattern</span>=<span class="string">&quot;a&quot;</span>  <span class="attr">oninvalid</span>=<span class="string">&quot;alert(1)&quot;</span> /&gt;</span></span><br><span class="line">          </span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p><code>oninvalid</code>事件会以正则表达式判断<code>pattern</code>属性的值，这里是<code>a</code>，那么当在input框输入的值不是全等于<code>a</code>的时候，并且被<code>submit</code>提交，就会触发<code>oninvalid</code>事件</p>
+<p>本地保存以上代码为HTML文件，再使用浏览器打开。经过测试，随意输入字符串，点击提交后可以触发xss<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-06-13.png"></p>
+<h4 id="绕过事件拦截"><a href="#绕过事件拦截" class="headerlink" title="绕过事件拦截"></a>绕过事件拦截</h4><p>那么现在可以开始构造绕过payload了，因为需要<code>submit</code>提交，所以添加<code>type=&quot;submit&quot;</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xss&quot; oninvalid=console.log(1) pattern=&quot;a&quot; type=&quot;submit&quot; </span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-28-30.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-30-40.png"></p>
+<h3 id="绕过disable属性"><a href="#绕过disable属性" class="headerlink" title="绕过disable属性"></a>绕过disable属性</h3><p>因为标签内有<code>disabled=&quot;disabled&quot;</code>，导致标签被禁用，所以需要屏蔽改元素，但是双斜杠<code>//</code>已经<code>&lt;!--</code>因为存在<code>&lt;</code>也被拦截，这里使用<code>a=</code>绕过，拼接后变成<code>a=&quot; disabled=&quot;disabled&quot;</code>，浏览器就会把<code>&quot; disabled=&quot;</code>当做属性<code>a</code>的值，从而绕过标签禁用，所以payload修改为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xss&quot; oninvalid=console.log(1) pattern=&quot;a&quot; type=&quot;submit&quot; a=</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-31-54.png"></p>
+<h3 id="绕过js函数拦截"><a href="#绕过js函数拦截" class="headerlink" title="绕过js函数拦截"></a>绕过js函数拦截</h3><p>因为直接<code>oninvalid=alert(1)</code>会被拦截，使用变量绕过函数拦截，把<code>alert(1)</code>拆分为<code>a=alert;a(1)</code>进行绕过，最终payload为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xss&quot; oninvalid=a=alert;a(1) pattern=&quot;a&quot; type=&quot;submit&quot; a=</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-40-27.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-40-45.png"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文通过实际案例介绍了3个xss绕过小技巧，如有更好的方法，请各位师傅不吝赐教。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/12/29/ics-05-writeup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -821,168 +976,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/" class="post-title-link" itemprop="url">SQL注入进阶:FLASK加工中转SQLMAP流量</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-26 16:21:00 / 修改时间：17:43:07" itemprop="dateCreated datePublished" datetime="2020-08-26T16:21:00+08:00">2020-08-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在渗透工作中我们经常能碰到一些逻辑复杂的SQL注入漏洞，并不能直接通过sqlmap工具注入拿到结果。今年网鼎杯的一道SQL注入题“张三的网站”让我久久不能忘怀，我不断思考遇到这类型的SQL注入除了手工注入然后编写脚本一点一点脱数据以外，有没有一个比较优雅的解决方案呢？</p>
-<h3 id="一道CTF题的思考"><a href="#一道CTF题的思考" class="headerlink" title="一道CTF题的思考"></a>一道CTF题的思考</h3><p>先来说说“张三的网站”这道题目，因为我手上没有题目源码，所以就根据记忆中的各个功能自己写了一个（很少写php，代码很烂），相关代码已经上传到GitHub，见文章底部。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/26/SQL%E6%B3%A8%E5%85%A5%E8%BF%9B%E9%98%B6-FLASK%E5%8A%A0%E5%B7%A5%E4%B8%AD%E8%BD%ACSQLMAP%E6%B5%81%E9%87%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/" class="post-title-link" itemprop="url">同步GitHub Page博客到Gitee</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-21 16:44:43" itemprop="dateCreated datePublished" datetime="2020-08-21T16:44:43+08:00">2020-08-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:58:58" itemprop="dateModified" datetime="2020-08-26T15:58:58+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Gitee-Page"><a href="#Gitee-Page" class="headerlink" title="Gitee Page"></a>Gitee Page</h3><p>码云 Pages是一个免费的静态网页托管服务，您可以使用 码云 Pages 托管博客、项目官网等静态网页。如果您使用过 Github Pages 那么您会很快上手使用码云的 Pages服务。<br>相对 Github Pages 来说，码云 Gitee Pages在国内访问会快很多。使用简单的方法就能让 Gitee Page 同步 Github Pages。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/21/%E5%90%8C%E6%AD%A5GitHub-Page%E5%8D%9A%E5%AE%A2%E5%88%B0Gitee/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1050,7 +1047,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
