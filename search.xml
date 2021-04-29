@@ -1099,6 +1099,8 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <url>/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在某次演练中，发现了一处XSS注入点，位于<code>input</code>标签内，但是它拦截了大部分事件且拦截尖括号，并且标签内用<code>disable</code>，导致无法利用，本文记录一下绕过过程。</p>
+<a id="more"></a>
+
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先简单看一下参数输出点，可以看到是在input标签内<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-17-50.png"></p>
 <p>简单测试，双引号不拦截，尖括号拦截<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-55-37.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-56-25.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-57-13.png"></p>
 <p>不能用尖括号的话，看来只能通过js事件触发了，fuzz了一下js事件，看到还是有几个事件还能用<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-10-58-43.png"></p>
