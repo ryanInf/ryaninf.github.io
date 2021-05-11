@@ -1123,12 +1123,6 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-40-27.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-40-45.png"></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文通过实际案例介绍了3个xss绕过小技巧，如有更好的方法，请各位师傅不吝赐教。</p>
 ]]></content>
-      <categories>
-        <category>渗透测试</category>
-      </categories>
-      <tags>
-        <tag>渗透测试</tag>
-      </tags>
   </entry>
   <entry>
     <title>信息收集之Web Scraper爬取站长之家备案数据</title>
