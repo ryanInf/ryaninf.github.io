@@ -2208,4 +2208,49 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>渗透测试</tag>
       </tags>
   </entry>
+  <entry>
+    <title>SQLMAP小技巧</title>
+    <url>/2021/05/26/SQLMAP%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在日常使用sqlmap中，可能我们会遇到明明手工注入能发现注入点，但是sqlmap发两个包就不再往下跑了，这是怎么回事呢？又该如何解决？</p>
+<a id="more"></a>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>这是一个注入点，但是sqlmap只发了两个包<br><img data-src="/2021/05/26/SQLMAP%E5%B0%8F%E6%8A%80%E5%B7%A7/2021-05-28-11-10-07.png"></p>
+<p>根据上面的提示，sqlmap应该是因为响应包状态码为<code>401</code>，认为需要授权，实际上是该注入点比较特殊，数据格式异常或者命中拦截规则的时候会返回<code>401</code>状态码</p>
+<p>正常访问的响应：<br><img data-src="/2021/05/26/SQLMAP%E5%B0%8F%E6%8A%80%E5%B7%A7/2021-05-28-11-18-51.png"><br>数据格式异常：<br><img data-src="/2021/05/26/SQLMAP%E5%B0%8F%E6%8A%80%E5%B7%A7/2021-05-28-11-19-37.png"></p>
+<p>这个时候最简单的办法，当然是通过burp把响应包改掉了，我们只要在burp新建一条自动匹配修改规则即可，让burp自动把<code>401</code>的状态码改成<code>200</code><br><img data-src="/2021/05/26/SQLMAP%E5%B0%8F%E6%8A%80%E5%B7%A7/2021-05-28-11-21-05.png"></p>
+<p>创建成功后，把sqlmap的代理设置成burp即可，如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlmap -r tmp\sql2.txt --proxy http://192.168.154.137:8080</span><br></pre></td></tr></table></figure>
+<p>这个时候可以看到sqlmap能正常往下测试了：<br><img data-src="/2021/05/26/SQLMAP%E5%B0%8F%E6%8A%80%E5%B7%A7/2021-05-28-11-26-12.png"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+        <tag>WEB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go 入门踩坑</title>
+    <url>/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近心血来潮，觉得Go可能在后续的职业生涯中发挥作用，就来学一下Go吧。</p>
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><h4 id="下载安装Go"><a href="#下载安装Go" class="headerlink" title="下载安装Go"></a>下载安装Go</h4><p>这里不多说了，直接到官网下载msi包，然后双击运行安装即可，我这里下载的是<code>go1.16.4.windows-amd64.msi</code>。</p>
+<a id="more"></a>
+<h4 id="VS-Code-配置Go开发环境"><a href="#VS-Code-配置Go开发环境" class="headerlink" title="VS Code 配置Go开发环境"></a>VS Code 配置Go开发环境</h4><p>首先安装Go的语言拓展<br><img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-40-38.png"></p>
+<p>然后安装Go语言开发工具包<br><img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-41-50.png"><br>勾选全部工具<br><img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-42-56.png"></p>
+<p> VS Code此时会下载并安装上图列出来的16个工具，但是由于国内的网络环境基本上都会出现安装失败<br> <img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-44-39.png"></p>
+<p> 这个时候当然是配置代理啦，按照网上的教程，大多都会看到说在命令行设置代理</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+
+<p> 这里反复尝试之后发现不行，看输出可以发现，VS Code还是请求了官方的地址，所以可知我们配置的代理不生效，然后翻看一下VS Code的设置，可以看到有个<code>Tools Env Vars</code>的配置，猜想它是配置这个Go工具包的环境变量的<br> <img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-55-55.png"></p>
+<p> 然后把网上教程中让我们设置的两个环境变量改成json格式写进去就行了，记得VS Code的配置文件是json格式的，所以如果原本上面有配置的，需要在前面加个逗号<code>,</code><br> <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;go.toolsEnvVars&quot;: &#123;&quot;GO111MODULE&quot;: &quot;on&quot;, &quot;GOPROXY&quot;: &quot;https://goproxy.cn,direct&quot;&#125;</span><br></pre></td></tr></table></figure><br> <img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-58-47.png"></p>
+<p> 配置完成后再次按照前面的步骤安装工具包即可。</p>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
+      </tags>
+  </entry>
 </search>
