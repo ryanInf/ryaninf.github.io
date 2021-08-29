@@ -195,6 +195,93 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/" class="post-title-link" itemprop="url">Python读取Excel合并单元格</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-01 19:11:24" itemprop="dateCreated datePublished" datetime="2020-04-01T19:11:24+08:00">2020-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-26 15:57:57" itemprop="dateModified" datetime="2020-08-26T15:57:57+08:00">2020-08-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Python 读取Excel合并单元格时，被合并的单元格读出来可能是空值，比如下图中单元格”A3”读取出来的值为空，而我们希望它是”A”。<br><img data-src="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/2020-08-20-19-12-27.png"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+<li>Python 3</li>
+<li>xlrd==1.2.0</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>xlrd提供了<code>sheet.merged_cells</code>用于获取页面中所有的合并单元格坐标。类似：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/01/Python%E8%AF%BB%E5%8F%96Excel%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/01/03/Linux%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -932,89 +1019,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/" class="post-title-link" itemprop="url">使用BurpSuite宏获取CSRF TOKEN</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-15 14:54:04" itemprop="dateCreated datePublished" datetime="2019-07-15T14:54:04+08:00">2019-07-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:53:20" itemprop="dateModified" datetime="2020-08-26T15:53:20+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在WEB渗透中经常可以看到页面存在一次性<code>token</code>校验的情况，即请求包中包含<code>token</code>，而<code>token</code>值需通过其它页面获取，导致<code>burpsuite</code>抓包后无法重放。</p>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>下面以一个简单例子来做个说明。目标网站如下，页面存在一个图片验证码，题目要求暴力破解得到账号密码。这题可以有多种方式实现，这里以<code>burpsuite</code>宏进行实验。<br><img data-src="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/2020-08-19-18-55-39.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1086,7 +1090,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

