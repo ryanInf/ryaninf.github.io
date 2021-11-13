@@ -2429,4 +2429,24 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>渗透测试</tag>
       </tags>
   </entry>
+  <entry>
+    <title>DER证书转换PEM证书小记</title>
+    <url>/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>或许是因为强迫症使然，产生了让xray使用burp的想法，至于为什么要这么做，也说不上原因，就感觉这样搞了舒服点。因为xray不支持burp默认的DER格式证书，所以直接使用会碰到未找到PEM 数据的问题，所以需要做一下转换，将DER转成PEM。<br><img data-src="/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/2021-11-13-18-56-44.png"></p>
+<a id="more"></a>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>首先分别导出burpsuite的公钥与私钥，记住是分别导出<br><img data-src="/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/2021-11-13-19-02-03.png"><br>为防止有英文学习不好的，还是截下图<br><img data-src="/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/2021-11-13-19-02-58.png"><br>导出的公钥文件名为<code>burp.ca.crt</code>，私钥文件名为<code>burp.ca.key</code><br>然后转换公钥文件格式</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> burp.ca.crt -inform der -outform pem -out burp_cert.pem</span><br></pre></td></tr></table></figure>
+<p>转换私钥文件格式</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl rsa -inform DER -outform PEM -<span class="keyword">in</span> burp.ca.key -out burp_key.pem</span><br></pre></td></tr></table></figure>
+<p>然后修改xray的<code>config.yaml</code>配置文件<br><img data-src="/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/2021-11-13-19-05-41.png"><br>这个时候浏览器挂上xray代理用的就是burp的证书了<br><img data-src="/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/2021-11-13-18-55-20.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://support.huaweicloud.com/scm_faq/scm_01_0128.html">https://support.huaweicloud.com/scm_faq/scm_01_0128.html</a></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
 </search>
