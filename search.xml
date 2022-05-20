@@ -2455,6 +2455,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>随着网络安全水平的发展，越来越多的网站增加了RSA加密、图形验证码等防护手段，传统的口令暴破方式已捉襟见肘，如果高效、低代码的进行口令暴破？本文将介绍一个操作浏览器进行口令暴破的案例与验证码识别工具。</p>
 <h3 id="Playwright：浏览器自动化工具"><a href="#Playwright：浏览器自动化工具" class="headerlink" title="Playwright：浏览器自动化工具"></a>Playwright：浏览器自动化工具</h3><p>Playwright是一个强大的Python库，仅用一个API即可自动执行Chromium、Firefox、WebKit等主流浏览器自动化操作，并同时支持以无头模式、有头模式运行。相比传统的“selenium”等工具，他可以录制我们对浏览器的操作并自动生成脚本，同时代码也是非常简单，与我们高效工作的目标非常契合。</p>
+<a id="more"></a>
 <h3 id="Playwright：滑动验证码案例"><a href="#Playwright：滑动验证码案例" class="headerlink" title="Playwright：滑动验证码案例"></a>Playwright：滑动验证码案例</h3><h4 id="生成登录流程代码"><a href="#生成登录流程代码" class="headerlink" title="生成登录流程代码"></a>生成登录流程代码</h4><p>安装playwright后，运行下面命令进行录制浏览器操作，并生成代码：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python -m playwright codegen</span><br></pre></td></tr></table></figure>
 <p><img data-src="/2022/05/10/%E5%9F%BA%E4%BA%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%8F%A3%E4%BB%A4%E6%9A%B4%E7%A0%B4/2022-05-10-18-07-29.png"></p>
