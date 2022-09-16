@@ -2493,6 +2493,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天打开博客发现评论下面居然有广告，经过简单排查发现广告来着评论插件livere，这里简单记录一下去广告的过程。</p>
 <h3 id="去广告"><a href="#去广告" class="headerlink" title="去广告"></a>去广告</h3><p>广告是这样子的，在评论下方<br><img data-src="/2022/09/16/livere%E5%8E%BB%E9%99%A4%E9%9F%A9%E6%96%87%E5%B9%BF%E5%91%8A/2022-09-16-16-36-08.png"></p>
+<a id="more"></a>
 <p>简单搜索一下，找到解决方法，原理是屏蔽掉某个div<br><img data-src="/2022/09/16/livere%E5%8E%BB%E9%99%A4%E9%9F%A9%E6%96%87%E5%B9%BF%E5%91%8A/2022-09-16-16-37-28.png"></p>
 <p>首先确认一下方法对我的环境是否适用，先f12查找一下<code>.trc_rbox_container</code>，发现这个div确实是广告<br><img data-src="/2022/09/16/livere%E5%8E%BB%E9%99%A4%E9%9F%A9%E6%96%87%E5%B9%BF%E5%91%8A/2022-09-16-16-40-03.png"></p>
 <p>然后控制台运行一下作者提供的js，发现该广告确实消失了，即该方法对我的问题有效<br><img data-src="/2022/09/16/livere%E5%8E%BB%E9%99%A4%E9%9F%A9%E6%96%87%E5%B9%BF%E5%91%8A/2022-09-16-16-41-44.png"></p>
