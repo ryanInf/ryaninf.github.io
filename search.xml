@@ -2543,4 +2543,115 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>CTF</tag>
       </tags>
   </entry>
+  <entry>
+    <title>记家庭网络组网</title>
+    <url>/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文是笔者一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。</p>
+<p>本文涉及：</p>
+<ul>
+<li>openwrt固件编译</li>
+<li>光猫桥接</li>
+<li>openwrt iptv单线复用</li>
+<li>WiFi漫游</li>
+<li>wireguard ipv6 异地组网</li>
+<li>frp、nps</li>
+<li>阿里云webdav</li>
+</ul>
+<a id="more"></a>
+<h3 id="网络结构介绍"><a href="#网络结构介绍" class="headerlink" title="网络结构介绍"></a>网络结构介绍</h3><p>笔者的户型及物理网络结构如下：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-41-50.png"></p>
+<p>物理线路：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-45-22.png"></p>
+<h3 id="需求说明"><a href="#需求说明" class="headerlink" title="需求说明"></a>需求说明</h3><p>由于网线在是开发商预埋好的，网络布线其实是不太合理的，但是没办法变更了。</p>
+<p>最大的难点是，弱电箱到客厅电视只有一条网线，如果用来给iptv，则没办法装在客厅放路由器，只能放在弱电箱，就很难受了，所以需要进行iptv线路的单线复用。</p>
+<p>因为不常住，所以并没有放置x86服务器做软路由的想法，按照最小预算的想法，选择了mt7621的瑞斯康达MSG1500 X.00刷入openwrt担当主路由，小黄鱼仅需49元包邮。</p>
+<p>配置如下：</p>
+<ul>
+<li>CPU：MT7621</li>
+<li>接口：1WAN+4LAN,USB2.0(全千兆网口)</li>
+<li>无线：2.4G/5G(7615DN)</li>
+<li>Flash：128M(NAND)</li>
+<li>内存：256M</li>
+</ul>
+<p>无线网络的话，中国移动宽带送了一个WiFi 6路由器，将就着废物利用，充当AP，放置在房间1。在客厅放置一个AX 3000无线路由器设置AP模式充当AP。</p>
+<p>然后是异地组网，在工作地宿舍也有一个小型网络，需要打通网络进行互访，以方便内网访问群晖、摄像头等资源，而移动没有ipv4的公网ip，所以通过ipv6组网。</p>
+<p>最终组网效果如下，192.168.100.0/24网段是本次家庭网络的网段。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-05-23.png"></p>
+<h3 id="openwrt固件编译"><a href="#openwrt固件编译" class="headerlink" title="openwrt固件编译"></a>openwrt固件编译</h3><p>因为笔者的各种需求，而且也不想用别人的固件，所以选择了自行定制openwrt编译固件。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-35-17.png"></p>
+<p>主要是加入了aliyundrive-webdav、omcproxy、wireguard、ipv6helper、frp、nps、mwan3等拓展，具体的配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;ryanInf&#x2F;OpenWrt-MSG1500-Actions&#x2F;blob&#x2F;main&#x2F;.config</span><br></pre></td></tr></table></figure>
+
+<p>编译方法参考：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;p3terx.com&#x2F;archives&#x2F;build-openwrt-with-github-actions.html</span><br></pre></td></tr></table></figure>
+
+<p>通过Github Actions编译好固件：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-55-08.png"></p>
+<h3 id="MSG1500刷入固件"><a href="#MSG1500刷入固件" class="headerlink" title="MSG1500刷入固件"></a>MSG1500刷入固件</h3><p>请注意，MSG1500路由器有两个版本，一个白色，一个黑色，请购买黑色的X.00版本，白色为阉割版，下面简述输入固件过程。</p>
+<p>官方的固件，是直接telnet可以连上，配置好路由器ip后，通过telnet连接，账号：root/root<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-57-11.png"></p>
+<p>然后备份路由器分区：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dd <span class="keyword">if</span>=/dev/mtd4 of=/tmp/firmware_backup.bin</span><br><span class="line">dd <span class="keyword">if</span>=/dev/mtd1 of=/tmp/Bootloader_backup.bin</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-58-34.png"></p>
+<p>下载tftpd32.exe，搭建tftp服务，或者用群晖的tftp服务，通过tftp把备份文件取出：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-59-04.png"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 这里 192.168.1.100 是tftp服务器地址</span></span><br><span class="line"><span class="built_in">cd</span> /tmp/</span><br><span class="line">tftp -pl Bootloader_backup.bin 192.168.1.100</span><br><span class="line">tftp -pl firmware_backup.bin  192.168.1.100</span><br></pre></td></tr></table></figure>
+
+<p>下载 breed breed-mt7621-hiwifi-hc5962.bin<br><a href="https://breed.hackpascal.net/">https://breed.hackpascal.net/</a></p>
+<p>下载后把breed-mt7621-hiwifi-hc5962.bin放入tftpd目录，再通过tftp下载到msg1500上面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tftp -gr breed-mt7621-hiwifi-hc5962.bin 192.168.1.100</span><br></pre></td></tr></table></figure>
+
+<p>刷入Breed：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mtd write /tmp/breed-mt7621-hiwifi-hc5962.bin Bootloader</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-04-02.png"></p>
+<p>路由器断电，然后按住路由WPS键并通电(WPS键继续按住8秒左右)，在浏览器输入192.168.1.1访问Breed后台进行固件刷入：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-04-38.png"></p>
+<p>刷入第一步编译出来的固件：openwrt-ramips-mt7621-raisecom_msg1500-x-00-initramfs-kernel.bin</p>
+<p>静待路由器重启，然后刷新浏览器可看到openwrt登陆页面，账号：root/password，此时刷机已完成。</p>
+<h3 id="光猫桥接配置"><a href="#光猫桥接配置" class="headerlink" title="光猫桥接配置"></a>光猫桥接配置</h3><p>光猫改桥接后有利于P2P下载、内网穿透、减少NAT层级性能更优，也方便自定义网络，所以需要进行光猫改桥接，改之前请确保你知道自己的宽带账号及密码。</p>
+<p>笔者是广东移动的宽带，配置仅供参考。</p>
+<p>首先获取光猫的超管密码，搜一下就有，用户名是<code>CMCCAdmin</code>，如果找不到就咨询宽带客服。<br>首先我们得区分哪个是上网连接，哪个是IPTV，笔者这里是41和48连接：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-15-21.png"></p>
+<p>通过LAN1口绑定的信息，可以知道vlan41连接是上网连接，vlan48是iptv：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-17-09.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-18-32.png"></p>
+<p>然后可以开始改桥接了，在修改之前，最好是对以上页面截图保存，以防配置失败改不回来。<br>首先进行用户侧vlan的绑定，我们知道，运营商网络通过vlan来区分上网和iptv等流量，我们知道上网是vlan41，iptv是vlan48，这里的vlan900是组播vlan，为了让openwrt能够区分这两组流量，所以需要给他们打上vlan标签。当然了，你把光猫插上两条网线到openwrt也能做这个区分，但这就白白浪费一根网线了，也不优雅。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-21-00.png"></p>
+<p>很简单，只需要把原来的路由模式，改成桥接模式：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-26-31.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-26-07.png"></p>
+<p>然后登陆路由器对wan口进行pppoe拨号配置：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-29-06.png"><br>注意MTU要设置的比光猫那小，LCP 响应故障阈值设置为0，防止误判定为掉线。笔者在这里踩坑了，刚开始MTU默认为1500导致经常性掉线，需要手动重新拨号才能上网：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-30-12.png"><br>物理接口需要绑定vlan41，即在原来接口名称后加上<code>.41</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-32-12.png"><br>防火墙区域按默认的WAN即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-33-15.png"><br>保存后返回接口页面，应该可以看到成功拨号并获取到ip地址：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-34-16.png"></p>
+<p>接下来配置LAN，设置自己的LAN网段：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-27-43.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-28-40.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-00.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-32.png"></p>
+<p>强制DHCP建议勾选上，移动送的路由器即便设置成AP默认仍然会启动DHCP导致内网设备不能上网，勾选后就不会有这个问题：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-53.png"></p>
+<p><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-31-29.png"></p>
+<p><strong>配置完成后，通过WiFi连接或者LAN口连接可访问公网。</strong></p>
+<h3 id="IPTV单线复用"><a href="#IPTV单线复用" class="headerlink" title="IPTV单线复用"></a>IPTV单线复用</h3><p><strong>iptv单线复用，是指iptv网络流量与本地内网流量共用一条线路。很多时候我们客厅可能只有一根网线，需要给iptv机顶盒使用，如果需要WIFI覆盖就只能把无线路由放到弱电箱或者其它房间，导致无线网络质量变差，通过iptv单线复用使我们可以同时在客厅使用iptv机顶盒与无线路由器。</strong></p>
+<p>要配置单线复用，首先要理解单线复用原理。其实很简单，就是把iptv机顶盒的流量指定走光猫的iptv线路（不用地域与运营商可能有额外校验方式，只需增加一些配置，基本原理不变），理解这个原理实现起来就很简单了，概括起来大致有以下方法实现：</p>
+<ul>
+<li>vlan (需购买至少1个支持vlan的交换机或同等设备，配置复杂，成本高，适合有定制需求的高玩)</li>
+<li>爱快分流 （需购买爱快路由器或者x86虚拟机安装，配置简单，优雅）</li>
+<li>openwrt mwan3分流 （openwrt支持的设备比较多，方便，但配置起来不优雅）</li>
+<li>支持iptv的无线路由器 （适合使用无线路由器充当主路由的，如有其它设备做主路由的如软路由，则配置起来复杂点）</li>
+<li>把8芯网线拆成4+4 （最高速率只能百兆，得不偿失，极度不推荐）</li>
+</ul>
+<p>这里选择<code>openwrt mwan3分流</code>的方法，因为暂时还没有24小时运行的pc机放家里。</p>
+<p>在openwrt上新建一个<code>wan_iptv</code>接口，接口类型是<code>wan</code>，同时绑定光猫上配置的<code>vlan</code>号：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-12-57-43.png"><br>协议是dhcp，主机名的话可默认，如果不行可尝试修改为机顶盒的主机名，通过openwrt的dhcp设置页可看到主机名：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-12-59-27.png"><br>网关跃点需要设置为比默认网关（即wan口）的大，习惯设置为100，这样内网设备默认不会走此线路：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-01-21.png"><br>防火墙区域是<code>wan</code>，这样内网设备使用此网关的话会经过nat：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-03-16.png"></p>
+<p>保存配置后，可看到<code>wan_iptv</code>接口成功获取到<code>10段</code>的iptv线路地址，注意如果获取到的是<code>100段</code>或者其它段的地址是不行的，需要检查下<code>MAC地址</code>、<code>主机名</code>等配置是否有冲突，正常情况下移动的是按默认可获取到正确的ip：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-07-26.png"></p>
+<p>现在iptv线路没问题了，难点就在于让iptv机顶盒的流量走<code>wan_iptv</code>接口，需要用到<code>mwan3</code>，可尝试通过opkg安装或自行编译或找别人编译好的，在第一步的估计编译中笔者已集成该模块。</p>
+<p>找到<code>负载均衡</code>，然后新建一个接口<code>wan_iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-14-11.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-15-39.png"></p>
+<p>创建成员<code>iptv_member</code>，此处最好把该成员规则置顶：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-16-23.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-16-57.png"></p>
+<p>创建策略<code>iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-17-40.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-18-06.png"></p>
+<p>创建规则<code>iptv_rule</code>，源地址写iptv机顶盒的ip，策略选择<code>iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-18-27.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-19-42.png"></p>
+<p>配置完成，保存，重启机顶盒查看能否成功登陆并播放电视节目，如果不能，可通过在openwrt上面抓包查看有哪些流量异常再进行排错。</p>
+<h3 id="WIFI漫游"><a href="#WIFI漫游" class="headerlink" title="WIFI漫游"></a>WIFI漫游</h3><p>WIFI漫游最简单的方式是，把无线路由器都设置为AP模式（主路由不需要配置AP模式；如果没有AP模式可关闭DHCP并把主路由LAN接入到无线路由器的LAN口），然后配置相同的<code>SSID</code>、加密方式、密码。效果还行，比AC+AP效果稍差，胜在配置简单，无需额外成本，家用足矣。</p>
+<p>配置AP模式：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-28-28.png"><br>建议固定选<code>WPA2</code>+<code>AES</code>组合，如果不指定可能影响漫游效果：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-30-38.png"></p>
+<p>另一个无线路由器也进行相同配置，不再一一截图。</p>
+<p>完成后可进行漫游测试，使用移动设备连接WiFi长ping网关，移动不同位置可看到信号切换。如需调试可使用<code>WinFi</code>进行测试，不多赘述。</p>
+<h3 id="异地组网"><a href="#异地组网" class="headerlink" title="异地组网"></a>异地组网</h3><p>由于移动申请ipv4公网ip很难，默认宽带也有ipv6地址，可通过ipv6进行异地组网。</p>
+<p>首先需要获取ipv6地址，因为光猫桥接模式下wan6并未能获取到ipv6地址，故切换<code>wan6</code>接口的协议为<code>不配置协议</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-14-41-42.png"><br>然后在WAN口打开ipv6设置：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-14-44-39.png"></p>
+<p>保存后可在<code>LAN</code>口看到公网ipv6地址：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-14-48-20.png"></p>
+<p>此时已经可以正常访问ipv6，接下来搭建WireGuard。我们再看一眼网络拓扑，目标是通过WireGuard架设隧道，让<code>192.168.100.0/24</code>与<code>192.168.200.0/24</code>可互访。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-05-23.png"></p>
+<p>首先在地域B的192.168.200.2上架设WireGuard服务，具体搭建步骤可搜索教程，非常简单，关键配置如下：<br>192.168.11.0/24网段用于VPN服务器之间的内网通信，59120是服务监听端口，切记需在防火墙放通（如有）。<br>同时需在Peer声明对端LAN网络子网，这样才允许WireGuard转发数据包到对端网络。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-12-27.png"></p>
+<p>然后是地域A配置：<br>接口ip地址写上地域B中配置的Peer地址，允许的IP写上地域B中的内网子网段<code>192.168.200.0/24</code>，必须勾上路由允许的IP，端点主机写地域B的WireGuard服务器的ipv6地址或域名（推荐进行DDNS，ipv6地址会定期变）<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-19-38.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-23-29.png"><br>防火墙区域设置为LAN：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-23-46.png"></p>
+<p>接下来新建一个防火墙规则<code>wg_lan</code>，允许两个地域内网间的流量转发：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-25-13.png"></p>
+<p>最后在地域B的网关即爱快路由器上配置一条静态路由，把地域A的内网段<code>192.168.100.0/24</code>的网关指向WireGuard服务器，即可让两地内网地址直连。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-27-23.png"></p>
+<p><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-30-11.png"></p>
+<h3 id="NPS"><a href="#NPS" class="headerlink" title="NPS"></a>NPS</h3><p>nps配置比较简单，在公网的服务器启动nps服务端后，在openwrt上配置nps的连接信息即可，主要用于备用连接，防止ipv6网络连接失败导致连接不上内网。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-31-01.png"></p>
+<h3 id="阿里云WEBDAV"><a href="#阿里云WEBDAV" class="headerlink" title="阿里云WEBDAV"></a>阿里云WEBDAV</h3><p>阿里云WebDav非常推荐使用，在openwrt启动后内网设备可通过webdav协议打开网盘里的高清电影、音频等多媒体文件，配合电视或智能盒子安装Kodi播放，即可体检无广告、在线播放、高清电影，只要找到阿里云资源保存一份到自己网盘即可播放，非常方便。<br>只需要登录网盘网页版获取token填入，然后设置监听的端口及密码即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-32-51.png"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文记录了一次家庭网络的折腾过程，希望能帮到有需求的有缘人。</p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>
