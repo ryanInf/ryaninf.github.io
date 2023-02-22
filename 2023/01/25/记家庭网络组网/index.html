@@ -23,12 +23,12 @@
     var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言本文是笔者一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。 本文涉及：  openwrt固件编译 光猫桥接 openwrt iptv单线复用 WiFi漫游 wireguard ipv6 异地组网 frp、nps 阿里云webdav">
+  <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言本文是博主一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。 本文涉及：  openwrt固件编译 光猫桥接 openwrt iptv单线复用 WiFi漫游 wireguard ipv6 异地组网 frp、nps 阿里云webdav">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记家庭网络组网">
 <meta property="og:url" content="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言本文是笔者一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。 本文涉及：  openwrt固件编译 光猫桥接 openwrt iptv单线复用 WiFi漫游 wireguard ipv6 异地组网 frp、nps 阿里云webdav">
+<meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言本文是博主一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。 本文涉及：  openwrt固件编译 光猫桥接 openwrt iptv单线复用 WiFi漫游 wireguard ipv6 异地组网 frp、nps 阿里云webdav">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-41-50.png">
 <meta property="og:image" content="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-45-22.png">
@@ -86,7 +86,7 @@
 <meta property="og:image" content="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-31-01.png">
 <meta property="og:image" content="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-32-51.png">
 <meta property="article:published_time" content="2023-01-25T14:15:29.000Z">
-<meta property="article:modified_time" content="2023-02-07T07:41:59.717Z">
+<meta property="article:modified_time" content="2023-02-22T04:29:38.309Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="折腾">
 <meta name="twitter:card" content="summary">
@@ -292,7 +292,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-07 15:41:59" itemprop="dateModified" datetime="2023-02-07T15:41:59+08:00">2023-02-07</time>
+                <time title="修改时间：2023-02-22 12:29:38" itemprop="dateModified" datetime="2023-02-22T12:29:38+08:00">2023-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,7 +323,7 @@
 
       
         <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文是笔者一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文是博主一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。</p>
 <p>本文涉及：</p>
 <ul>
 <li>openwrt固件编译</li>
@@ -335,7 +335,7 @@
 <li>阿里云webdav</li>
 </ul>
 <a id="more"></a>
-<h3 id="网络结构介绍"><a href="#网络结构介绍" class="headerlink" title="网络结构介绍"></a>网络结构介绍</h3><p>笔者的户型及物理网络结构如下：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-41-50.png"></p>
+<h3 id="网络结构介绍"><a href="#网络结构介绍" class="headerlink" title="网络结构介绍"></a>网络结构介绍</h3><p>博主的户型及物理网络结构如下：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-41-50.png"></p>
 <p>物理线路：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-45-22.png"></p>
 <h3 id="需求说明"><a href="#需求说明" class="headerlink" title="需求说明"></a>需求说明</h3><p>由于网线在是开发商预埋好的，网络布线其实是不太合理的，但是没办法变更了。</p>
 <p>最大的难点是，弱电箱到客厅电视只有一条网线，如果用来给iptv，则没办法装在客厅放路由器，只能放在弱电箱，就很难受了，所以需要进行iptv线路的单线复用。</p>
@@ -351,7 +351,7 @@
 <p>无线网络的话，中国移动宽带送了一个WiFi 6路由器，将就着废物利用，充当AP，放置在房间1。在客厅放置一个AX 3000无线路由器设置AP模式充当AP。</p>
 <p>然后是异地组网，在工作地宿舍也有一个小型网络，需要打通网络进行互访，以方便内网访问群晖、摄像头等资源，而移动没有ipv4的公网ip，所以通过ipv6组网。</p>
 <p>最终组网效果如下，192.168.100.0/24网段是本次家庭网络的网段。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-05-23.png"></p>
-<h3 id="openwrt固件编译"><a href="#openwrt固件编译" class="headerlink" title="openwrt固件编译"></a>openwrt固件编译</h3><p>因为笔者的各种需求，而且也不想用别人的固件，所以选择了自行定制openwrt编译固件。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-35-17.png"></p>
+<h3 id="openwrt固件编译"><a href="#openwrt固件编译" class="headerlink" title="openwrt固件编译"></a>openwrt固件编译</h3><p>因为博主的各种需求，而且也不想用别人的固件，所以选择了自行定制openwrt编译固件。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-35-17.png"></p>
 <p>主要是加入了aliyundrive-webdav、omcproxy、wireguard、ipv6helper、frp、nps、mwan3等拓展，具体的配置文件如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;ryanInf&#x2F;OpenWrt-MSG1500-Actions&#x2F;blob&#x2F;main&#x2F;.config</span><br></pre></td></tr></table></figure>
 
@@ -378,12 +378,12 @@
 <p>刷入第一步编译出来的固件：openwrt-ramips-mt7621-raisecom_msg1500-x-00-initramfs-kernel.bin</p>
 <p>静待路由器重启，然后刷新浏览器可看到openwrt登陆页面，账号：root/password，此时刷机已完成。</p>
 <h3 id="光猫桥接配置"><a href="#光猫桥接配置" class="headerlink" title="光猫桥接配置"></a>光猫桥接配置</h3><p>光猫改桥接后有利于P2P下载、内网穿透、减少NAT层级性能更优，也方便自定义网络，所以需要进行光猫改桥接，改之前请确保你知道自己的宽带账号及密码。</p>
-<p>笔者是广东移动的宽带，配置仅供参考。</p>
-<p>首先获取光猫的超管密码，搜一下就有，用户名是<code>CMCCAdmin</code>，如果找不到就咨询宽带客服。<br>首先我们得区分哪个是上网连接，哪个是IPTV，笔者这里是41和48连接：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-15-21.png"></p>
+<p>博主是广东移动的宽带，配置仅供参考。</p>
+<p>首先获取光猫的超管密码，搜一下就有，用户名是<code>CMCCAdmin</code>，如果找不到就咨询宽带客服。<br>首先我们得区分哪个是上网连接，哪个是IPTV，博主这里是41和48连接：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-15-21.png"></p>
 <p>通过LAN1口绑定的信息，可以知道vlan41连接是上网连接，vlan48是iptv：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-17-09.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-18-32.png"></p>
 <p>然后可以开始改桥接了，在修改之前，最好是对以上页面截图保存，以防配置失败改不回来。<br>首先进行用户侧vlan的绑定，我们知道，运营商网络通过vlan来区分上网和iptv等流量，我们知道上网是vlan41，iptv是vlan48，这里的vlan900是组播vlan，为了让openwrt能够区分这两组流量，所以需要给他们打上vlan标签。当然了，你把光猫插上两条网线到openwrt也能做这个区分，但这就白白浪费一根网线了，也不优雅。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-21-00.png"></p>
 <p>很简单，只需要把原来的路由模式，改成桥接模式：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-26-31.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-26-07.png"></p>
-<p>然后登陆路由器对wan口进行pppoe拨号配置：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-29-06.png"><br>注意MTU要设置的比光猫那小，LCP 响应故障阈值设置为0，防止误判定为掉线。笔者在这里踩坑了，刚开始MTU默认为1500导致经常性掉线，需要手动重新拨号才能上网：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-30-12.png"><br>物理接口需要绑定vlan41，即在原来接口名称后加上<code>.41</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-32-12.png"><br>防火墙区域按默认的WAN即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-33-15.png"><br>保存后返回接口页面，应该可以看到成功拨号并获取到ip地址：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-34-16.png"></p>
+<p>然后登陆路由器对wan口进行pppoe拨号配置：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-29-06.png"><br>注意MTU要设置的比光猫那小，LCP 响应故障阈值设置为0，防止误判定为掉线。博主在这里踩坑了，刚开始MTU默认为1500导致经常性掉线，需要手动重新拨号才能上网：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-30-12.png"><br>物理接口需要绑定vlan41，即在原来接口名称后加上<code>.41</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-32-12.png"><br>防火墙区域按默认的WAN即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-33-15.png"><br>保存后返回接口页面，应该可以看到成功拨号并获取到ip地址：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-34-16.png"></p>
 <p>接下来配置LAN，设置自己的LAN网段：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-27-43.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-28-40.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-00.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-32.png"></p>
 <p>强制DHCP建议勾选上，移动送的路由器即便设置成AP默认仍然会启动DHCP导致内网设备不能上网，勾选后就不会有这个问题：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-53.png"></p>
 <p><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-31-29.png"></p>
@@ -400,7 +400,7 @@
 <p>这里选择<code>openwrt mwan3分流</code>的方法，因为暂时还没有24小时运行的pc机放家里。</p>
 <p>在openwrt上新建一个<code>wan_iptv</code>接口，接口类型是<code>wan</code>，同时绑定光猫上配置的<code>vlan</code>号：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-12-57-43.png"><br>协议是dhcp，主机名的话可默认，如果不行可尝试修改为机顶盒的主机名，通过openwrt的dhcp设置页可看到主机名：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-12-59-27.png"><br>网关跃点需要设置为比默认网关（即wan口）的大，习惯设置为100，这样内网设备默认不会走此线路：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-01-21.png"><br>防火墙区域是<code>wan</code>，这样内网设备使用此网关的话会经过nat：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-03-16.png"></p>
 <p>保存配置后，可看到<code>wan_iptv</code>接口成功获取到<code>10段</code>的iptv线路地址，注意如果获取到的是<code>100段</code>或者其它段的地址是不行的，需要检查下<code>MAC地址</code>、<code>主机名</code>等配置是否有冲突，正常情况下移动的是按默认可获取到正确的ip：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-07-26.png"></p>
-<p>现在iptv线路没问题了，难点就在于让iptv机顶盒的流量走<code>wan_iptv</code>接口，需要用到<code>mwan3</code>，可尝试通过opkg安装或自行编译或找别人编译好的，在第一步的估计编译中笔者已集成该模块。</p>
+<p>现在iptv线路没问题了，难点就在于让iptv机顶盒的流量走<code>wan_iptv</code>接口，需要用到<code>mwan3</code>，可尝试通过opkg安装或自行编译或找别人编译好的，在第一步的估计编译中博主已集成该模块。</p>
 <p>找到<code>负载均衡</code>，然后新建一个接口<code>wan_iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-14-11.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-15-39.png"></p>
 <p>创建成员<code>iptv_member</code>，此处最好把该成员规则置顶：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-16-23.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-16-57.png"></p>
 <p>创建策略<code>iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-17-40.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-18-06.png"></p>
@@ -460,7 +460,10 @@
     <a href="/2022/12/09/%E4%BD%BF%E7%94%A8ChatGPT%E8%BF%9B%E8%A1%8C%E9%80%86%E5%90%91%E7%9A%84%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/" rel="prev" title="使用ChatGPT进行逆向的一次尝试">
       <i class="fa fa-chevron-left"></i> 使用ChatGPT进行逆向的一次尝试
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/" rel="next" title="爱快主路由下IPV6防火墙的最优解（可能）">
+      爱快主路由下IPV6防火墙的最优解（可能） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -540,7 +543,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

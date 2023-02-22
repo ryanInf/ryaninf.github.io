@@ -2547,7 +2547,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <title>记家庭网络组网</title>
     <url>/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/</url>
     <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文是笔者一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文是博主一次家庭网络从零到一组网的过程，其中涉及到的很多坑在搜索引擎上并未找到解决方法，所以在此记录一下，以帮助有缘人。</p>
 <p>本文涉及：</p>
 <ul>
 <li>openwrt固件编译</li>
@@ -2559,7 +2559,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <li>阿里云webdav</li>
 </ul>
 <a id="more"></a>
-<h3 id="网络结构介绍"><a href="#网络结构介绍" class="headerlink" title="网络结构介绍"></a>网络结构介绍</h3><p>笔者的户型及物理网络结构如下：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-41-50.png"></p>
+<h3 id="网络结构介绍"><a href="#网络结构介绍" class="headerlink" title="网络结构介绍"></a>网络结构介绍</h3><p>博主的户型及物理网络结构如下：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-41-50.png"></p>
 <p>物理线路：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-22-45-22.png"></p>
 <h3 id="需求说明"><a href="#需求说明" class="headerlink" title="需求说明"></a>需求说明</h3><p>由于网线在是开发商预埋好的，网络布线其实是不太合理的，但是没办法变更了。</p>
 <p>最大的难点是，弱电箱到客厅电视只有一条网线，如果用来给iptv，则没办法装在客厅放路由器，只能放在弱电箱，就很难受了，所以需要进行iptv线路的单线复用。</p>
@@ -2575,7 +2575,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p>无线网络的话，中国移动宽带送了一个WiFi 6路由器，将就着废物利用，充当AP，放置在房间1。在客厅放置一个AX 3000无线路由器设置AP模式充当AP。</p>
 <p>然后是异地组网，在工作地宿舍也有一个小型网络，需要打通网络进行互访，以方便内网访问群晖、摄像头等资源，而移动没有ipv4的公网ip，所以通过ipv6组网。</p>
 <p>最终组网效果如下，192.168.100.0/24网段是本次家庭网络的网段。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-05-23.png"></p>
-<h3 id="openwrt固件编译"><a href="#openwrt固件编译" class="headerlink" title="openwrt固件编译"></a>openwrt固件编译</h3><p>因为笔者的各种需求，而且也不想用别人的固件，所以选择了自行定制openwrt编译固件。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-35-17.png"></p>
+<h3 id="openwrt固件编译"><a href="#openwrt固件编译" class="headerlink" title="openwrt固件编译"></a>openwrt固件编译</h3><p>因为博主的各种需求，而且也不想用别人的固件，所以选择了自行定制openwrt编译固件。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-25-23-35-17.png"></p>
 <p>主要是加入了aliyundrive-webdav、omcproxy、wireguard、ipv6helper、frp、nps、mwan3等拓展，具体的配置文件如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;ryanInf&#x2F;OpenWrt-MSG1500-Actions&#x2F;blob&#x2F;main&#x2F;.config</span><br></pre></td></tr></table></figure>
 
@@ -2602,12 +2602,12 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p>刷入第一步编译出来的固件：openwrt-ramips-mt7621-raisecom_msg1500-x-00-initramfs-kernel.bin</p>
 <p>静待路由器重启，然后刷新浏览器可看到openwrt登陆页面，账号：root/password，此时刷机已完成。</p>
 <h3 id="光猫桥接配置"><a href="#光猫桥接配置" class="headerlink" title="光猫桥接配置"></a>光猫桥接配置</h3><p>光猫改桥接后有利于P2P下载、内网穿透、减少NAT层级性能更优，也方便自定义网络，所以需要进行光猫改桥接，改之前请确保你知道自己的宽带账号及密码。</p>
-<p>笔者是广东移动的宽带，配置仅供参考。</p>
-<p>首先获取光猫的超管密码，搜一下就有，用户名是<code>CMCCAdmin</code>，如果找不到就咨询宽带客服。<br>首先我们得区分哪个是上网连接，哪个是IPTV，笔者这里是41和48连接：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-15-21.png"></p>
+<p>博主是广东移动的宽带，配置仅供参考。</p>
+<p>首先获取光猫的超管密码，搜一下就有，用户名是<code>CMCCAdmin</code>，如果找不到就咨询宽带客服。<br>首先我们得区分哪个是上网连接，哪个是IPTV，博主这里是41和48连接：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-15-21.png"></p>
 <p>通过LAN1口绑定的信息，可以知道vlan41连接是上网连接，vlan48是iptv：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-17-09.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-18-32.png"></p>
 <p>然后可以开始改桥接了，在修改之前，最好是对以上页面截图保存，以防配置失败改不回来。<br>首先进行用户侧vlan的绑定，我们知道，运营商网络通过vlan来区分上网和iptv等流量，我们知道上网是vlan41，iptv是vlan48，这里的vlan900是组播vlan，为了让openwrt能够区分这两组流量，所以需要给他们打上vlan标签。当然了，你把光猫插上两条网线到openwrt也能做这个区分，但这就白白浪费一根网线了，也不优雅。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-21-00.png"></p>
 <p>很简单，只需要把原来的路由模式，改成桥接模式：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-26-31.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-26-07.png"></p>
-<p>然后登陆路由器对wan口进行pppoe拨号配置：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-29-06.png"><br>注意MTU要设置的比光猫那小，LCP 响应故障阈值设置为0，防止误判定为掉线。笔者在这里踩坑了，刚开始MTU默认为1500导致经常性掉线，需要手动重新拨号才能上网：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-30-12.png"><br>物理接口需要绑定vlan41，即在原来接口名称后加上<code>.41</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-32-12.png"><br>防火墙区域按默认的WAN即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-33-15.png"><br>保存后返回接口页面，应该可以看到成功拨号并获取到ip地址：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-34-16.png"></p>
+<p>然后登陆路由器对wan口进行pppoe拨号配置：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-29-06.png"><br>注意MTU要设置的比光猫那小，LCP 响应故障阈值设置为0，防止误判定为掉线。博主在这里踩坑了，刚开始MTU默认为1500导致经常性掉线，需要手动重新拨号才能上网：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-30-12.png"><br>物理接口需要绑定vlan41，即在原来接口名称后加上<code>.41</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-32-12.png"><br>防火墙区域按默认的WAN即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-33-15.png"><br>保存后返回接口页面，应该可以看到成功拨号并获取到ip地址：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-01-26-00-34-16.png"></p>
 <p>接下来配置LAN，设置自己的LAN网段：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-27-43.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-28-40.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-00.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-32.png"></p>
 <p>强制DHCP建议勾选上，移动送的路由器即便设置成AP默认仍然会启动DHCP导致内网设备不能上网，勾选后就不会有这个问题：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-29-53.png"></p>
 <p><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-11-31-29.png"></p>
@@ -2624,7 +2624,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p>这里选择<code>openwrt mwan3分流</code>的方法，因为暂时还没有24小时运行的pc机放家里。</p>
 <p>在openwrt上新建一个<code>wan_iptv</code>接口，接口类型是<code>wan</code>，同时绑定光猫上配置的<code>vlan</code>号：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-12-57-43.png"><br>协议是dhcp，主机名的话可默认，如果不行可尝试修改为机顶盒的主机名，通过openwrt的dhcp设置页可看到主机名：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-12-59-27.png"><br>网关跃点需要设置为比默认网关（即wan口）的大，习惯设置为100，这样内网设备默认不会走此线路：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-01-21.png"><br>防火墙区域是<code>wan</code>，这样内网设备使用此网关的话会经过nat：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-03-16.png"></p>
 <p>保存配置后，可看到<code>wan_iptv</code>接口成功获取到<code>10段</code>的iptv线路地址，注意如果获取到的是<code>100段</code>或者其它段的地址是不行的，需要检查下<code>MAC地址</code>、<code>主机名</code>等配置是否有冲突，正常情况下移动的是按默认可获取到正确的ip：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-07-26.png"></p>
-<p>现在iptv线路没问题了，难点就在于让iptv机顶盒的流量走<code>wan_iptv</code>接口，需要用到<code>mwan3</code>，可尝试通过opkg安装或自行编译或找别人编译好的，在第一步的估计编译中笔者已集成该模块。</p>
+<p>现在iptv线路没问题了，难点就在于让iptv机顶盒的流量走<code>wan_iptv</code>接口，需要用到<code>mwan3</code>，可尝试通过opkg安装或自行编译或找别人编译好的，在第一步的估计编译中博主已集成该模块。</p>
 <p>找到<code>负载均衡</code>，然后新建一个接口<code>wan_iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-14-11.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-15-39.png"></p>
 <p>创建成员<code>iptv_member</code>，此处最好把该成员规则置顶：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-16-23.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-16-57.png"></p>
 <p>创建策略<code>iptv</code>：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-17-40.png"><br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-13-18-06.png"></p>
@@ -2646,6 +2646,48 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <h3 id="NPS"><a href="#NPS" class="headerlink" title="NPS"></a>NPS</h3><p>nps配置比较简单，在公网的服务器启动nps服务端后，在openwrt上配置nps的连接信息即可，主要用于备用连接，防止ipv6网络连接失败导致连接不上内网。<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-31-01.png"></p>
 <h3 id="阿里云WEBDAV"><a href="#阿里云WEBDAV" class="headerlink" title="阿里云WEBDAV"></a>阿里云WEBDAV</h3><p>阿里云WebDav非常推荐使用，在openwrt启动后内网设备可通过webdav协议打开网盘里的高清电影、音频等多媒体文件，配合电视或智能盒子安装Kodi播放，即可体检无广告、在线播放、高清电影，只要找到阿里云资源保存一份到自己网盘即可播放，非常方便。<br>只需要登录网盘网页版获取token填入，然后设置监听的端口及密码即可：<br><img data-src="/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/2023-02-07-15-32-51.png"></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文记录了一次家庭网络的折腾过程，希望能帮到有需求的有缘人。</p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爱快主路由下IPV6防火墙的最优解（可能）</title>
+    <url>/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在ipv6网络环境下，内网设备也获取到公网的ipv6地址，可直接被外部网络访问，形同裸奔，所以使用ipv6防火墙是很有必要的。</p>
+<p>爱快的流控、人性化的界面与配置，是我使用爱快作为主路由的主要原因，但是不支持ipv6防火墙，内网设备在ipv6下裸奔，也是爱快受人诟病的一大缺陷。在家庭网络中，如何在爱快作为主路由的环境下，增加ipv6防火墙的问题，我想了很久，搜索了大量的资料，中间考虑过很多方案。其实要做到增加防火墙的方法很多，比如使用openwrt作为主路由自带防火墙、opensense，或是使用内网主机自带的防火墙。考虑过使用openwrt作为主路由，但是openwrt在折腾中诡异的问题实在太多，而且流控、界面展示、客户端控制、人性化的操作等多方面都不符合我的个人审美与需求。m0n0wall、opnsense之类的防火墙固件的话因为想到为了一个防火墙功能而额外消耗比较多的硬件自营且接入上去对网络结构有比较大的改动所以放弃了。最终，想到了一个相对优雅且对现有网络结构影响较小的方案。</p>
+<p>本教程不太适合小白，小白也不太能理解ipv6防火墙的重要性。</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>我们知道，openwrt自带了ipv6的防火墙，那么使用爱快作为ipv4网关，openwrt作为ipv6网关，就可以实现需求。<br>下面来揭晓我的方案:</p>
+<ul>
+<li>在爱快创建一个vlan接口，并在该接口启用ipv6，同时停用爱快lan口的ipv6服务</li>
+<li>通过vlan，复用内网LAN线路作为openwrt与爱快间的ipv6桥梁</li>
+<li>openwrt 充当内网lan ipv6网关</li>
+<li>openwrt 配置ipv6防火墙</li>
+</ul>
+<p>示例图如下：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-12-38-56.png"></p>
+<p>最终流量走向示例如下：<br>ipv4: client1(192.168.5.101) -&gt; ikuai lan(192.168.5.1) -&gt; ikuai wan(Internet)<br>ipv6: client1(2400:xxxx:a1::101) -&gt; openwrt lan(2400:xxxx:a1::1) -&gt; openwrt wan(dhcpv6 client) -&gt; ikuai lan(dhcpv6 server) -&gt; ikuan wan(Internet ipv6)</p>
+<p>可以看到，ipv6流量先经过openwrt再经过ipv6，然后我们在openwrt上面配置ipv6防火墙就可以了。</p>
+<a id="more"></a>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><h4 id="爱快配置"><a href="#爱快配置" class="headerlink" title="爱快配置"></a>爱快配置</h4><p>首先是爱快主路由的配置，lan1是内网网口：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-19-46.png"></p>
+<p>在vlan设置中，添加一个vlan，这里使用vlan号101，线路选择lan1，不要设置ipv4地址，因为是纯ipv6网络：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-23-11.png"></p>
+<p><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-24-08.png"></p>
+<p><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-25-30.png"></p>
+<p>然后配置vlan101口的ipv6服务。需要确保在ipv6设置中外网接口能获取到公网v6地址，且获取到ipv6前缀，正常桥接光猫并正确拨号后会自动获取到：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-35-41.png"><br>前缀这里需要小于64，否则在openwrt就无法下发ipv6地址：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-36-42.png"></p>
+<h4 id="openwrt-ipv6配置"><a href="#openwrt-ipv6配置" class="headerlink" title="openwrt ipv6配置"></a>openwrt ipv6配置</h4><p>接下来配置openwrt，为了方便，我的openwrt配置了2个网口，都是绑定了内网lan口：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-26-51.png"><br>openwrt作为二级ipv4路由，相信大家都会，不细说了，配置好之后可开始配置v6，不配置也行。<br>然后修改wan6配置：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-28-45.png"><br>把协议切换为dhcpv6客户端，如何没有的，请自行查询安装ipv6（主要是ipv6-helper）方法或更换固件：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-30-34.png"><br>不要勾选”使用内置的 IPv6 管理”：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-32-53.png"><br>配置为桥接接口，并连接到vlan101：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-33-27.png"><br>防火墙区域设置为wan：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-13-34-02.png"></p>
+<p>保存后会自动重启接口，此时wan6应该能获取到ipv6地址及pd前缀，正常的话lan口也应该获取到ipv6地址：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-01-18.png"></p>
+<p>然后配置lan口的dhcpv6服务，内网设备即可获取到ipv6地址：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-05-26.png"></p>
+<p>然而博主的lan口经过多方配置，也无法获取到ipv6地址，内网设备也无法获取到公网的ipv6地址，网上很多教程是改成中继模式的并不符合本人的需求。</p>
+<p>最终，通过把wan6获取到的pd前缀，写入lan口的ipv6地址，才解决了问题，内网设备、lan口都有公网的ipv6地址，也能正常访问ipv6网络。<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-09-54.png"></p>
+<p>但这样有个问题，运营商给的ipv6 pd前缀是会变的，会导致后面内网设备无法上网，所以需要想个办法把最新的pd前缀应用到lan接口去，这里使用crontab：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* * * * * newpd=`ifstatus wan6|jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`;lan_v6=`ifstatus lan|jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`;<span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$newpd</span>&quot;</span> != <span class="string">&quot;<span class="variable">$lan_v6</span>&quot;</span> ];<span class="keyword">then</span> uci <span class="built_in">set</span> network.lan.ip6addr=<span class="variable">$newpd</span>;uci commit network;service network restart;<span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>把上面的命令直接写入计划任务即可，如果lan口本身就能获取到ipv6地址的则不需要这个步骤。<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-15-54.png"></p>
+<h4 id="openwrt-防火墙配置"><a href="#openwrt-防火墙配置" class="headerlink" title="openwrt 防火墙配置"></a>openwrt 防火墙配置</h4><p>如果需要开放某些ipv6端口允许公网访问，可配置防火墙策略。<br>以bt下载（16881端口）为例：<br>打开防火墙 -&gt; 通信规则 -&gt; 新建转发规则，输入规则名，点击添加并编辑：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-19-51.png"></p>
+<p><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-21-39.png"><br>然后保存并应用即可：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-23-16.png"></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>ipv6 防火墙实现的方法很多种，本文只是介绍一种相对简单的方式，希望能帮助到遇到相同难题的人。</p>
 ]]></content>
       <categories>
         <category>折腾</category>
