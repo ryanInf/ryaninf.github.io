@@ -2240,6 +2240,13 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p> 这里反复尝试之后发现不行，看输出可以发现，VS Code还是请求了官方的地址，所以可知我们配置的代理不生效，然后翻看一下VS Code的设置，可以看到有个<code>Tools Env Vars</code>的配置，猜想它是配置这个Go工具包的环境变量的<br> <img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-55-55.png"></p>
 <p> 然后把网上教程中让我们设置的两个环境变量改成json格式写进去就行了，记得VS Code的配置文件是json格式的，所以如果原本上面有配置的，需要在前面加个逗号<code>,</code><br> <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;go.toolsEnvVars&quot;: &#123;&quot;GO111MODULE&quot;: &quot;on&quot;, &quot;GOPROXY&quot;: &quot;https://goproxy.cn,direct&quot;&#125;</span><br></pre></td></tr></table></figure><br> <img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/2021-05-28-10-58-47.png"></p>
 <p> 配置完成后再次按照前面的步骤安装工具包即可。</p>
+<h3 id="go-导入本地包"><a href="#go-导入本地包" class="headerlink" title="go 导入本地包"></a>go 导入本地包</h3><p>go mod 导入本地包，先下载源码，如下载github.com/pretty66/websocketproxy到本地myproject/libs/websocketproxy。</p>
+<p>然后修改myproject/go.mod，增加一行：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">replace github.com/pretty66/websocketproxy =&gt; ./libs/websocketproxy</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/image-20230308162946444.png"></p>
+<p>然后自己的代码照常import就行</p>
+<p><img data-src="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/image-20230308163011841.png"></p>
 ]]></content>
       <categories>
         <category>Go</category>
