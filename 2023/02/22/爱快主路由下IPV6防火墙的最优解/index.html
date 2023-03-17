@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://r0yanx.com/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-16-23-16.png">
 <meta property="og:image" content="https://r0yanx.com/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-23-20-56-01.png">
 <meta property="article:published_time" content="2023-02-22T03:45:23.000Z">
-<meta property="article:modified_time" content="2023-02-23T16:13:41.014Z">
+<meta property="article:modified_time" content="2023-03-17T06:45:08.331Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="折腾">
 <meta name="twitter:card" content="summary">
@@ -258,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 00:13:41" itemprop="dateModified" datetime="2023-02-24T00:13:41+08:00">2023-02-24</time>
+                <time title="修改时间：2023-03-17 14:45:08" itemprop="dateModified" datetime="2023-03-17T14:45:08+08:00">2023-03-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,7 +290,7 @@
       
         <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在ipv6网络环境下，内网设备也获取到公网的ipv6地址，可直接被外部网络访问，形同裸奔，所以使用ipv6防火墙是很有必要的。</p>
-<p>爱快的流控、人性化的界面与配置，是我使用爱快作为主路由的主要原因，但是不支持ipv6防火墙，内网设备在ipv6下裸奔，也是爱快受人诟病的一大缺陷。在家庭网络中，如何在爱快作为主路由的环境下，增加ipv6防火墙的问题，我想了很久，搜索了大量的资料，中间考虑过很多方案。其实要做到增加防火墙的方法很多，比如使用openwrt作为主路由自带防火墙、opensense，或是使用内网主机自带的防火墙。考虑过使用openwrt作为主路由，但是openwrt在折腾中诡异的问题实在太多，而且流控、界面展示、客户端控制、人性化的操作等多方面都不符合我的个人审美与需求。m0n0wall、opnsense之类的防火墙固件的话因为想到为了一个防火墙功能而额外消耗比较多的硬件自营且接入上去对网络结构有比较大的改动所以放弃了。最终，想到了一个相对优雅且对现有网络结构影响较小的方案。</p>
+<p>爱快的流控、人性化的界面与配置，是我使用爱快作为主路由的主要原因，但是不支持ipv6防火墙，内网设备在ipv6下裸奔，也是爱快受人诟病的一大缺陷。在家庭网络中，如何在爱快作为主路由的环境下，增加ipv6防火墙的问题，我想了很久，搜索了大量的资料，中间考虑过很多方案。其实要做到增加防火墙的方法很多，比如使用openwrt作为主路由自带防火墙、opensense，或是使用内网主机自带的防火墙。考虑过使用openwrt作为主路由，但是openwrt在折腾中诡异的问题实在太多，而且流控、界面展示、客户端控制、人性化的操作等多方面都不符合我的个人审美与需求。m0n0wall、opnsense之类的防火墙固件的话因为想到为了一个防火墙功能而额外消耗比较多的硬件资源且接入上去对网络结构有比较大的改动所以放弃了。最终，想到了一个相对优雅且对现有网络结构影响较小的方案。</p>
 <p>本教程不太适合小白，小白也不太能理解ipv6防火墙的重要性。</p>
 <h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>我们知道，openwrt自带了ipv6的防火墙，那么使用爱快作为ipv4网关，openwrt作为ipv6网关，就可以实现需求。<br>下面来揭晓我的方案:</p>
 <ul>
