@@ -2705,4 +2705,40 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>折腾</tag>
       </tags>
   </entry>
+  <entry>
+    <title>openwrt折腾笔记</title>
+    <url>/2023/03/20/openwrt%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文只是记录一下openwrt日常配置方法，作为备忘。</p>
+<h3 id="openwrt重置"><a href="#openwrt重置" class="headerlink" title="openwrt重置"></a>openwrt重置</h3><p>在终端中执行下面命令，可讲openwrt恢复出厂设置，主要用于特殊原因访问不到web界面的时候。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firstboot -y &amp;&amp; reboot</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动更新ipv6-pd前缀"><a href="#自动更新ipv6-pd前缀" class="headerlink" title="自动更新ipv6 pd前缀"></a>自动更新ipv6 pd前缀</h3><p>自动将从wan6获取到的ipv6 pd前缀更新到lan口，配置原因请看下文：<br><a href="https://r0yanx.com/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/#more">爱快主路由下 IPV6 防火墙的最优解（可能）</a></p>
+<p>调试过程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取wan6的pd前缀</span></span><br><span class="line">newpd=`ubus call network.interface.wan6 status |jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r  <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line"><span class="comment"># 获取lan口的ipv6地址</span></span><br><span class="line">lan_v6=`ubus call network.interface.lan status |jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r  <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">newpd=`ifstatus wan6|jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line">lan_v6=`ifstatus lan|jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改lan口v6地址</span></span><br><span class="line">uci <span class="built_in">set</span> network.lan.ip6addr=<span class="string">&#x27;24xx:xxxx:xxx:xxxx::/64&#x27;</span></span><br><span class="line">uci commit network</span><br><span class="line">service network restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断wan6 pd前缀是否应用到lan口，否则就更新wan6地址到lan口</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$newpd</span>&quot;</span> != <span class="string">&quot;<span class="variable">$lan_v6</span>&quot;</span> ];<span class="keyword">then</span> uci <span class="built_in">set</span> network.lan.ip6addr=<span class="variable">$newpd</span>;uci commit network;service network restart;<span class="keyword">fi</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#完整cron</span></span><br><span class="line"></span><br><span class="line">* * * * * newpd=`ifstatus wan6|jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`;lan_v6=`ifstatus lan|jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`;<span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$newpd</span>&quot;</span> != <span class="string">&quot;<span class="variable">$lan_v6</span>&quot;</span> ];<span class="keyword">then</span> uci <span class="built_in">set</span> network.lan.ip6addr=<span class="variable">$newpd</span>;uci commit network;service network restart;<span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>相关参考：<br><a href="https://openwrt.org/zh/docs/guide-user/base-system/uci">https://openwrt.org/zh/docs/guide-user/base-system/uci</a></p>
+<h3 id="Adguardhome与SSR共存"><a href="#Adguardhome与SSR共存" class="headerlink" title="Adguardhome与SSR共存"></a>Adguardhome与SSR共存</h3><p>adguardhome直接从源安装的不稳定，容易卡死，先下载luci包，然后通过页面上的更新功能来安装adguardhome核心</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://github.com/rufengsuixing/luci-app-adguardhome/releases/download/1.8-9/luci-app-adguardhome_1.8-9_all.ipk</span><br></pre></td></tr></table></figure>
+
+<p>ssr作为fq网关时，dns解析依赖dnsmasq，所以dns解析必须经过dnsmasq(有特殊情况，就是ssr DNS解析方式选择”使用本机端口为5335的DNS服务”的时候，不需要，属于高级玩法啦，此处不讨论)。<br>为了让adguardhome显示内网ip而不是127.0.0.1，要把adguardhome监听53端口，然后上游设置为dnsmasq，dnsmasq上游设置为smartdns</p>
+<p>client -&gt; adguardhome 53 -&gt; dnsmasq 53503 -&gt; smartdns 6053 -&gt; internet dns</p>
+<p>以下引用恩山网友的测试记录：<br>dns重定向</p>
+<ul>
+<li>作为dnsmasq的上游服务器(在AGH中统计到的ip都为127.0.0.1，无法统计客户端及对应调整设置，乳酸菌饮料-plus正常)</li>
+<li>重定向53端口到 AdGuardHome（ipv6需要开启ipv6 nat redirect 否则如果客户端使用ipv6过滤无效，不以dnsmasq为上游乳酸菌饮料-plus失效）</li>
+<li>使用53端口替换 dnsmasq(需要设置AGH的dnsip为0.0.0.0, AGH和dnsmasq的端口将被交换，不以dnsmasq为上游乳酸菌饮料-plus失效)</li>
+</ul>
+<p>官方说法：<br><a href="https://github.com/rufengsuixing/luci-app-adguardhome">https://github.com/rufengsuixing/luci-app-adguardhome</a><br>关于ssr配合<br>方法一gfw代理：dns重定向-作为dnsmasq的上游服务器<br>方法二gfw代理：手动设置adh上游dns为自己即127.0.0.1:[自己监听的端口]，然后使用 dns重定向-使用53端口替换dnsmasq，（因为端口互换后就是dnsmasq为上游了）<br>方法三国外ip代理：任意重定向方式，adh加入gfw列表，开启计划任务定时更新gfw即可</p>
+<h3 id="安装SmartDNS"><a href="#安装SmartDNS" class="headerlink" title="安装SmartDNS"></a>安装SmartDNS</h3><p>SmartDNS使用起来效果确实不错的，建议安装。<br>下载luci-app-smartdns，太新的貌似不兼容，下了个20年的可以</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://github.com/pymumu/smartdns/releases/download/Release33/luci-app-smartdns.1.2020.09.08-2235.all-luci-compat-all.ipk</span><br></pre></td></tr></table></figure>
+
+<p>下载本体:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://github.com/pymumu/smartdns/releases/download/Release40/smartdns.1.2023.01.02-1537.x86_64-openwrt-all.ipk</span><br></pre></td></tr></table></figure>
+
+<p>opkg install xxx 安装<br>然后重启openwrt，可看到菜单有smartdns</p>
+<h3 id="后续持续更新…"><a href="#后续持续更新…" class="headerlink" title="后续持续更新…"></a>后续持续更新…</h3>]]></content>
+  </entry>
 </search>

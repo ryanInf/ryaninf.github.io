@@ -23,36 +23,19 @@
     var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary&#x2F;server&#x2F;socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary&#x2F;server&#x2F;socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作">
+  <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言本文只是记录一下openwrt日常配置方法，作为备忘。 openwrt重置在终端中执行下面命令，可讲openwrt恢复出厂设置，主要用于特殊原因访问不到web界面的时候。 1firstboot -y &amp;&amp; reboot  自动更新ipv6 pd前缀自动将从wan6获取到的ipv6 pd前缀更新到lan口，配置原因请看下文：爱快主">
 <meta property="og:type" content="article">
-<meta property="og:title" content="让BurpSuite使用MSF的socks4a代理">
-<meta property="og:url" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/index.html">
+<meta property="og:title" content="openwrt折腾笔记">
+<meta property="og:url" content="https://r0yanx.com/2023/03/20/openwrt%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言最近在使用msf转发流量时遇到了个问题，就是使用auxiliary&#x2F;server&#x2F;socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary&#x2F;server&#x2F;socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。 具体问题演示环境我所在的环境比较特殊，工作">
+<meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言本文只是记录一下openwrt日常配置方法，作为备忘。 openwrt重置在终端中执行下面命令，可讲openwrt恢复出厂设置，主要用于特殊原因访问不到web界面的时候。 1firstboot -y &amp;&amp; reboot  自动更新ipv6 pd前缀自动将从wan6获取到的ipv6 pd前缀更新到lan口，配置原因请看下文：爱快主">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-36.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-49.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-05.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-14.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-33.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-34.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-39.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-47.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-08.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-15.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-29.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-11.png">
-<meta property="og:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-27.png">
-<meta property="article:published_time" content="2019-07-11T10:40:11.000Z">
-<meta property="article:modified_time" content="2020-08-26T07:52:40.721Z">
+<meta property="article:published_time" content="2023-03-20T02:22:11.000Z">
+<meta property="article:modified_time" content="2023-03-20T07:39:16.583Z">
 <meta property="article:author" content="r0yanx">
-<meta property="article:tag" content="渗透测试">
-<meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png">
 
-<link rel="canonical" href="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
+<link rel="canonical" href="https://r0yanx.com/2023/03/20/openwrt%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -65,7 +48,7 @@
   };
 </script>
 
-  <title>让BurpSuite使用MSF的socks4a代理 | r0yanx's Blog</title>
+  <title>openwrt折腾笔记 | r0yanx's Blog</title>
   
 
 
@@ -222,7 +205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/03/20/openwrt%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -235,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          让BurpSuite使用MSF的socks4a代理
+          openwrt折腾笔记
         </h1>
 
         <div class="post-meta">
@@ -244,24 +227,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-07-11 18:40:11" itemprop="dateCreated datePublished" datetime="2019-07-11T18:40:11+08:00">2019-07-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-26 15:52:40" itemprop="dateModified" datetime="2020-08-26T15:52:40+08:00">2020-08-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
+              <time title="创建时间：2023-03-20 10:22:11 / 修改时间：15:39:16" itemprop="dateCreated datePublished" datetime="2023-03-20T10:22:11+08:00">2023-03-20</time>
             </span>
 
           
@@ -283,36 +251,37 @@
 
       
         <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在使用msf转发流量时遇到了个问题，就是使用auxiliary/server/socks4a做代理时，burpsuite不支持socks4a代理，导致无法使用burp去抓包。而使用auxiliary/server/socks5做代理却失败了，可能是脚本的bug，官方issues也有人反馈这个问题。</p>
-<h3 id="具体问题"><a href="#具体问题" class="headerlink" title="具体问题"></a>具体问题</h3><h4 id="演示环境"><a href="#演示环境" class="headerlink" title="演示环境"></a>演示环境</h4><p>我所在的环境比较特殊，工作机（192.168.1.2，Windows）位于A地内网，MSF机器（172.16.1.2，Linux）位于B地内网，两内网不相通，但是可以通过11.11.11.11:22 SSH访问MSF机器，遂用SSH隧道将172.16.1.2:11080端口转发到工作机的127.0.0.1:1083端口，如果不清楚这个操作，可以理解为工作机访问本机127.0.0.1:1083端口等价于访问MSF机172.16.1.2:11080端口。<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-43-50.png"></p>
-<a id="more"></a>
-<h4 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h4><ol>
-<li>在MSF机器启动socks4a代理（前面获取反弹shell、设置路由的步骤略过）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; use auxiliary&#x2F;server&#x2F;socks4a </span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; set SRVPORT 11080</span><br><span class="line">msf5 auxiliary(server&#x2F;socks4a) &gt; exploit</span><br></pre></td></tr></table></figure>
-<img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-36.png"></li>
-<li>在配置代理前，我的ip地址是A地公网ip<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-44-49.png"></li>
-<li>使用Firefox配置代理测试转发是否正常，这时ip由联通变成电信了，证明代理转发隧道工作正常<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-05.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-14.png"></li>
-<li>这个时候，如果直接在burpsuite配置前置socks代理的话是不能使用的，因为burpsuite不支持socks4协议，所以会打不开网页<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-45-33.png"></li>
-</ol>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用sockscap64工具，把socks4a转发为http代理。当然，使用其它工具将socks4a转为http代理或socks5代理也行，比如Linux下的privoxy，socks4a转socks5的工具找了很久都没找到，遂放弃。</p>
-<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><ol>
-<li>打开sockscap64工具，创建代理配置，代理服务器为127.0.0.1:1083（MSF socks4a端口地址）<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-34.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-39.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-46-47.png"></li>
-<li>burpsuite配置前置http代理，代理服务地址为127.0.0.1:25378，这个端口是sockscap64监听的端口<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-08.png"><br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-15.png"></li>
-<li>打开Firefox测试，可以看到现在已经是MSF机器的电信ip了，问题成功解决。<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-47-29.png"></li>
-<li>回顾下出口流量走向，如下：<div id="flowchart-0" class="flow-chart"></div>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文只是记录一下openwrt日常配置方法，作为备忘。</p>
+<h3 id="openwrt重置"><a href="#openwrt重置" class="headerlink" title="openwrt重置"></a>openwrt重置</h3><p>在终端中执行下面命令，可讲openwrt恢复出厂设置，主要用于特殊原因访问不到web界面的时候。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firstboot -y &amp;&amp; reboot</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<h4 id="为什么是25378端口"><a href="#为什么是25378端口" class="headerlink" title="为什么是25378端口"></a>为什么是25378端口</h4><ol>
-<li>SockScap64支持系统代理<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-11.png"></li>
-<li>启用系统代理可发现其使用25378端口做代理服务<br><img data-src="/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/2020-08-19-18-50-27.png"><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 工作机Firefox
-e=>end: 目标网络
-op1=>operation: burp代理（127.0.0.1:1080)
-op2=>operation: SocksCap64本地代理（127.0.0.1:25378)
-op3=>operation: ssh本地转发端口（127.0.0.1:1083)
-op4=>operation: msf socks4a端口（172.16.1.2:11083）
-st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
-</ol>
+<h3 id="自动更新ipv6-pd前缀"><a href="#自动更新ipv6-pd前缀" class="headerlink" title="自动更新ipv6 pd前缀"></a>自动更新ipv6 pd前缀</h3><p>自动将从wan6获取到的ipv6 pd前缀更新到lan口，配置原因请看下文：<br><a href="https://r0yanx.com/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/#more">爱快主路由下 IPV6 防火墙的最优解（可能）</a></p>
+<p>调试过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取wan6的pd前缀</span></span><br><span class="line">newpd=`ubus call network.interface.wan6 status |jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r  <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line"><span class="comment"># 获取lan口的ipv6地址</span></span><br><span class="line">lan_v6=`ubus call network.interface.lan status |jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r  <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">newpd=`ifstatus wan6|jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line">lan_v6=`ifstatus lan|jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改lan口v6地址</span></span><br><span class="line">uci <span class="built_in">set</span> network.lan.ip6addr=<span class="string">&#x27;24xx:xxxx:xxx:xxxx::/64&#x27;</span></span><br><span class="line">uci commit network</span><br><span class="line">service network restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断wan6 pd前缀是否应用到lan口，否则就更新wan6地址到lan口</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$newpd</span>&quot;</span> != <span class="string">&quot;<span class="variable">$lan_v6</span>&quot;</span> ];<span class="keyword">then</span> uci <span class="built_in">set</span> network.lan.ip6addr=<span class="variable">$newpd</span>;uci commit network;service network restart;<span class="keyword">fi</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#完整cron</span></span><br><span class="line"></span><br><span class="line">* * * * * newpd=`ifstatus wan6|jq <span class="string">&#x27;.[&quot;ipv6-prefix&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`;lan_v6=`ifstatus lan|jq <span class="string">&#x27;.[&quot;ipv6-address&quot;][0]&#x27;</span> | jq -r   <span class="string">&#x27;&quot;\(.address)\/\(.mask)&quot;&#x27;</span>`;<span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$newpd</span>&quot;</span> != <span class="string">&quot;<span class="variable">$lan_v6</span>&quot;</span> ];<span class="keyword">then</span> uci <span class="built_in">set</span> network.lan.ip6addr=<span class="variable">$newpd</span>;uci commit network;service network restart;<span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>相关参考：<br><a target="_blank" rel="noopener" href="https://openwrt.org/zh/docs/guide-user/base-system/uci">https://openwrt.org/zh/docs/guide-user/base-system/uci</a></p>
+<h3 id="Adguardhome与SSR共存"><a href="#Adguardhome与SSR共存" class="headerlink" title="Adguardhome与SSR共存"></a>Adguardhome与SSR共存</h3><p>adguardhome直接从源安装的不稳定，容易卡死，先下载luci包，然后通过页面上的更新功能来安装adguardhome核心</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/rufengsuixing/luci-app-adguardhome/releases/download/1.8-9/luci-app-adguardhome_1.8-9_all.ipk</span><br></pre></td></tr></table></figure>
+
+<p>ssr作为fq网关时，dns解析依赖dnsmasq，所以dns解析必须经过dnsmasq(有特殊情况，就是ssr DNS解析方式选择”使用本机端口为5335的DNS服务”的时候，不需要，属于高级玩法啦，此处不讨论)。<br>为了让adguardhome显示内网ip而不是127.0.0.1，要把adguardhome监听53端口，然后上游设置为dnsmasq，dnsmasq上游设置为smartdns</p>
+<p>client -&gt; adguardhome 53 -&gt; dnsmasq 53503 -&gt; smartdns 6053 -&gt; internet dns</p>
+<p>以下引用恩山网友的测试记录：<br>dns重定向</p>
+<ul>
+<li>作为dnsmasq的上游服务器(在AGH中统计到的ip都为127.0.0.1，无法统计客户端及对应调整设置，乳酸菌饮料-plus正常)</li>
+<li>重定向53端口到 AdGuardHome（ipv6需要开启ipv6 nat redirect 否则如果客户端使用ipv6过滤无效，不以dnsmasq为上游乳酸菌饮料-plus失效）</li>
+<li>使用53端口替换 dnsmasq(需要设置AGH的dnsip为0.0.0.0, AGH和dnsmasq的端口将被交换，不以dnsmasq为上游乳酸菌饮料-plus失效)</li>
+</ul>
+<p>官方说法：<br><a target="_blank" rel="noopener" href="https://github.com/rufengsuixing/luci-app-adguardhome">https://github.com/rufengsuixing/luci-app-adguardhome</a><br>关于ssr配合<br>方法一gfw代理：dns重定向-作为dnsmasq的上游服务器<br>方法二gfw代理：手动设置adh上游dns为自己即127.0.0.1:[自己监听的端口]，然后使用 dns重定向-使用53端口替换dnsmasq，（因为端口互换后就是dnsmasq为上游了）<br>方法三国外ip代理：任意重定向方式，adh加入gfw列表，开启计划任务定时更新gfw即可</p>
+<h3 id="安装SmartDNS"><a href="#安装SmartDNS" class="headerlink" title="安装SmartDNS"></a>安装SmartDNS</h3><p>SmartDNS使用起来效果确实不错的，建议安装。<br>下载luci-app-smartdns，太新的貌似不兼容，下了个20年的可以</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/pymumu/smartdns/releases/download/Release33/luci-app-smartdns.1.2020.09.08-2235.all-luci-compat-all.ipk</span><br></pre></td></tr></table></figure>
+
+<p>下载本体:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/pymumu/smartdns/releases/download/Release40/smartdns.1.2023.01.02-1537.x86_64-openwrt-all.ipk</span><br></pre></td></tr></table></figure>
+
+<p>opkg install xxx 安装<br>然后重启openwrt，可看到菜单有smartdns</p>
+<h3 id="后续持续更新…"><a href="#后续持续更新…" class="headerlink" title="后续持续更新…"></a>后续持续更新…</h3>
     </div>
 
     
@@ -327,7 +296,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://r0yanx.com/2019/07/11/%E8%AE%A9BurpSuite%E4%BD%BF%E7%94%A8MSF%E7%9A%84socks4a%E4%BB%A3%E7%90%86/" title="让BurpSuite使用MSF的socks4a代理">https://r0yanx.com/2019/07/11/让BurpSuite使用MSF的socks4a代理/</a>
+    <a href="https://r0yanx.com/2023/03/20/openwrt%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/" title="openwrt折腾笔记">https://r0yanx.com/2023/03/20/openwrt折腾笔记/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -337,10 +306,6 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag"># 渗透测试</a>
-              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
-          </div>
 
         
 
@@ -348,13 +313,10 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/07/11/VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/" rel="prev" title="VMware虚拟机磁盘空间压缩">
-      <i class="fa fa-chevron-left"></i> VMware虚拟机磁盘空间压缩
+    <a href="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/" rel="prev" title="爱快主路由下IPV6防火墙的最优解（可能）">
+      <i class="fa fa-chevron-left"></i> 爱快主路由下IPV6防火墙的最优解（可能）
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/07/15/%E4%BD%BF%E7%94%A8BurpSuite%E5%AE%8F%E8%8E%B7%E5%8F%96CSRF-TOKEN/" rel="next" title="使用BurpSuite宏获取CSRF TOKEN">
-      使用BurpSuite宏获取CSRF TOKEN <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -418,7 +380,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">具体问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">演示环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.2.</span> <span class="nav-text">测试步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF25378%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.2.</span> <span class="nav-text">为什么是25378端口</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#openwrt%E9%87%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">openwrt重置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0ipv6-pd%E5%89%8D%E7%BC%80"><span class="nav-number">3.</span> <span class="nav-text">自动更新ipv6 pd前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adguardhome%E4%B8%8ESSR%E5%85%B1%E5%AD%98"><span class="nav-number">4.</span> <span class="nav-text">Adguardhome与SSR共存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85SmartDNS"><span class="nav-number">5.</span> <span class="nav-text">安装SmartDNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E2%80%A6"><span class="nav-number">6.</span> <span class="nav-text">后续持续更新…</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
