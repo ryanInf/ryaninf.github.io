@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言作为一个有追求的Hacker&amp;Geeker，打造一个趁手的终端是必不可少的，本文将分享一下本人多年使用下来的最优方案。 本文涉及以下内容：  Cmder配置 WinderTerm + Cmder Windows Terminal + Cmder alias 常用命令快速执行 环境变量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="个人终端环境打造">
+<meta property="og:url" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/index.html">
+<meta property="og:site_name" content="r0yanx&#39;s Blog">
+<meta property="og:description" content="本文仅作为技术讨论及分享，严禁用于任何非法用途。 前言作为一个有追求的Hacker&amp;Geeker，打造一个趁手的终端是必不可少的，本文将分享一下本人多年使用下来的最优方案。 本文涉及以下内容：  Cmder配置 WinderTerm + Cmder Windows Terminal + Cmder alias 常用命令快速执行 环境变量">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-15-59-19.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-09-26.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-24-30.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-29-04.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-26-33.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-41-23.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-37-53.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-34-54.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-21-12.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-13-07.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-15-48.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-32-20.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-20-38.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-29-52.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-26-57.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-32-52.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-35-45.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-37-08.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-38-28.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-43-30.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-49-18.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-44-34.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-05-00.png">
+<meta property="og:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-10-42.png">
+<meta property="article:published_time" content="2023-03-31T07:49:32.000Z">
+<meta property="article:modified_time" content="2023-04-03T02:21:17.022Z">
+<meta property="article:author" content="r0yanx">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-15-59-19.png">
+
+<link rel="canonical" href="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>个人终端环境打造 | r0yanx's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">r0yanx's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">网络安全点点滴滴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tools">
+
+    <a href="/tools/" rel="section"><i class="fa fa-tools fa-fw"></i>tools</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/ryaninf" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          个人终端环境打造
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-31 15:49:32" itemprop="dateCreated datePublished" datetime="2023-03-31T15:49:32+08:00">2023-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-03 10:21:17" itemprop="dateModified" datetime="2023-04-03T10:21:17+08:00">2023-04-03</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个有追求的Hacker&amp;Geeker，打造一个趁手的终端是必不可少的，本文将分享一下本人多年使用下来的最优方案。</p>
+<p>本文涉及以下内容：</p>
+<ol>
+<li>Cmder配置</li>
+<li>WinderTerm + Cmder</li>
+<li>Windows Terminal + Cmder</li>
+<li>alias 常用命令快速执行</li>
+<li>环境变量</li>
+</ol>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-15-59-19.png"></p>
+<a id="more"></a>
+<h3 id="Cmder配置"><a href="#Cmder配置" class="headerlink" title="Cmder配置"></a>Cmder配置</h3><p><code>Cmder</code>给我们提供了一个不错的环境，带有常见的Linux命令如<code>curl</code>、<code>grep</code>、<code>sort</code>、<code>uniq</code>等命令，使用起来比原生cmd舒服的多，所以选用<code>Cmder</code>作为基础的命令行环境。</p>
+<h4 id="安装及初始化"><a href="#安装及初始化" class="headerlink" title="安装及初始化"></a>安装及初始化</h4><p>自行到官网下载最新版本Cmder，建议下载完整版，Mini版啥都没，用起来不舒服。<br><a target="_blank" rel="noopener" href="https://cmder.app/">https://Cmder.app/</a><br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-09-26.png"><br>运行后会自动初始化。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-24-30.png"><br>然后检查下系统环境变量，有无<code>Cmder_ROOT</code>、<code>ConEmuDir</code>两个环境变量，如果没有，就手动添加下。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-29-04.png"></p>
+<p><code>CMDER_ROOT</code>设置为Cmder解压后的命令，即<code>Cmder.exe</code>所在目录。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-26-33.png"><br><code>ConEmuDir</code>在是Cmder目录下的<code>vendor\conemu-maximus5</code>，参考上方截图。</p>
+<h4 id="修改烦人的默认符号-“λ”"><a href="#修改烦人的默认符号-“λ”" class="headerlink" title="修改烦人的默认符号 “λ”"></a>修改烦人的默认符号 “λ”</h4><p>默认命令行提示符号 “λ”，在某些情况下会导致显示异常，所以换掉，比如下面，<code>ping</code>显示成<code>pping</code>：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-41-23.png"><br>打开<code>vendor\clink.lua</code>文件，搜索<code>local lambda =</code><br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-37-53.png"><br>修改后：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-34-54.png"></p>
+<h4 id="配置Alias"><a href="#配置Alias" class="headerlink" title="配置Alias"></a>配置Alias</h4><p>如果经常用Linux应该知道，我们可以把一些常用命令设置成别名，比如：<br><code>alias ll=&quot;ls -lah&quot;</code></p>
+<p>通过别名，我们可以设置一些自定义命令，实现快捷操作或者多版本Python运行等。</p>
+<p>我们可以在<code>config\user_aliases.cmd</code>文件添加自己的别名，参考如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">myip=curl 4.ipw.cn &amp;&amp; <span class="built_in">echo</span>= &amp;&amp; curl 6.ipw.cn</span><br><span class="line">python=D:\python\Python38\python.exe  $*</span><br><span class="line">python3=D:\python\Python38\python.exe  $*</span><br><span class="line">python2=D:\python\Python27\python.exe  $*</span><br><span class="line">pip=D:\python\Python38\Scripts\pip.exe  $*</span><br><span class="line">pip3=D:\python\Python38\Scripts\pip.exe  $*</span><br><span class="line">pip2=D:\python\Python27\Scripts\pip.exe  $*</span><br><span class="line">pipinstall=D:\python\Python38\Scripts\pip.exe install -i https://mirrors.cloud.tencent.com/pypi/simple/ $*</span><br><span class="line">dbc=<span class="string">&quot;E:\sectools\11_other\dbeaver\dbeaver.exe&quot;</span></span><br><span class="line">hashcat=<span class="string">&quot;E:\sectools\01_bruteforce\hashcat-5.1.0\hashcat64.exe&quot;</span>  $*</span><br><span class="line">ip=ipconfig /all</span><br><span class="line">ifconfig=ipconfig</span><br><span class="line">ctf-scan=D:\python\Python38\python.exe E:\Python\ctf-wscan\ctf-wscan.py $*</span><br><span class="line">icohash = e:/Python/hw/env3/Scripts/python.exe e:/Python/FOFA_ICO_HASH.py  $*</span><br><span class="line">tshark = <span class="string">&quot;D:\Program Files\Wireshark\tshark.exe&quot;</span> $*</span><br><span class="line">docker = <span class="string">&quot;D:\Program Files (x86)\VMware\VMware Workstation\bin\vctl.exe&quot;</span>  $*</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-21-12.png"></p>
+<p>然后打开一个新的Cmder标签就能使用我们定义的别名了：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-13-07.png"></p>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-15-48.png"></p>
+<h4 id="兼容第三方终端"><a href="#兼容第三方终端" class="headerlink" title="兼容第三方终端"></a>兼容第三方终端</h4><p>既然Cmder配置后还不错，为什么还要用第三方客户端呢？<br>我的看法是：Cmder性能差，比如多行文本粘贴上去，会卡；界面不够现代化。</p>
+<p>既然我们知道Cmder有些毛病，但是有想用它的环境，比如Linux命令、Git、Alias等，可以想办法把它放到你系统的终端中启动。</p>
+<p>从下面截图我们知道，Cmder是通过下面的命令进行初始化启动的，我们先记下它的命令行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd /k <span class="string">&quot;&quot;</span>%ConEmuDir%\..\init.bat<span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-32-20.png"></p>
+<p>我们打开自己喜欢的终端工具，比如<code>Windows Terminal</code>，打开一个CMD窗口粘贴上面的命令测试一下，如果没有报错成功运行，可以看到我们已经进入<code>Cmder</code>的环境了，刚才设置的<code>Alias</code>也生效了。如果报错的话，请检查一下你的系统环境变量设置。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-20-38.png"></p>
+<h3 id="Windows-Terminal-Cmder"><a href="#Windows-Terminal-Cmder" class="headerlink" title="Windows Terminal + Cmder"></a>Windows Terminal + Cmder</h3><p>通过上面的方法我们知道可以使用第三方终端运行<code>Cmder</code>环境，下面来实践在<code>Windows Terminal</code>上面配置<code>Cmder</code>，只需要在设置中新建一个配置文件，照图片中配置即可：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-29-52.png"></p>
+<p>注意：这种方法不能同步在<code>Cmder</code>上面设置的环境变量，即下面这种：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-26-57.png"></p>
+<p>建议启用自动复制内容到剪切板：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-32-52.png"></p>
+<p>其它如主题、背景图等等可以自己去设置一一设置。</p>
+<h3 id="WinderTerm-Cmder"><a href="#WinderTerm-Cmder" class="headerlink" title="WinderTerm + Cmder"></a>WinderTerm + Cmder</h3><p>下载运行<code>WinderTerm</code>后，新建会话：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-35-45.png"></p>
+<p>会话-&gt;Shell选择<code>cmd</code>：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-37-08.png"></p>
+<p>在Shell-&gt;进程-&gt;参数填写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/k <span class="string">&quot;&quot;</span>%ConEmuDir%\..\init.bat<span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
+<p>在工作目录填写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%CMDER_ROOT%</span><br></pre></td></tr></table></figure>
+<p>环境变量可根据自己需求填写，效果跟系统的环境变量一样，只不过作用域只在<code>WinderTerm</code>的<code>Cmder</code>窗口，通过它我们可以配置轻松<code>NodeJs</code>、<code>Java</code>等环境变量。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-38-28.png"></p>
+<p>效果如下：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-43-30.png"></p>
+<p>最后，建议在会话-&gt;首选项-&gt;文本中开启自动复制文本，省得总是右键复制。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-49-18.png"></p>
+<h3 id="WinderTerm-iPython"><a href="#WinderTerm-iPython" class="headerlink" title="WinderTerm + iPython"></a>WinderTerm + iPython</h3><p>这个跟<code>Cmder</code>一样原理，找到<code>ipython.exe</code>的路径，然后配置过去即可，这样平时调调代码就很方便。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-44-34.png"></p>
+<h3 id="WinderTerm-Linux-GUI"><a href="#WinderTerm-Linux-GUI" class="headerlink" title="WinderTerm + Linux GUI"></a>WinderTerm + Linux GUI</h3><p><code>WinderTerm</code>除了作为本地终端，<code>SSH</code>的支持也是我常用的功能。同时，可通过打开<code>X Server</code>功能，在<code>Windows</code>上打开通过<code>SSH</code>连接的<code>Linux GUI</code>程序。</p>
+<p>在会话-&gt;首选项-&gt;X Server打开下图的设置：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-05-00.png"></p>
+<p>效果如下：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-10-42.png"></p>
+<p>不过需要注意的是，如果<code>SSH</code>中断，<code>GUI</code>程序也会自动关闭。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>通过</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>r0yanx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/" title="个人终端环境打造">https://r0yanx.com/2023/03/31/个人终端环境打造/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%98%E8%85%BE/" rel="tag"># 折腾</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/20/openwrt%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0/" rel="prev" title="openwrt折腾笔记">
+      <i class="fa fa-chevron-left"></i> openwrt折腾笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NTQyMS8yMTkzMw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cmder%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Cmder配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%8F%8A%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">安装及初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%83%A6%E4%BA%BA%E7%9A%84%E9%BB%98%E8%AE%A4%E7%AC%A6%E5%8F%B7-%E2%80%9C%CE%BB%E2%80%9D"><span class="nav-number">2.2.</span> <span class="nav-text">修改烦人的默认符号 “λ”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEAlias"><span class="nav-number">2.3.</span> <span class="nav-text">配置Alias</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%BC%E5%AE%B9%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%88%E7%AB%AF"><span class="nav-number">2.4.</span> <span class="nav-text">兼容第三方终端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-Terminal-Cmder"><span class="nav-number">3.</span> <span class="nav-text">Windows Terminal + Cmder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WinderTerm-Cmder"><span class="nav-number">4.</span> <span class="nav-text">WinderTerm + Cmder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WinderTerm-iPython"><span class="nav-number">5.</span> <span class="nav-text">WinderTerm + iPython</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WinderTerm-Linux-GUI"><span class="nav-number">6.</span> <span class="nav-text">WinderTerm + Linux GUI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="r0yanx"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">r0yanx</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ryanInf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ryanInf" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:admin@r0yanx.com" title="E-Mail → mailto:admin@r0yanx.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.freebuf.com/author/r0yanx" title="FreeBuf → https:&#x2F;&#x2F;www.freebuf.com&#x2F;author&#x2F;r0yanx" rel="noopener" target="_blank"><i class="fas fa-heart fa-fw"></i>FreeBuf</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">r0yanx</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+setInterval(function () {
+    var box = document.querySelector(".trc_rbox_container");
+    if(box) box.outerHTML = "";
+}, 500);
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

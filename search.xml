@@ -2742,4 +2742,60 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p>opkg install xxx 安装<br>然后重启openwrt，可看到菜单有smartdns</p>
 <h3 id="后续持续更新…"><a href="#后续持续更新…" class="headerlink" title="后续持续更新…"></a>后续持续更新…</h3>]]></content>
   </entry>
+  <entry>
+    <title>个人终端环境打造</title>
+    <url>/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个有追求的Hacker&amp;Geeker，打造一个趁手的终端是必不可少的，本文将分享一下本人多年使用下来的最优方案。</p>
+<p>本文涉及以下内容：</p>
+<ol>
+<li>Cmder配置</li>
+<li>WinderTerm + Cmder</li>
+<li>Windows Terminal + Cmder</li>
+<li>alias 常用命令快速执行</li>
+<li>环境变量</li>
+</ol>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-15-59-19.png"></p>
+<a id="more"></a>
+<h3 id="Cmder配置"><a href="#Cmder配置" class="headerlink" title="Cmder配置"></a>Cmder配置</h3><p><code>Cmder</code>给我们提供了一个不错的环境，带有常见的Linux命令如<code>curl</code>、<code>grep</code>、<code>sort</code>、<code>uniq</code>等命令，使用起来比原生cmd舒服的多，所以选用<code>Cmder</code>作为基础的命令行环境。</p>
+<h4 id="安装及初始化"><a href="#安装及初始化" class="headerlink" title="安装及初始化"></a>安装及初始化</h4><p>自行到官网下载最新版本Cmder，建议下载完整版，Mini版啥都没，用起来不舒服。<br><a href="https://cmder.app/">https://Cmder.app/</a><br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-09-26.png"><br>运行后会自动初始化。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-24-30.png"><br>然后检查下系统环境变量，有无<code>Cmder_ROOT</code>、<code>ConEmuDir</code>两个环境变量，如果没有，就手动添加下。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-29-04.png"></p>
+<p><code>CMDER_ROOT</code>设置为Cmder解压后的命令，即<code>Cmder.exe</code>所在目录。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-26-33.png"><br><code>ConEmuDir</code>在是Cmder目录下的<code>vendor\conemu-maximus5</code>，参考上方截图。</p>
+<h4 id="修改烦人的默认符号-“λ”"><a href="#修改烦人的默认符号-“λ”" class="headerlink" title="修改烦人的默认符号 “λ”"></a>修改烦人的默认符号 “λ”</h4><p>默认命令行提示符号 “λ”，在某些情况下会导致显示异常，所以换掉，比如下面，<code>ping</code>显示成<code>pping</code>：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-41-23.png"><br>打开<code>vendor\clink.lua</code>文件，搜索<code>local lambda =</code><br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-37-53.png"><br>修改后：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-34-54.png"></p>
+<h4 id="配置Alias"><a href="#配置Alias" class="headerlink" title="配置Alias"></a>配置Alias</h4><p>如果经常用Linux应该知道，我们可以把一些常用命令设置成别名，比如：<br><code>alias ll=&quot;ls -lah&quot;</code></p>
+<p>通过别名，我们可以设置一些自定义命令，实现快捷操作或者多版本Python运行等。</p>
+<p>我们可以在<code>config\user_aliases.cmd</code>文件添加自己的别名，参考如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">myip=curl 4.ipw.cn &amp;&amp; <span class="built_in">echo</span>= &amp;&amp; curl 6.ipw.cn</span><br><span class="line">python=D:\python\Python38\python.exe  $*</span><br><span class="line">python3=D:\python\Python38\python.exe  $*</span><br><span class="line">python2=D:\python\Python27\python.exe  $*</span><br><span class="line">pip=D:\python\Python38\Scripts\pip.exe  $*</span><br><span class="line">pip3=D:\python\Python38\Scripts\pip.exe  $*</span><br><span class="line">pip2=D:\python\Python27\Scripts\pip.exe  $*</span><br><span class="line">pipinstall=D:\python\Python38\Scripts\pip.exe install -i https://mirrors.cloud.tencent.com/pypi/simple/ $*</span><br><span class="line">dbc=<span class="string">&quot;E:\sectools\11_other\dbeaver\dbeaver.exe&quot;</span></span><br><span class="line">hashcat=<span class="string">&quot;E:\sectools\01_bruteforce\hashcat-5.1.0\hashcat64.exe&quot;</span>  $*</span><br><span class="line">ip=ipconfig /all</span><br><span class="line">ifconfig=ipconfig</span><br><span class="line">ctf-scan=D:\python\Python38\python.exe E:\Python\ctf-wscan\ctf-wscan.py $*</span><br><span class="line">icohash = e:/Python/hw/env3/Scripts/python.exe e:/Python/FOFA_ICO_HASH.py  $*</span><br><span class="line">tshark = <span class="string">&quot;D:\Program Files\Wireshark\tshark.exe&quot;</span> $*</span><br><span class="line">docker = <span class="string">&quot;D:\Program Files (x86)\VMware\VMware Workstation\bin\vctl.exe&quot;</span>  $*</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-21-12.png"></p>
+<p>然后打开一个新的Cmder标签就能使用我们定义的别名了：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-13-07.png"></p>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-15-48.png"></p>
+<h4 id="兼容第三方终端"><a href="#兼容第三方终端" class="headerlink" title="兼容第三方终端"></a>兼容第三方终端</h4><p>既然Cmder配置后还不错，为什么还要用第三方客户端呢？<br>我的看法是：Cmder性能差，比如多行文本粘贴上去，会卡；界面不够现代化。</p>
+<p>既然我们知道Cmder有些毛病，但是有想用它的环境，比如Linux命令、Git、Alias等，可以想办法把它放到你系统的终端中启动。</p>
+<p>从下面截图我们知道，Cmder是通过下面的命令进行初始化启动的，我们先记下它的命令行。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cmd /k <span class="string">&quot;&quot;</span>%ConEmuDir%\..\init.bat<span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-16-32-20.png"></p>
+<p>我们打开自己喜欢的终端工具，比如<code>Windows Terminal</code>，打开一个CMD窗口粘贴上面的命令测试一下，如果没有报错成功运行，可以看到我们已经进入<code>Cmder</code>的环境了，刚才设置的<code>Alias</code>也生效了。如果报错的话，请检查一下你的系统环境变量设置。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-20-38.png"></p>
+<h3 id="Windows-Terminal-Cmder"><a href="#Windows-Terminal-Cmder" class="headerlink" title="Windows Terminal + Cmder"></a>Windows Terminal + Cmder</h3><p>通过上面的方法我们知道可以使用第三方终端运行<code>Cmder</code>环境，下面来实践在<code>Windows Terminal</code>上面配置<code>Cmder</code>，只需要在设置中新建一个配置文件，照图片中配置即可：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-29-52.png"></p>
+<p>注意：这种方法不能同步在<code>Cmder</code>上面设置的环境变量，即下面这种：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-26-57.png"></p>
+<p>建议启用自动复制内容到剪切板：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-03-31-17-32-52.png"></p>
+<p>其它如主题、背景图等等可以自己去设置一一设置。</p>
+<h3 id="WinderTerm-Cmder"><a href="#WinderTerm-Cmder" class="headerlink" title="WinderTerm + Cmder"></a>WinderTerm + Cmder</h3><p>下载运行<code>WinderTerm</code>后，新建会话：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-35-45.png"></p>
+<p>会话-&gt;Shell选择<code>cmd</code>：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-37-08.png"></p>
+<p>在Shell-&gt;进程-&gt;参数填写：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/k <span class="string">&quot;&quot;</span>%ConEmuDir%\..\init.bat<span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
+<p>在工作目录填写：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%CMDER_ROOT%</span><br></pre></td></tr></table></figure>
+<p>环境变量可根据自己需求填写，效果跟系统的环境变量一样，只不过作用域只在<code>WinderTerm</code>的<code>Cmder</code>窗口，通过它我们可以配置轻松<code>NodeJs</code>、<code>Java</code>等环境变量。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-38-28.png"></p>
+<p>效果如下：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-43-30.png"></p>
+<p>最后，建议在会话-&gt;首选项-&gt;文本中开启自动复制文本，省得总是右键复制。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-49-18.png"></p>
+<h3 id="WinderTerm-iPython"><a href="#WinderTerm-iPython" class="headerlink" title="WinderTerm + iPython"></a>WinderTerm + iPython</h3><p>这个跟<code>Cmder</code>一样原理，找到<code>ipython.exe</code>的路径，然后配置过去即可，这样平时调调代码就很方便。<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-09-44-34.png"></p>
+<h3 id="WinderTerm-Linux-GUI"><a href="#WinderTerm-Linux-GUI" class="headerlink" title="WinderTerm + Linux GUI"></a>WinderTerm + Linux GUI</h3><p><code>WinderTerm</code>除了作为本地终端，<code>SSH</code>的支持也是我常用的功能。同时，可通过打开<code>X Server</code>功能，在<code>Windows</code>上打开通过<code>SSH</code>连接的<code>Linux GUI</code>程序。</p>
+<p>在会话-&gt;首选项-&gt;X Server打开下图的设置：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-05-00.png"></p>
+<p>效果如下：<br><img data-src="/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/2023-04-03-10-10-42.png"></p>
+<p>不过需要注意的是，如果<code>SSH</code>中断，<code>GUI</code>程序也会自动关闭。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>通过</p>
+]]></content>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>
