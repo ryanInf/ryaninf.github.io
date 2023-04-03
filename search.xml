@@ -2740,6 +2740,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://github.com/pymumu/smartdns/releases/download/Release40/smartdns.1.2023.01.02-1537.x86_64-openwrt-all.ipk</span><br></pre></td></tr></table></figure>
 
 <p>opkg install xxx 安装<br>然后重启openwrt，可看到菜单有smartdns</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>光猫桥接配置、IPTV 单线复用、异地组网请看下文：<br><a href="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/">https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/</a></p>
 <h3 id="后续持续更新…"><a href="#后续持续更新…" class="headerlink" title="后续持续更新…"></a>后续持续更新…</h3>]]></content>
   </entry>
   <entry>
