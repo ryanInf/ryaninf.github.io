@@ -200,6 +200,85 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/" class="post-title-link" itemprop="url">小米CR8806免拆TTL刷机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-20 11:27:09 / 修改时间：13:11:42" itemprop="dateCreated datePublished" datetime="2023-04-20T11:27:09+08:00">2023-04-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近入手小米CR8806刷入集客固件做AP，这里记录一下免拆TTL刷机过程，以及一些踩坑的细节，希望能帮助到有缘人。<br>如果你也想刷机，那么建议你先看一遍参考中的b站视频再跟着我的教程走，小白慎入。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>在开始刷机前，需要先准备一个USB转TTL模块，这里用的是FT232，推荐。<br><a target="_blank" rel="noopener" href="https://github.com/ryanInf/ryaninf.github.io/releases/download/CR8806/CR8806_AP.7z">相关文件下载</a></p>
+<h4 id="刷入官方固件"><a href="#刷入官方固件" class="headerlink" title="刷入官方固件"></a>刷入官方固件</h4><p>按照恩山教程，刷入官方固件恢复后才能进入TTL。（没尝试过不刷能不能进，有缘人看到这篇文章的话可以试试）。</p>
+<p>网线插入路由器LAN1口，然后跟电脑处于同一局域网。<br>打开小米路由器修复工具选择固件：miwifi_cr8806_firmware_4622b_6.2.33.bin。<br>路由器断电，按住reset键，上电，直至黄灯闪烁后松开。<br>然后电脑就会自动识别到路由器开始刷入。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230417223332543.png"></p>
+<p>要点：<br>路由器与电脑处于同一局域网就行，使用桥接网络的虚拟机也可以识别并刷机，但要留意网卡的ip是否有被设置到<code>192.168.31.x</code>，只有这样才能识别到路由器。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/03/31/%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%89%93%E9%80%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -313,8 +392,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-03 10:29:48" itemprop="dateModified" datetime="2023-04-03T10:29:48+08:00">2023-04-03</time>
+                <time title="修改时间：2023-04-20 11:29:00" itemprop="dateModified" datetime="2023-04-20T11:29:00+08:00">2023-04-20</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
+                </span>
+            </span>
 
           
 
@@ -935,85 +1023,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">FastJson RCE实验笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-08-29 10:25:18 / 修改时间：14:15:07" itemprop="dateCreated datePublished" datetime="2021-08-29T10:25:18+08:00">2021-08-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="FastJson-1-2-24"><a href="#FastJson-1-2-24" class="headerlink" title="FastJson 1.2.24"></a>FastJson 1.2.24</h3><h4 id="实验说明"><a href="#实验说明" class="headerlink" title="实验说明"></a>实验说明</h4><p>本次实验使用了<code>Vulhub</code>的<code>fastjson 1.2.24 反序列化导致任意命令执行漏洞</code>，漏洞利用使用了<code>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</code>，漏洞地址为<code>http://192.168.154.130:8090</code>。</p>
-<h4 id="启动漏洞环境"><a href="#启动漏洞环境" class="headerlink" title="启动漏洞环境"></a>启动漏洞环境</h4><p>因为用了docker的漏洞环境，所以请先安装<code>docker</code>及<code>docker-compose</code>，此处不再赘述。在靶机运行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/vulhub/vulhub.git</span><br><span class="line"><span class="built_in">cd</span> vulhub/fastjson/1.2.24-rce/</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-51-27.png"><br>启动后可访问FastJson的服务：<br><img data-src="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/2021-08-29-10-52-07.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/29/FastJson-RCE%E5%AE%9E%E9%AA%8C%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1085,7 +1094,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

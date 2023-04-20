@@ -2742,6 +2742,12 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p>opkg install xxx 安装<br>然后重启openwrt，可看到菜单有smartdns</p>
 <h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>光猫桥接配置、IPTV 单线复用、异地组网请看下文：<br><a href="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/">https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/</a></p>
 <h3 id="后续持续更新…"><a href="#后续持续更新…" class="headerlink" title="后续持续更新…"></a>后续持续更新…</h3>]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
   </entry>
   <entry>
     <title>个人终端环境打造</title>
@@ -2795,6 +2801,41 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <p>不过需要注意的是，如果<code>SSH</code>中断，<code>GUI</code>程序也会自动关闭。</p>
 <!-- ### 小结
 各人的使用习惯不一，希望 -->]]></content>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小米CR8806免拆TTL刷机</title>
+    <url>/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近入手小米CR8806刷入集客固件做AP，这里记录一下免拆TTL刷机过程，以及一些踩坑的细节，希望能帮助到有缘人。<br>如果你也想刷机，那么建议你先看一遍参考中的b站视频再跟着我的教程走，小白慎入。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>在开始刷机前，需要先准备一个USB转TTL模块，这里用的是FT232，推荐。<br><a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/CR8806/CR8806_AP.7z">相关文件下载</a></p>
+<h4 id="刷入官方固件"><a href="#刷入官方固件" class="headerlink" title="刷入官方固件"></a>刷入官方固件</h4><p>按照恩山教程，刷入官方固件恢复后才能进入TTL。（没尝试过不刷能不能进，有缘人看到这篇文章的话可以试试）。</p>
+<p>网线插入路由器LAN1口，然后跟电脑处于同一局域网。<br>打开小米路由器修复工具选择固件：miwifi_cr8806_firmware_4622b_6.2.33.bin。<br>路由器断电，按住reset键，上电，直至黄灯闪烁后松开。<br>然后电脑就会自动识别到路由器开始刷入。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230417223332543.png"></p>
+<p>要点：<br>路由器与电脑处于同一局域网就行，使用桥接网络的虚拟机也可以识别并刷机，但要留意网卡的ip是否有被设置到<code>192.168.31.x</code>，只有这样才能识别到路由器。</p>
+<a id="more"></a>
+
+<h4 id="TTL接线"><a href="#TTL接线" class="headerlink" title="TTL接线"></a>TTL接线</h4><p>刷入官方固件后路由器断电，在断电情况下完成TTL接线。<br>TTL这步最难的就是在不拆路由器的情况下，把TTL线接入到路由器的TTL口。TTL口在路由器主板左上方，对应的孔位如图。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/2023-04-20-12-27-32.png"><br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/2023-04-20-11-46-41.png"></p>
+<p>TTL模块接线要如下图对应：<br>RXD -&gt; TXD<br>GND -&gt; GND<br>TXD -&gt; RXD<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230417235417703.png"></p>
+<p>好了，知道怎么接线，难点来了。需要从路由器左上方的洞洞把TTL模块的连接线插入到路由器主板对应的TTL孔位。这里是用铁丝延长，把平时扎线的铁丝剥皮，然后剪断，一头插入杜邦线，一头插入TTL孔，然后用手机手电筒照着慢慢插到对应的孔位，有个技巧就是铁丝长点、直点会比较好插，插好之后用透明胶固定免得掉了。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230418005041216.png"></p>
+<p>然后TTL模块插入电脑，通过设备管理器找到模块在哪个COM口，这里是<code>COM3</code>。使用终端工具连接，这里使用Xshell，波特率设置为<code>115200</code>，然后连接该COM口。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230417230108058.png"></p>
+<p>然后接上路由器电源，终端开始输出字符，迅速按几下回车键，就可以进入shell。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230417235442033.png"></p>
+<h4 id="刷入固件"><a href="#刷入固件" class="headerlink" title="刷入固件"></a>刷入固件</h4><p>输入以下3行命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenv boot_wait on</span><br><span class="line">setenv uart_en 1</span><br><span class="line">saveenv</span><br></pre></td></tr></table></figure>
+<p>此时重启就可以每次中断uboot进入命令行了。</p>
+<p>把网线插入路由器LAN1口，然后跟电脑处于同一局域网，相连的电脑网卡ip设置为<code>192.168.31.100</code>。<br>然后在电脑启动一个TFTP服务，把ubi_JIKEAP_N3000.img拷贝进tftp32所在目录。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/2023-04-20-12-52-37.png"></p>
+<p>然后在终端依次执行下发命令刷入集客固件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenv serverip 192.168.31.100</span><br><span class="line">tftpboot ubi-JIKEAP_N3000.img      <span class="comment">#将固件上传至路由器内存</span></span><br><span class="line">flash rootfs_1  <span class="comment">#将内存中的固件刷入rootfs_1分区</span></span><br><span class="line">setenv flag_try_sys2_failed 0   </span><br><span class="line">setenv flag_boot_rootfs 1</span><br><span class="line">setenv flag_last_success 1  <span class="comment">#上面3行应该是设置从rootfs_1分区启动，仍保留rootfs分区启动的能力</span></span><br><span class="line">saveenv  <span class="comment">#保存设置</span></span><br></pre></td></tr></table></figure>
+
+
+<p><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230418000839135.png"><br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230418001103150.png"></p>
+<p>完成后拔电重启，第一次开机要等一段时间，大概是几分钟，然后灯的颜色就会变，也可以在主路由器后台看到dhcp分配给它的地址。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230418002227530.png"><br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230418002419826.png"></p>
+<p>然后在浏览器地址栏输入该ip打开集客固件后台，输入密码admin即可进入集客固件后台了。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/2023-04-20-12-57-31.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.right.com.cn/FORUM/thread-8272321-1-1.html">https://www.right.com.cn/FORUM/thread-8272321-1-1.html</a><br><a href="https://www.bilibili.com/video/BV1h341197rX/?spm_id_from=333.337.search-card.all.click&amp;vd_source=c694d4d09b7c1d1824061044663000cc">https://www.bilibili.com/video/BV1h341197rX/?spm_id_from=333.337.search-card.all.click&amp;vd_source=c694d4d09b7c1d1824061044663000cc</a><br><a href="https://www.acwifi.net/20090.html">https://www.acwifi.net/20090.html</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
       <tags>
         <tag>折腾</tag>
       </tags>
