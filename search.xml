@@ -2910,6 +2910,12 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>以上仅是个人不太深入的经验总结，欢迎批评指正。授人以鱼不如授人以渔，大家可根据对应的<code>list</code>结果查找可利用的MBean。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jolokia.org/reference/html/protocol.html#jolokia-operations">https://jolokia.org/reference/html/protocol.html#jolokia-operations</a><br><a href="https://thinkloveshare.com/hacking/ssrf_to_rce_with_jolokia_and_mbeans/">https://thinkloveshare.com/hacking/ssrf_to_rce_with_jolokia_and_mbeans/</a><br><a href="https://wiki.96.mk/Web%E5%AE%89%E5%85%A8/Jolokia/%EF%BC%88CVE-2018-1000130%EF%BC%89Jolokia%20%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">https://wiki.96.mk/Web%E5%AE%89%E5%85%A8/Jolokia/%EF%BC%88CVE-2018-1000130%EF%BC%89Jolokia%20%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a><br><a href="https://www.hacking8.com/bug-product/Spring-Boot/Spring-Boot-Actuator-jolokia-%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4%E7%9A%84rce%E6%BC%8F%E6%B4%9E.html">https://www.hacking8.com/bug-product/Spring-Boot/Spring-Boot-Actuator-jolokia-%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4%E7%9A%84rce%E6%BC%8F%E6%B4%9E.html</a></p>
 ]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
+      </tags>
   </entry>
   <entry>
     <title>兆能ZN-M2救砖记</title>
