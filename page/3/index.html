@@ -200,6 +200,235 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/12/29/ics-05-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/29/ics-05-writeup/" class="post-title-link" itemprop="url">ics-05-writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-29 14:29:04" itemprop="dateCreated datePublished" datetime="2020-12-29T14:29:04+08:00">2020-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-16 16:22:52" itemprop="dateModified" datetime="2022-09-16T16:22:52+08:00">2022-09-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本题来源于XCTF 4th-CyberEarth，攻防世界WEB进阶021上是原题，题目名称为<code>ics-05</code>，题目信息如下。<br><img data-src="/2020/12/29/ics-05-writeup/2020-12-29-14-52-41.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/29/ics-05-writeup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/11/30/python-pip-%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/30/python-pip-%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/" class="post-title-link" itemprop="url">python pip 离线安装第三方库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-30 18:20:03 / 修改时间：18:25:34" itemprop="dateCreated datePublished" datetime="2020-11-30T18:20:03+08:00">2020-11-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<ol>
+<li>在联网的主机上执行pip下载第三方库，如gevent、tqdm<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip2 download gevent tqdm -i https:&#x2F;&#x2F;mirrors.cloud.tencent.com&#x2F;pypi&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li>复制下载的包到离线主机上，使用以下命令安装，其中pylibs是安装包保存的目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip2 install --no-index --find-links&#x3D;file:&#x2F;&#x2F;c:\pylibs gevent tqdm</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/11/17/fakebook-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/17/fakebook-writeup/" class="post-title-link" itemprop="url">fakebook-writeup</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-17 17:13:42 / 修改时间：17:20:18" itemprop="dateCreated datePublished" datetime="2020-11-17T17:13:42+08:00">2020-11-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>本题来源于2018年网鼎杯，攻防世界WEB进阶019上是原题。题目考察的是SQL注入中的UNION注入、SSRF和反序列化的组合利用，是一道比较综合性的题目，值得学习。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/17/fakebook-writeup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/11/17/give-you-flag-writeup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -761,231 +990,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/21/vim%E7%AE%80%E6%98%93%E5%BF%AB%E6%8D%B7%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">vim简易快捷配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-21 10:36:10 / 修改时间：10:39:16" itemprop="dateCreated datePublished" datetime="2020-08-21T10:36:10+08:00">2020-08-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>经常需要在不同的Linux上切换，有些Linux默认配置的vim用起来很不舒服，所以记录一个简单的vim配置，用起来会顺手一点。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>将下面代码保存到<code>~/.vimrc</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">syntax on</span><br><span class="line">filetype indent on</span><br><span class="line">set nocp</span><br><span class="line">set nocompatible</span><br><span class="line">set autoread</span><br><span class="line">set mouse&#x3D;</span><br><span class="line">set showcmd</span><br><span class="line">set showmatch</span><br><span class="line">set autoindent</span><br><span class="line">set softtabstop&#x3D;4</span><br><span class="line">set shiftwidth&#x3D;4</span><br><span class="line">set tabstop&#x3D;4</span><br><span class="line">set nu</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/08/21/kali-iptables-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/21/kali-iptables-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD/" class="post-title-link" itemprop="url">kali iptables 配置自启动加载</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-21 10:32:26 / 修改时间：10:34:33" itemprop="dateCreated datePublished" datetime="2020-08-21T10:32:26+08:00">2020-08-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="创建启动配置文件"><a href="#创建启动配置文件" class="headerlink" title="创建启动配置文件"></a>创建启动配置文件</h3><p>编辑创建以下文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
-<p>粘贴下面内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line">/sbin/iptables-restore &lt; /etc/iptables/rules.v4</span><br></pre></td></tr></table></figure>
-<p>添加执行权限：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
-<p>通过下面命令保存iptables：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/" class="post-title-link" itemprop="url">Spring Boot Actuators未授权GetShell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-05 19:29:40" itemprop="dateCreated datePublished" datetime="2020-06-05T19:29:40+08:00">2020-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-11 20:24:05" itemprop="dateModified" datetime="2021-04-11T20:24:05+08:00">2021-04-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
-<h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>actuator 是 springboot 提供的用来对应用系统进行自省和监控的功能模块。其提供的执行器端点分为两类：原生端点和用户自定义扩展端点，原生端点主要有：  </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/05/Spring-Boot-Actuators%E6%9C%AA%E6%8E%88%E6%9D%83GetShell/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1057,7 +1061,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
