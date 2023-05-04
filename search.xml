@@ -2921,6 +2921,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <title>兆能ZN-M2救砖记</title>
     <url>/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>大概是自己做固件的时候忘了配置屏蔽WiFi，在更新ZN-M2的时候刷入了一个带WiFi的openwrt固件，好家伙，直接开机进不了后台，勉强能SSH登录但几乎无法操作，查看内存剩余4MB，想scp复制新的固件进去都会中断。然后进入不死uboot想重新刷，但是刷入任何固件均失败了，包括AX18和ZN-M2的，最终无奈进行TTL大法刷回原版固件。</p>
+<p><img data-src="/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/2023-05-04-11-43-26.png"></p>
 <a id="more"></a>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先拆机、TTL接线，这些基操在之前的文章都说过了，可以参考：<a href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/">小米CR8806免拆TTL刷机</a></p>
 <p>TTL接线，老规矩：<br>RXD -&gt; TXD<br>GND -&gt; GND<br>TXD -&gt; RXD</p>
