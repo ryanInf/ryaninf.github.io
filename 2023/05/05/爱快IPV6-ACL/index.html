@@ -23,12 +23,12 @@
     var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前言爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。 测试首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。 现在配置好了，测试一下效果，先把规则停用。 然后使用Windows的远程桌面端口进行测试，真实可被公网访问的ip是我箭头所指的这个，临时IPv6是用来">
+  <meta name="description" content="前言爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。 测试首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爱快IPv6 ACL">
 <meta property="og:url" content="https://r0yanx.com/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="前言爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。 测试首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。 现在配置好了，测试一下效果，先把规则停用。 然后使用Windows的远程桌面端口进行测试，真实可被公网访问的ip是我箭头所指的这个，临时IPv6是用来">
+<meta property="og:description" content="前言爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。 测试首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://r0yanx.com/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-31-58.png">
 <meta property="og:image" content="https://r0yanx.com/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-34-37.png">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://r0yanx.com/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-55-14.png">
 <meta property="og:image" content="https://r0yanx.com/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-13-15-56.png">
 <meta property="article:published_time" content="2023-05-05T04:27:35.000Z">
-<meta property="article:modified_time" content="2023-05-05T05:38:05.101Z">
+<meta property="article:modified_time" content="2023-05-05T06:14:38.103Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="折腾">
 <meta property="article:tag" content="网络">
@@ -240,7 +240,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-05-05 12:27:35 / 修改时间：13:38:05" itemprop="dateCreated datePublished" datetime="2023-05-05T12:27:35+08:00">2023-05-05</time>
+              <time title="创建时间：2023-05-05 12:27:35 / 修改时间：14:14:38" itemprop="dateCreated datePublished" datetime="2023-05-05T12:27:35+08:00">2023-05-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,6 +272,7 @@
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。</p>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-31-58.png"></p>
+<a id="more"></a>
 <p>现在配置好了，测试一下效果，先把规则停用。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-34-37.png"></p>
 <p>然后使用Windows的远程桌面端口进行测试，真实可被公网访问的ip是我箭头所指的这个，临时IPv6是用来出站上网的，不能被公网访问，所以我们测试要用框框选中这个。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-36-17.png"></p>
 <p>然后在外部有IPv6的VPS上面使用nmap探测3389：</p>

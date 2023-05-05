@@ -2976,6 +2976,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
     <url>/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。</p>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-31-58.png"></p>
+<a id="more"></a>
 <p>现在配置好了，测试一下效果，先把规则停用。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-34-37.png"></p>
 <p>然后使用Windows的远程桌面端口进行测试，真实可被公网访问的ip是我箭头所指的这个，临时IPv6是用来出站上网的，不能被公网访问，所以我们测试要用框框选中这个。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-36-17.png"></p>
 <p>然后在外部有IPv6的VPS上面使用nmap探测3389：</p>
