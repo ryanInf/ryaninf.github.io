@@ -1094,6 +1094,9 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       <categories>
         <category>漏洞挖掘</category>
       </categories>
+      <tags>
+        <tag>漏洞</tag>
+      </tags>
   </entry>
   <entry>
     <title>Spring Boot Vulnerability Exploit Check List</title>
@@ -2660,6 +2663,7 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       </categories>
       <tags>
         <tag>折腾</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2965,6 +2969,45 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
       </categories>
       <tags>
         <tag>折腾</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爱快IPv6 ACL</title>
+    <url>/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-31-58.png"></p>
+<p>现在配置好了，测试一下效果，先把规则停用。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-34-37.png"></p>
+<p>然后使用Windows的远程桌面端口进行测试，真实可被公网访问的ip是我箭头所指的这个，临时IPv6是用来出站上网的，不能被公网访问，所以我们测试要用框框选中这个。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-36-17.png"></p>
+<p>然后在外部有IPv6的VPS上面使用nmap探测3389：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -6 2409:xxx::1026 -p 3389 -Pn -n</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-38-46.png"></p>
+<p>端口是开放的，所以默认情况下，我们在IPv6是裸奔，然后再把策略启用，重新测试。</p>
+<p><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-42-07.png"><br>可以看到端口是可以访问了，规则生效。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-43-47.png"></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>在正式开始配置之前，我们需要牢记爱快的规则：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">冲突时允许的优先级高于阻断的优先级。</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-55-14.png"></p>
+<p>所以我们在配置完上面的阻断规则后，再针对自己需求配置允许的规则即可。</p>
+<p>但是IPv6地址会经常变化，如何针对某个v6地址做策略呢？</p>
+<p>在IPv6中，与IPv4的子网掩码类似，也有一个称为“前缀长度”的概念，用于指示网络地址的范围。而“负掩码”则是由前缀长度计算出来的。负掩码是一个二进制数，它的高位是1，低位是0，并且包含了地址的前缀。负掩码可以用来确定一个地址的网络地址部分（即前缀），并将其与其他IPv6地址进行比较。</p>
+<p>例如，假设一个IPv6地址为2001:0db8:85a3:0000:0000:8a2e:0370:7334/64，其中“/64”表示这个地址的前缀长度为64位。那么，这个地址的负掩码就是一个长度为128位的二进制数，其中前64位为1，后64位为0。</p>
+<p>负掩码的主要作用是用于IPv6地址的路由选择。通过比较负掩码，路由器可以将数据包转发到目标地址所属的正确网络。</p>
+<p>说人话，简单点就是，比如<code>2400:a1:b1:c1::abc</code>中，<code>2400:a1:b1:c1</code>是会变动的，但是<code>::abc</code>不会变化，所以匹配它的写法是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">::abc&#x2F;::ffff:ffff:ffff:ffff</span><br></pre></td></tr></table></figure>
+
+<p>比如我有个OPENVPN服务，根据下图的配置访问可允许公网IPv6访问VPN的端口。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-13-15-56.png"></p>
+<p>上面这种地址在类Unix设备上比较常见，在Windows下的话，公网的IPv6会长一些，但是写法是一样，比如公网IPv6 <code>2400:a1:b1:c1:aaaa:bbbb:cccc:dddd</code>，匹配它的写法是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">::aaaa:bbbb:cccc:dddd&#x2F;::ffff:ffff:ffff:ffff</span><br></pre></td></tr></table></figure>
+
+<p>如果你有下载需要，建议开放TCP+UDP的<code>16881</code>、<code>6881</code>端口。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文讲述了爱快的IPv6 ACL配置方法，希望对你有所帮助。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.ikuai8.com/index.php?option=com_content&amp;view=article&amp;id=192&amp;Itemid=312">https://www.ikuai8.com/index.php?option=com_content&amp;view=article&amp;id=192&amp;Itemid=312</a><br><a href="https://www.jianshu.com/p/c762ead45eb2">https://www.jianshu.com/p/c762ead45eb2</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
 </search>
