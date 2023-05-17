@@ -3011,4 +3011,22 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>网络</tag>
       </tags>
   </entry>
+  <entry>
+    <title>记解决烦人的Windows蓝屏</title>
+    <url>/2023/05/17/%E8%AE%B0%E8%A7%A3%E5%86%B3%E7%83%A6%E4%BA%BA%E7%9A%84Windows%E8%93%9D%E5%B1%8F/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Windows 又双叒叕蓝屏了，这次是<code>DPC WATCHDOG VIOLATION</code>蓝屏，记录下解决过程。<br><img data-src="/2023/05/17/%E8%AE%B0%E8%A7%A3%E5%86%B3%E7%83%A6%E4%BA%BA%E7%9A%84Windows%E8%93%9D%E5%B1%8F/2023-05-17-11-46-05.png"></p>
+<a id="more"></a>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先安装windows官方的工具<a href="https://www.microsoft.com/zh-cn/p/windbg/9pgjgd53tn86?rtc=1&activetab=pivot:overviewtab">WinDbg Preview</a>。</p>
+<p>然后以管理员身份运行该工具，选择打开文件，打开<code>C:\Windows\Minidump</code>目录下的文件，如果最近有蓝屏可以找到最近的<code>.dmp</code>文件，打开后会自动下载一些分析库。<br><img data-src="/2023/05/17/%E8%AE%B0%E8%A7%A3%E5%86%B3%E7%83%A6%E4%BA%BA%E7%9A%84Windows%E8%93%9D%E5%B1%8F/2023-05-17-11-47-50.png"></p>
+<p>程序下方进度条加载完后，点击<code>!analyze -v</code>开始分析：<br><img data-src="/2023/05/17/%E8%AE%B0%E8%A7%A3%E5%86%B3%E7%83%A6%E4%BA%BA%E7%9A%84Windows%E8%93%9D%E5%B1%8F/2023-05-17-11-49-17.png"></p>
+<p>最终定位到是<code>GlassWire</code>这个软件引起的，卸载，收工。<br><img data-src="/2023/05/17/%E8%AE%B0%E8%A7%A3%E5%86%B3%E7%83%A6%E4%BA%BA%E7%9A%84Windows%E8%93%9D%E5%B1%8F/2023-05-17-11-50-14.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://zhuanlan.zhihu.com/p/268642207?utm_id=0">https://zhuanlan.zhihu.com/p/268642207?utm_id=0</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>
