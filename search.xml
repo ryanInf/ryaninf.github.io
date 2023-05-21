@@ -3029,4 +3029,76 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>折腾</tag>
       </tags>
   </entry>
+  <entry>
+    <title>魔白盒M411A刷CoreELEC</title>
+    <url>/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文记录一下魔白盒M411A刷入CoreELEC过程，因为这个型号的CoreELEC刷入教程少之又少，而且官方CoreELEC包是识别不了WiFi的，经过摸索后解决了这个问题，所以记录一下。</p>
+<h3 id="硬件介绍"><a href="#硬件介绍" class="headerlink" title="硬件介绍"></a>硬件介绍</h3><p>首先博主手上的魔白盒M411A是黑龙江版本，PDD 49块包邮，性能比肩100多的N1，缺点是百兆网口，但是我刷CoreELEC使用WiFi倒是不影响，性价比极高。<br>前排提醒：该盒子版本众多，就算是同一型号也会有不同的硬件的情况，购买需谨慎。</p>
+<table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>S905L3A</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内存</td>
+<td>2GB + 8GB</td>
+</tr>
+<tr>
+<td>WIFI</td>
+<td>双频WiFi （UWE5621DS）</td>
+</tr>
+<tr>
+<td>蓝牙</td>
+<td>有</td>
+</tr>
+<tr>
+<td>网口</td>
+<td>100M</td>
+</tr>
+<tr>
+<td>USB</td>
+<td>USB 2.0 * 2</td>
+</tr>
+</tbody></table>
+<p>板子如下：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-21-42-29.png"></p>
+<a id="more"></a>
+<h3 id="固件"><a href="#固件" class="headerlink" title="固件"></a>固件</h3><p>翻了很多教程，刷入官方CoreELEC以及armbian发现都无法驱动WiFi，拆机研究发现WiFi模块为<code>UWE5621DS</code>，然后搜索相关问题发现GitHub上有个支持该WiFi模块的CoreELEC固件，是为<code>e900v22c</code>适配的，该盒子与M411A硬件大致相同，遂尝试刷入，发现完美适配，WiFi、蓝牙等都正常。</p>
+<p>固件地址：<br><a href="https://github.com/KryptonLee/e900v22c-CoreELEC.git">https://github.com/KryptonLee/e900v22c-CoreELEC.git</a></p>
+<h3 id="制作最新固件"><a href="#制作最新固件" class="headerlink" title="制作最新固件"></a>制作最新固件</h3><p>在测试使用正常后，发现美中不足是作者提供的版本不是最新的，最新的发行版本是<code>20.1-Nexus</code>。<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-21-54-16.png"></p>
+<p>查看作者源码，作者已提供了构建脚本，只需要修改脚本的版本号即可自行选择版本。</p>
+<p>安装构建所需工具，然后git下载代码仓库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update -y</span><br><span class="line">sudo apt-get install -y make gcc git texinfo gzip squashfs-tools</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/KryptonLee/e900v22c-CoreELEC.git</span><br><span class="line"><span class="built_in">cd</span> e900v22c-CoreELE</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>build.sh</code>：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-21-57-56.png"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">version=<span class="string">&quot;20.1-Nexus&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>具体版本编号可以看CoreELEC官方GitHub：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-21-59-58.png"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./build</span><br></pre></td></tr></table></figure>
+<p>开始构建：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-01-00.png"></p>
+<p>构建成功后生成img.gz文件，解压后就是我们的固件包：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-01-19.png"></p>
+<p>下面是我做好的固件包：<br><a href="https://github.com/ryanInf/ryaninf.github.io/releases/download/m411a/CoreELEC-Amlogic-ng.arm-20.1-Nexus-m411a-2023.05.18.img.gz">M411A-CoreELEC固件</a></p>
+<h3 id="刷入CoreELEC"><a href="#刷入CoreELEC" class="headerlink" title="刷入CoreELEC"></a>刷入CoreELEC</h3><p>前排提醒：刷机有风险，建议先备份固件。同时请确认自己具备救砖能力再考虑刷入，博主也曾翻车后面靠线刷救回。</p>
+<p>使用烧录工具写入U盘：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-02-03.png"></p>
+<p>然后从让盒子从U盘启动，这里因为每个盒子的方法都可能不一样，这里说下我的方法：<br>在盒子原本的安卓系统中开启adb调试，<strong>U盘插入到靠近网口的那个USB口</strong>，然后连接adb执行下面命令，重启后盒子会进入U盘的系统：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">adb shell reboot update</span><br></pre></td></tr></table></figure>
+
+<p>默认界面是英文的，我改为中文了：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-11-21.png"></p>
+<p><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-12-06.png"></p>
+<p>WiFi、蓝牙正常：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-13-27.png"><br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-14-00.png"></p>
+<h3 id="刷入EMMC"><a href="#刷入EMMC" class="headerlink" title="刷入EMMC"></a>刷入EMMC</h3><p>这是一个可选步骤，如果不想一直从U盘启动，可写入EMMC就能本地启动了。<br><strong>在刷入前请确保各功能都正常使用，同时也接受变砖的风险。</strong><br>首先打开CoreELEC的SSH并连接：<br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-02-37.png"></p>
+<p>执行刷入命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ceemmc -x</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-17-45.png"><br><img data-src="/2023/05/21/%E9%AD%94%E7%99%BD%E7%9B%92M411A%E5%88%B7CoreELEC/2023-05-21-22-17-53.png"></p>
+<p>刷入成功，重启即可拔U盘正常启动。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/KryptonLee/e900v22c-CoreELEC">https://github.com/KryptonLee/e900v22c-CoreELEC</a></p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>
