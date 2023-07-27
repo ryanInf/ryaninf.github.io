@@ -14,7 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -261,11 +261,11 @@
 
       
         <h3 id="创建启动配置文件"><a href="#创建启动配置文件" class="headerlink" title="创建启动配置文件"></a>创建启动配置文件</h3><p>编辑创建以下文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/network/if-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
 <p>粘贴下面内容：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line">/sbin/iptables-restore &lt; /etc/iptables/rules.v4</span><br></pre></td></tr></table></figure>
 <p>添加执行权限：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/network/if-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
 <p>通过下面命令保存iptables：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br></pre></td></tr></table></figure>
     </div>
@@ -486,10 +486,10 @@
   
   <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.fancybox.min.js"></script>
+  <script src="/js/lozad.min.js"></script>
+  <script src="/js/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

