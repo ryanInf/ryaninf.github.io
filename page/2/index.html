@@ -200,6 +200,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/" class="post-title-link" itemprop="url">爱快主路由下IPV6防火墙的最优解（可能）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-22 11:45:23" itemprop="dateCreated datePublished" datetime="2023-02-22T11:45:23+08:00">2023-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-05 09:57:36" itemprop="dateModified" datetime="2023-05-05T09:57:36+08:00">2023-05-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong><br>2023.5.4 更新：<br>2023-03-21，爱快官方iKuai8_3.7.0以上版本已更新ipv6 ACL支持，使用官方ACL成为最优解。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在ipv6网络环境下，内网设备也获取到公网的ipv6地址，可直接被外部网络访问，形同裸奔，所以使用ipv6防火墙是很有必要的。</p>
+<p>爱快的流控、人性化的界面与配置，是我使用爱快作为主路由的主要原因，但是不支持ipv6防火墙，内网设备在ipv6下裸奔，也是爱快受人诟病的一大缺陷。在家庭网络中，如何在爱快作为主路由的环境下，增加ipv6防火墙的问题，我想了很久，搜索了大量的资料，中间考虑过很多方案。其实要做到增加防火墙的方法很多，比如使用openwrt作为主路由自带防火墙、opensense，或是使用内网主机自带的防火墙。考虑过使用openwrt作为主路由，但是openwrt在折腾中诡异的问题实在太多，而且流控、界面展示、客户端控制、人性化的操作等多方面都不符合我的个人审美与需求。m0n0wall、opnsense之类的防火墙固件的话因为想到为了一个防火墙功能而额外消耗比较多的硬件资源且接入上去对网络结构有比较大的改动所以放弃了。最终，想到了一个相对优雅且对现有网络结构影响较小的方案。</p>
+<p>本教程不太适合小白，小白也不太能理解ipv6防火墙的重要性。</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>我们知道，openwrt自带了ipv6的防火墙，那么使用爱快作为ipv4网关，openwrt作为ipv6网关，就可以实现需求。<br>下面来揭晓我的方案:</p>
+<ul>
+<li>在爱快创建一个vlan接口，并在该接口启用ipv6，同时停用爱快lan口的ipv6服务</li>
+<li>通过vlan，复用内网LAN线路作为openwrt与爱快间的ipv6桥梁</li>
+<li>openwrt 充当内网lan ipv6网关</li>
+<li>openwrt 配置ipv6防火墙</li>
+</ul>
+<p>示例图如下：<br><img data-src="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/2023-02-22-12-38-56.png"></p>
+<p>最终流量走向示例如下：<br>ipv4: client1(192.168.5.101) -&gt; ikuai lan(192.168.5.1) -&gt; ikuai wan(Internet)<br>ipv6: client1(2400:xxxx:a1::101) -&gt; openwrt lan(2400:xxxx:a1::1) -&gt; openwrt wan(dhcpv6 client) -&gt; ikuai lan(dhcpv6 server) -&gt; ikuan wan(Internet ipv6)</p>
+<p>可以看到，ipv6流量先经过openwrt再经过ipv6，然后我们在openwrt上面配置ipv6防火墙就可以了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/02/22/%E7%88%B1%E5%BF%AB%E4%B8%BB%E8%B7%AF%E7%94%B1%E4%B8%8BIPV6%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%9C%80%E4%BC%98%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/01/25/%E8%AE%B0%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C%E7%BB%84%E7%BD%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -909,88 +1003,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/" class="post-title-link" itemprop="url">Go 入门踩坑</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-28 10:36:21" itemprop="dateCreated datePublished" datetime="2021-05-28T10:36:21+08:00">2021-05-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-08 16:34:10" itemprop="dateModified" datetime="2023-03-08T16:34:10+08:00">2023-03-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近心血来潮，觉得Go可能在后续的职业生涯中发挥作用，就来学一下Go吧。</p>
-<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><h4 id="下载安装Go"><a href="#下载安装Go" class="headerlink" title="下载安装Go"></a>下载安装Go</h4><p>这里不多说了，直接到官网下载msi包，然后双击运行安装即可，我这里下载的是<code>go1.16.4.windows-amd64.msi</code>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/28/Go-%E5%85%A5%E9%97%A8%E8%B8%A9%E5%9D%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1062,7 +1074,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1117,7 +1129,7 @@
 <div class="copyright">
   
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

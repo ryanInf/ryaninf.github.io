@@ -3114,4 +3114,25 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>渗透测试</tag>
       </tags>
   </entry>
+  <entry>
+    <title>BurpSuite忽略心跳包的优雅解法</title>
+    <url>/2024/02/01/BurpSuite%E5%BF%BD%E7%95%A5%E5%BF%83%E8%B7%B3%E5%8C%85%E7%9A%84%E4%BC%98%E9%9B%85%E8%A7%A3%E6%B3%95/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在渗透中，我们测试的站点可能会一直产生心跳包，比如展示大屏网站，严重影响了渗透工作，以往的方法都是通过BurpSuite的target scope来进行配置，但是个人不喜欢这么操作，因为容易忽略掉一些站外流量，近期想到了一种新方法来解决这个问题。</p>
+<a id="more"></a>
+
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>方法很简单，就是配置pac代理文件。<br>首先需要安装 SwitchyOmega，应该没有人不会安装吧。<br>创建一个新的情景模式，使用PAC模式<br><img data-src="/images/2024-02-01-11-53-48.png"></p>
+<p>贴上下面的脚本：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 配置不走代理的URL列表</span></span><br><span class="line"><span class="keyword">var</span> noProxyURLs = [</span><br><span class="line">    <span class="string">&quot;http://baidu.com/a/b/c&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http://example3.com/*&quot;</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置不走代理的host</span></span><br><span class="line"><span class="keyword">var</span> noProxyHosts = [</span><br><span class="line">    <span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">    <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;firefox.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;mozilla.net&quot;</span>,</span><br><span class="line">    <span class="string">&quot;firebaseio.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;mozilla.org&quot;</span>,</span><br><span class="line">    <span class="string">&quot;google.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;*.mozilla.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;firefox.settings.services.mozilla.com&quot;</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> burp = <span class="string">&quot;PROXY 127.0.0.1:8080&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> direct = <span class="string">&#x27;DIRECT;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FindProxyForURL</span>(<span class="params">url, host</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查当前URL是否在不走代理的列表中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; noProxyURLs.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (shExpMatch(url, noProxyURLs[i])) &#123;</span><br><span class="line">            <span class="comment">// 如果匹配到不走代理的URL，则返回 DIRECT</span></span><br><span class="line">            <span class="keyword">return</span> direct;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 检查当前主机名是否在不走代理的列表中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; noProxyHosts.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dnsDomainIs(host, noProxyHosts[i])) &#123;</span><br><span class="line">            <span class="comment">// 如果匹配到不走代理的主机名，则返回 DIRECT</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;DIRECT&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果不在不走代理的URL列表中，则走代理</span></span><br><span class="line">    <span class="keyword">return</span> burp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要增加url或者host只需要添加到数组里边即可。</p>
+<p><img data-src="/images/2024-02-01-11-56-54.png"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
 </search>
