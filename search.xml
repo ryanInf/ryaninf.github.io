@@ -3195,4 +3195,62 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>Linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>NatMap IPv4直连方案</title>
+    <url>/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>目前申请公网ip越来越难，虽然目前IPv6越来越普及，仍有部分场景不能覆盖到，如部分企业内网、公共WiFi等，如何高效远程接入家庭内网，本文将分享由 <code>NatMap+WireGuard</code>远程接入家庭内网的方案。</p>
+<p>本方案的优势在于，不同于FRP的P2P连接需要依赖客户端的支持（如IOS无法使用），在没有公网IPv4下可以直接使用IPv4直连内网。本方案是笔者自认为的最优方案，不一定是读者的最优方案，建议阅读后自行选择。</p>
+<a id="more"></a>
+<p>本方案作为IPv6接入的补充，可以与IPv6同时使用，建议优先使用IPv6。</p>
+<h3 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h3><ol>
+<li>网络类型为NAT1</li>
+<li>内网24小时运行的服务器，如openwrt、pve等</li>
+<li>配置好的WireGuard服务</li>
+<li>Server酱注册</li>
+</ol>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><h4 id="NAT1网络"><a href="#NAT1网络" class="headerlink" title="NAT1网络"></a>NAT1网络</h4><p>NAT1网络有很多好处，比如便于建立P2P连接，有利于BT、PT下载、FRP穿透等，家庭网络建议开启。至于其安全性，作为安全从业者，经过查阅资料，个人认为在没有公网IP的情况下是安全的，至于为什么长篇大论就不说了，可以自己研究。</p>
+<p>怎么开启NAT1，这个没啥好说的，光猫桥接模式+路由器选择NAT1即可，这个根据自己的设备搜一搜就有很多文章。<br><img data-src="/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/2024-06-08-22-38-33.png"></p>
+<p>可以使用NatTypeTester测试自己的NAT类型。<br><a href="https://github.com/HMBSbige/NatTypeTester">https://github.com/HMBSbige/NatTypeTester</a></p>
+<h4 id="NatMap"><a href="#NatMap" class="headerlink" title="NatMap"></a>NatMap</h4><p>NATMap实现与拥有动态公网IP同等的访问效果，它通过打通完全锥型(Full cone)类型NAT的TCP、UDP端口，实现访问侧任意主机在无需客户端的情况下进行直连访问。</p>
+<p><a href="https://github.com/heiher/natmap">https://github.com/heiher/natmap</a></p>
+<p>再使用前可以先阅读官方文档，理解其原理，本文更偏向于实践。与作者方案的不同之处是，笔者并不使用作者的IP4P方法，因为笔者手机是IOS，作者的提供WireGuard分支只支持安卓，也不支持Windows。</p>
+<p>NatMap成功后会返回公网IP和端口，所以笔者的方案是通过server酱把成功后的IP和端口发送到微信，然后在客户端手动修改WireGuard配置，没有什么高深技术，只是记录配置过程，所以大神可以省流。</p>
+<h4 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h4><p>首先配置好WireGuard服务，如果还没配置好请搜索相关教程，可以看看司博图的，配置起来非常简单，不再赘述。<br><img data-src="/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/2024-06-08-22-55-16.png"></p>
+<p>其实作者也写了文档，可以看作者的。</p>
+<p>然后是调试natmap，通过下面命令启动natmap，当然不使用su命令也行，个人习惯，能不给root就不给。其中-p是WireGuard的端口，因为跟WireGuard是同一台服务器，所以-t是127.0.0.1，如果不是可以写其它内网地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">su nobody -m -p -c <span class="string">&quot;./natmap-linux-x86_64 -u -s turn.cloudflare.com -t 127.0.0.1 -p 5xxx&quot;</span></span><br></pre></td></tr></table></figure>
+<p>运行后一段时间，成功的话有类似以下的输出，第一个的你的公网出口IP，第二个是映射的端口，我们主要关注这两个。第三个是作者提出的IP4P地址，可参考作者文档。<br><img data-src="/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/2024-06-08-23-01-32.png"></p>
+<p>此时使用手机或者其它设备通过WireGuard连接，可以连接成功。</p>
+<h4 id="编写通知脚本"><a href="#编写通知脚本" class="headerlink" title="编写通知脚本"></a>编写通知脚本</h4><p>作者提供了<code>-e</code>参数供用户调用脚本进行ddns更新，但有个坑点是只支持调用sh脚本，这方面缺少文档。</p>
+<p>先创建文件存放目录及文件，注意不要放在/root目录和/home目录，大概率出现权限问题，因为后面自启动是通过nobody用户运行的，权限很低。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir /tools</span><br><span class="line"><span class="built_in">cd</span> /tools</span><br><span class="line"></span><br><span class="line">touch ddns.sh</span><br><span class="line">touch natmap-ddns.py</span><br></pre></td></tr></table></figure>
+
+<p>ddns.sh内容如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">/usr/bin/python3.9 /tools/natmap-ddns.py $*</span><br></pre></td></tr></table></figure>
+
+<p>natmap-ddns.py内容如下，其中url修改为自己的Server酱API地址：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">ip4 = sys.argv[<span class="number">1</span>]</span><br><span class="line">port = sys.argv[<span class="number">2</span>]</span><br><span class="line">ip4p = sys.argv[<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">localport = sys.argv[<span class="number">4</span>]</span><br><span class="line">ttype = sys.argv[<span class="number">5</span>]</span><br><span class="line">localip = sys.argv[<span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pubaddr = <span class="string">f&#x27;<span class="subst">&#123;ip4&#125;</span>:<span class="subst">&#123;port&#125;</span>&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;[+] Public: <span class="subst">&#123;pubaddr&#125;</span>    Local: <span class="subst">&#123;localip&#125;</span>:<span class="subst">&#123;localport&#125;</span>    type: <span class="subst">&#123;ttype&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># send to server chain</span></span><br><span class="line">url = <span class="string">f&#x27;https://sctapi.ftqq.com/SCT21xxx.send?title=NatMap&amp;desp=<span class="subst">&#123;pubaddr&#125;</span>&#x27;</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    r = urllib.request.urlopen(url)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;[+] Send: Server酱消息发送成功！&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;[!] Error: 发生Server酱消息错误！&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="配置自启动服务"><a href="#配置自启动服务" class="headerlink" title="配置自启动服务"></a>配置自启动服务</h4><p>通过systemd启动，适用于大部分的Linux系统，如Ubuntu、CentOS等。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">touch /etc/systemd/system/natmap.service</span><br></pre></td></tr></table></figure>
+
+<p>natmap.service内容如下，其中ExecStart修改为自己调试好的命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;NatMap Service</span><br><span class="line">Documentation&#x3D;NatMap Service</span><br><span class="line">After&#x3D;network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User&#x3D;nobody</span><br><span class="line">CapabilityBoundingSet&#x3D;CAP_NET_ADMIN CAP_NET_BIND_SERVICE</span><br><span class="line">AmbientCapabilities&#x3D;CAP_NET_ADMIN CAP_NET_BIND_SERVICE</span><br><span class="line">NoNewPrivileges&#x3D;true</span><br><span class="line">ExecStart&#x3D;&#x2F;tools&#x2F;natmap-linux-x86_64 -u -s turn.cloudflare.com -t 127.0.0.1 -p 5xxxx -e &#x2F;tools&#x2F;ddns.sh</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">RestartPreventExitStatus&#x3D;23</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>设置natmap服务自启动，并启动服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> natmap.service</span><br><span class="line">systemctl start natmap.service</span><br></pre></td></tr></table></figure>
+
+<p>然后微信就收到IP地址啦，配置到WireGuard连接即可。<br><img data-src="/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/2024-06-08-23-23-11.png"></p>
+<p><img data-src="/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/2024-06-08-23-23-37.png"></p>
+<p><img data-src="/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/2024-06-08-23-34-25.png"></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>本方案或许还不够优雅，也是无奈之举，希望有更多支持IP4P格式的应用，如Windows的WireGuard支持，那么就可以实现自动化的WireGuard连接了，当然，或许可以考虑tailscale。至于笔者为什么不直接使用tailscale？可以说是洁癖吧，不喜欢自己的内网通过公网的服务商进行接入，headscale配置又很复杂，感觉没啥必要，毕竟平时都是同IPv6连接，额外增加那么多资源去配置headscale似乎很不优雅，natmap正好补充了这方面的不足。</p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>
