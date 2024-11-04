@@ -3256,4 +3256,19 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>折腾</tag>
       </tags>
   </entry>
+  <entry>
+    <title>&#39;微信聊天记录备份失败&#39;</title>
+    <url>/2024/11/04/%E5%BE%AE%E4%BF%A1%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E5%A4%B1%E8%B4%A5/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>想备份一下微信的聊天记录，一直提示<code>当前网络状况复杂，请尝试使用其它网络</code>，想着可能是防火墙拦截了，给开放下端口就行，然后防火墙添加微信的入站规则，还不行，然后火绒剑分析一下端口，发现事情没有那么简单。。。<br><img data-src="/images/2024-11-04-10-32-37.png"></p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>打开火绒剑看一下微信进程监听的网络端口，很容易判断出<code>8000</code>端口是微信的备份服务监听端口（下图是正在备份中，所以有建立TCP连接）。可以看到微信会抓取本地某个网卡的ip，比如<code>192.168.1.2</code>来进行监听，而不是<code>0.0.0.0</code>，导致监听的ip不对，无法进行通信，那么解决的方法也很简单，就是把其它网卡先禁用掉，备份完再启用。<br><img data-src="/images/2024-11-04-10-34-33.png"></p>
+<p>因为我看到它是监听了vm8的端口，所以把vm8禁用了就可以正常备份了。<br><img data-src="/images/2024-11-04-10-38-35.png"></p>
+<p>明明只要获取全部网卡ip地址逐个尝试连接就可以了，非不把功能做好。</p>
+]]></content>
+      <categories>
+        <category>折腾</category>
+      </categories>
+      <tags>
+        <tag>折腾</tag>
+      </tags>
+  </entry>
 </search>

@@ -200,6 +200,77 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2024/11/04/%E5%BE%AE%E4%BF%A1%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E5%A4%B1%E8%B4%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/11/04/%E5%BE%AE%E4%BF%A1%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E5%A4%B1%E8%B4%A5/" class="post-title-link" itemprop="url">'微信聊天记录备份失败'</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-11-04 10:31:08 / 修改时间：10:41:00" itemprop="dateCreated datePublished" datetime="2024-11-04T10:31:08+08:00">2024-11-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>想备份一下微信的聊天记录，一直提示<code>当前网络状况复杂，请尝试使用其它网络</code>，想着可能是防火墙拦截了，给开放下端口就行，然后防火墙添加微信的入站规则，还不行，然后火绒剑分析一下端口，发现事情没有那么简单。。。<br><img data-src="/images/2024-11-04-10-32-37.png"></p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>打开火绒剑看一下微信进程监听的网络端口，很容易判断出<code>8000</code>端口是微信的备份服务监听端口（下图是正在备份中，所以有建立TCP连接）。可以看到微信会抓取本地某个网卡的ip，比如<code>192.168.1.2</code>来进行监听，而不是<code>0.0.0.0</code>，导致监听的ip不对，无法进行通信，那么解决的方法也很简单，就是把其它网卡先禁用掉，备份完再启用。<br><img data-src="/images/2024-11-04-10-34-33.png"></p>
+<p>因为我看到它是监听了vm8的端口，所以把vm8禁用了就可以正常备份了。<br><img data-src="/images/2024-11-04-10-38-35.png"></p>
+<p>明明只要获取全部网卡ip地址逐个尝试连接就可以了，非不把功能做好。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2024/06/08/NatMap-IPv4%E7%9B%B4%E8%BF%9E%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -927,85 +998,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/" class="post-title-link" itemprop="url">小米CR8806免拆TTL刷机</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-04-20 11:27:09 / 修改时间：13:16:32" itemprop="dateCreated datePublished" datetime="2023-04-20T11:27:09+08:00">2023-04-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近入手小米CR8806刷入集客固件做AP，这里记录一下免拆TTL刷机过程，以及一些踩坑的细节，希望能帮助到有缘人。<br>如果你也想刷机，那么建议你先看一遍参考中的b站视频再跟着我的教程走，小白慎入。</p>
-<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>在开始刷机前，需要先准备一个USB转TTL模块，这里用的是FT232，推荐。<br><a target="_blank" rel="noopener" href="https://github.com/ryanInf/ryaninf.github.io/releases/download/CR8806/CR8806_AP.7z">相关文件下载</a></p>
-<h4 id="刷入官方固件"><a href="#刷入官方固件" class="headerlink" title="刷入官方固件"></a>刷入官方固件</h4><p>按照恩山教程，刷入官方固件恢复后才能进入TTL。（没尝试过不刷能不能进，有缘人看到这篇文章的话可以试试）。</p>
-<p>网线插入路由器LAN1口，然后跟电脑处于同一局域网。<br>打开小米路由器修复工具选择固件：miwifi_cr8806_firmware_4622b_6.2.33.bin。<br>路由器断电，按住reset键，上电，直至黄灯闪烁后松开。<br>然后电脑就会自动识别到路由器开始刷入。<br><img data-src="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/image-20230417223332543.png"></p>
-<p>要点：<br>路由器与电脑处于同一局域网就行，使用桥接网络的虚拟机也可以识别并刷机，但要留意网卡的ip是否有被设置到<code>192.168.31.x</code>，只有这样才能识别到路由器。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/20/%E5%B0%8F%E7%B1%B3CR8806%E5%85%8D%E6%8B%86TTL%E5%88%B7%E6%9C%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1077,7 +1069,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
