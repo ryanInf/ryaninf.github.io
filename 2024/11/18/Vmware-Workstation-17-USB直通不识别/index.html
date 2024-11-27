@@ -23,19 +23,19 @@
     var CONFIG = {"hostname":"r0yanx.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前言最近从Vmware Workstation 16.2升级到17.6，发现USB直通之后无法连接设备，搜索一番后成功解决问题。 正文因为工作需要，经常需要桥接USB到虚拟机，最近升级之后发现有问题，桥接进去设备管理器看不到，打开相应软件也不识别。 尝试过在vmx配置文件增加这个设置，无用。 1usb.generic.keepStreamsEnabled &#x3D; &quot;FALSE&amp;qu">
+  <meta name="description" content="前言最近从Vmware Workstation 16.2升级到17.6，发现USB直通之后无法连接设备，搜索一番后成功解决问题。 正文因为工作需要，经常需要桥接USB到虚拟机，最近升级之后发现有问题，桥接进去设备管理器看不到，打开相应软件也不识别。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vmware Workstation 17 USB直通不识别">
 <meta property="og:url" content="https://r0yanx.com/2024/11/18/Vmware-Workstation-17-USB%E7%9B%B4%E9%80%9A%E4%B8%8D%E8%AF%86%E5%88%AB/index.html">
 <meta property="og:site_name" content="r0yanx&#39;s Blog">
-<meta property="og:description" content="前言最近从Vmware Workstation 16.2升级到17.6，发现USB直通之后无法连接设备，搜索一番后成功解决问题。 正文因为工作需要，经常需要桥接USB到虚拟机，最近升级之后发现有问题，桥接进去设备管理器看不到，打开相应软件也不识别。 尝试过在vmx配置文件增加这个设置，无用。 1usb.generic.keepStreamsEnabled &#x3D; &quot;FALSE&amp;qu">
+<meta property="og:description" content="前言最近从Vmware Workstation 16.2升级到17.6，发现USB直通之后无法连接设备，搜索一番后成功解决问题。 正文因为工作需要，经常需要桥接USB到虚拟机，最近升级之后发现有问题，桥接进去设备管理器看不到，打开相应软件也不识别。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://r0yanx.com/2024/11/18/Vmware-Workstation-17-USB%E7%9B%B4%E9%80%9A%E4%B8%8D%E8%AF%86%E5%88%AB/2024-11-18-15-51-12.png">
 <meta property="og:image" content="https://r0yanx.com/2024/11/18/Vmware-Workstation-17-USB%E7%9B%B4%E9%80%9A%E4%B8%8D%E8%AF%86%E5%88%AB/2024-11-18-15-54-39.png">
 <meta property="og:image" content="https://r0yanx.com/2024/11/18/Vmware-Workstation-17-USB%E7%9B%B4%E9%80%9A%E4%B8%8D%E8%AF%86%E5%88%AB/2024-11-18-15-55-09.png">
 <meta property="og:image" content="https://r0yanx.com/2024/11/18/Vmware-Workstation-17-USB%E7%9B%B4%E9%80%9A%E4%B8%8D%E8%AF%86%E5%88%AB/2024-11-18-15-57-03.png">
 <meta property="article:published_time" content="2024-11-18T07:44:37.000Z">
-<meta property="article:modified_time" content="2024-11-18T07:57:28.950Z">
+<meta property="article:modified_time" content="2024-11-27T05:37:42.623Z">
 <meta property="article:author" content="r0yanx">
 <meta property="article:tag" content="折腾">
 <meta name="twitter:card" content="summary">
@@ -233,10 +233,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-11-18 15:44:37 / 修改时间：15:57:28" itemprop="dateCreated datePublished" datetime="2024-11-18T15:44:37+08:00">2024-11-18</time>
+              <time title="创建时间：2024-11-18 15:44:37" itemprop="dateCreated datePublished" datetime="2024-11-18T15:44:37+08:00">2024-11-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-27 13:37:42" itemprop="dateModified" datetime="2024-11-27T13:37:42+08:00">2024-11-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -267,6 +273,7 @@
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近从Vmware Workstation 16.2升级到17.6，发现USB直通之后无法连接设备，搜索一番后成功解决问题。</p>
 <h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>因为工作需要，经常需要桥接USB到虚拟机，最近升级之后发现有问题，桥接进去设备管理器看不到，打开相应软件也不识别。<br><img data-src="/2024/11/18/Vmware-Workstation-17-USB%E7%9B%B4%E9%80%9A%E4%B8%8D%E8%AF%86%E5%88%AB/2024-11-18-15-51-12.png"></p>
+<a id="more"></a>
 <p>尝试过在vmx配置文件增加这个设置，无用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usb.generic.keepStreamsEnabled &#x3D; &quot;FALSE&quot;</span><br></pre></td></tr></table></figure>
 
@@ -311,7 +318,10 @@
     <a href="/2024/11/04/%E5%BE%AE%E4%BF%A1%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E5%A4%B1%E8%B4%A5/" rel="prev" title="微信聊天记录备份失败">
       <i class="fa fa-chevron-left"></i> 微信聊天记录备份失败
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/11/27/BABYRE/" rel="next" title="BABYRE">
+      BABYRE <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -391,7 +401,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -404,7 +414,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
