@@ -200,6 +200,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" class="post-title-link" itemprop="url">frida spawn超时问题解决</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-05-20 11:46:11 / 修改时间：14:14:01" itemprop="dateCreated datePublished" datetime="2025-05-20T11:46:11+08:00">2025-05-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在frida使用时，遇到可能attach无法spawn的问题，在一加ace3 pro手机出现，但是两个其它测试机没这个问题，一开始以为是frida版本问题，后面切换了不同版本也一样，困扰很久，最近终于爬楼解决了，分享一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to spawn: unable to access PID 1692 (zygote) while preparing for app launch; try disabling Magisk Hide in case it is active</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/2025-05-20-11-52-08.png"><br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/2025-05-20-11-53-36.png"></p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>原因是zygote32影响了，把它关掉就正常<br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image3.png"><br>在root权限下执行下面命令即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setprop persist.sys.tango_zygote32.start 0</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image-2.png"><br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image-1.png"><br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://github.com/frida/frida/issues/2516">https://github.com/frida/frida/issues/2516</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2024/11/27/BABYRE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -930,88 +1004,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/" class="post-title-link" itemprop="url">兆能ZN-M2救砖记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-05-03 20:58:05" itemprop="dateCreated datePublished" datetime="2023-05-03T20:58:05+08:00">2023-05-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-04 11:43:51" itemprop="dateModified" datetime="2023-05-04T11:43:51+08:00">2023-05-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>大概是自己做固件的时候忘了配置屏蔽WiFi，在更新ZN-M2的时候刷入了一个带WiFi的openwrt固件，好家伙，直接开机进不了后台，勉强能SSH登录但几乎无法操作，查看内存剩余4MB，想scp复制新的固件进去都会中断。然后进入不死uboot想重新刷，但是刷入任何固件均失败了，包括AX18和ZN-M2的，最终无奈进行TTL大法刷回原版固件。</p>
-<p><img data-src="/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/2023-05-04-11-43-26.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/03/%E5%85%86%E8%83%BDZN-M2%E6%95%91%E7%A0%96%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1083,20 +1075,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1138,7 +1130,7 @@
 <div class="copyright">
   
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

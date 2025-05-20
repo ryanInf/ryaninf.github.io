@@ -3344,4 +3344,22 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>逆向</tag>
       </tags>
   </entry>
+  <entry>
+    <title>frida spawn超时问题解决</title>
+    <url>/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在frida使用时，遇到可能attach无法spawn的问题，在一加ace3 pro手机出现，但是两个其它测试机没这个问题，一开始以为是frida版本问题，后面切换了不同版本也一样，困扰很久，最近终于爬楼解决了，分享一下。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Failed to spawn: unable to access PID 1692 (zygote) while preparing for app launch; try disabling Magisk Hide in case it is active</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/2025-05-20-11-52-08.png"><br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/2025-05-20-11-53-36.png"></p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>原因是zygote32影响了，把它关掉就正常<br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image3.png"><br>在root权限下执行下面命令即可</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setprop persist.sys.tango_zygote32.start 0</span><br></pre></td></tr></table></figure>
+<p><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image-2.png"><br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image-1.png"><br><img data-src="/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/image.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/frida/frida/issues/2516">https://github.com/frida/frida/issues/2516</a></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
 </search>
