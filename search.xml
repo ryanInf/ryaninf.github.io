@@ -3362,4 +3362,30 @@ st->op1->op2->op3->op4->e</textarea><textarea id="flowchart-0-options" style="di
         <tag>Android</tag>
       </tags>
   </entry>
+  <entry>
+    <title>抓包ca证书管理</title>
+    <url>/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/</url>
+    <content><![CDATA[<p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在渗透中，我们可能会经常切换不同的抓包工具，或者使用xray之类的扫描工具，不同工具有不同的ca证书，如果都要导入一遍，Windows还好，Android、iOS之类就麻烦多了，为了提升工作效率，分享我个人的方法，就是使用同一套证书。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>个人使用的ca以reqable证书为主，因为黄鸟证书导入相对比较方便，Android直接刷magisk包就好了。</p>
+<p>因为reqable中没有导出私钥文件的功能，下面下发分享从p12证书分离私钥文件的方法。<br>在reqable中导出p12证书，使用下面命令可以分离出.key私钥文件，用于后续操作。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl pkcs12 -<span class="keyword">in</span> reqable-ca.p12 -nocerts -nodes -passin pass:1234 -out reqable-ca.key -provider legacy -provider default</span><br></pre></td></tr></table></figure>
+
+<p>建议可以存一份证书文件，一直使用同一套会方便很多。<br><img data-src="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/image.png"></p>
+<p><strong>分享几个证书使用场景</strong></p>
+<ol>
+<li>burpsuite：bp导入证书直接导p12证书输入密码即可<br><img data-src="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/image-1.png"></li>
+<li>yarkit：yarkit官方似乎没有提供导入证书的GUI界面，可以在项目根目录直接替换key和crt文件<br><img data-src="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/image-2.png"></li>
+<li>xray：xray修改配置文件即可，但是xray只支持pem格式，可以参考下面文章转换：<a href="https://r0yanx.com/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/">DER 证书转换 PEM 证书小记</a></li>
+<li>不同终端的reqable：有时候家里的电脑、虚拟机这些可能也装黄鸟，直接导入p12证书即可</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文分享了个人使用ca证书的经验，能够提升工作效率。</p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
 </search>

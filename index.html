@@ -200,6 +200,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="r0yanx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="r0yanx's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/" class="post-title-link" itemprop="url">抓包ca证书管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-01 08:59:22 / 修改时间：09:44:13" itemprop="dateCreated datePublished" datetime="2025-08-01T08:59:22+08:00">2025-08-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">渗透测试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本文仅作为技术讨论及分享，严禁用于任何非法用途。</strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在渗透中，我们可能会经常切换不同的抓包工具，或者使用xray之类的扫描工具，不同工具有不同的ca证书，如果都要导入一遍，Windows还好，Android、iOS之类就麻烦多了，为了提升工作效率，分享我个人的方法，就是使用同一套证书。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>个人使用的ca以reqable证书为主，因为黄鸟证书导入相对比较方便，Android直接刷magisk包就好了。</p>
+<p>因为reqable中没有导出私钥文件的功能，下面下发分享从p12证书分离私钥文件的方法。<br>在reqable中导出p12证书，使用下面命令可以分离出.key私钥文件，用于后续操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -<span class="keyword">in</span> reqable-ca.p12 -nocerts -nodes -passin pass:1234 -out reqable-ca.key -provider legacy -provider default</span><br></pre></td></tr></table></figure>
+
+<p>建议可以存一份证书文件，一直使用同一套会方便很多。<br><img data-src="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/image.png"></p>
+<p><strong>分享几个证书使用场景</strong></p>
+<ol>
+<li>burpsuite：bp导入证书直接导p12证书输入密码即可<br><img data-src="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/image-1.png"></li>
+<li>yarkit：yarkit官方似乎没有提供导入证书的GUI界面，可以在项目根目录直接替换key和crt文件<br><img data-src="/2025/08/01/%E6%8A%93%E5%8C%85%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86%E5%88%86%E4%BA%AB/image-2.png"></li>
+<li>xray：xray修改配置文件即可，但是xray只支持pem格式，可以参考下面文章转换：<a href="https://r0yanx.com/2021/11/13/DER%E8%AF%81%E4%B9%A6%E8%BD%AC%E6%8D%A2PEM%E8%AF%81%E4%B9%A6%E5%B0%8F%E8%AE%B0/">DER 证书转换 PEM 证书小记</a></li>
+<li>不同终端的reqable：有时候家里的电脑、虚拟机这些可能也装黄鸟，直接导入p12证书即可</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文分享了个人使用ca证书的经验，能够提升工作效率。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2025/05/20/frida-spawn%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -928,82 +1010,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://r0yanx.com/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="r0yanx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="r0yanx's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/" class="post-title-link" itemprop="url">爱快IPv6 ACL</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-05-05 12:27:35 / 修改时间：14:14:38" itemprop="dateCreated datePublished" datetime="2023-05-05T12:27:35+08:00">2023-05-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">折腾</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>爱快iKuai8_3.7.0版本增加了IPv6的ACL支持，即爱快终于有IPv6的防火墙了，喜大普奔。本文记录一下爱快IPv6 ACL的测试、配置过程。</p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>首先是配置一条公网入访问的拦截策略，默认拦截所有IPv6的公网入站请求，防止外部攻击。<br><img data-src="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/2023-05-05-12-31-58.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/05/%E7%88%B1%E5%BF%ABIPV6-ACL/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1075,7 +1081,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
